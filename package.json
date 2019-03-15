@@ -1,0 +1,31 @@
+{
+  "name": "hop-stars",
+  "version": "0.0.1",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "start": "webpack-dev-server --mode development --config webpack.config.dev.js --open --hot --inline"
+  },
+  "author": "Alvin Javelosa <alvin.javelosa@imfreemobile.com>",
+  "devDependencies": {
+    "@types/pixi.js": "4.7.3",
+    "clean-webpack-plugin": "^0.1.16",
+    "connect": "^3.6.6",
+    "copy-webpack-plugin": "^4.6.0",
+    "html-webpack-plugin": "^3.2.0",
+    "script-loader": "^0.7.1",
+    "serve-static": "^1.13.2",
+    "ts-loader": "^5.3.1",
+    "tsconfig-paths-webpack-plugin": "^3.2.0",
+    "typescript": "^2.4",
+    "uglifyjs-webpack-plugin": "^2.0.1",
+    "webpack": "^4.27.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
+  },
+  "dependencies": {
+    "pixi-viewport": "^3.16.0",
+    "pixi.js": "4.7.3",
+    "rxjs": "^5.5.10"
+  }
+}
