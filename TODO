@@ -1,0 +1,23 @@
+
+# DEVELOPMENT:
+
+  - container movement        8h
+  - container scroll          8h
+  
+  - squares component state:
+    - hopped                  4h
+    - moving horizontal       8h
+    - moving vertical         8h
+
+  - ball component state:            
+    - ball color changeable   4h
+    - ball bounce movement    8h
+    - ball pan movement       8h
+    - ball destroy            4h
+
+  - title text                2h
+  - score text                2h
+
+  - integration               16h
+
+  
