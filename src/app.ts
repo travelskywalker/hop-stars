@@ -12,7 +12,7 @@ import { resourcesProvider } from '@src/app.resources';
 export class App {
 
   // pixijs engine reference
-  private _app: PIXI.Application;
+  public _app: PIXI.Application;
 
   // scene management
   private _scenes: Scene[] = [];
@@ -41,7 +41,7 @@ export class App {
     loader_img.src = b64_loader;
     this._loaderSprite = new PIXI.Sprite(new PIXI.Texture(new PIXI.BaseTexture(loader_img)));
     this._loaderSprite.anchor.set(0.5, 0.5);
-    this._loaderSprite.scale = new PIXI.Point(1, 1);
+    this._loaderSprite.scale = new PIXI.Point(3, 3);
     let perc = (window.innerWidth * window.devicePixelRatio) * 0.25;
     do {
       this._loaderSprite.width += 0.09;
@@ -54,8 +54,8 @@ export class App {
 
     // loader slider
     this._loaderText = new PIXI.Text(
-      'Loading... 0%',
-      { fontFamily: 'Arial', fontSize: 14 * window.devicePixelRatio, fill: 0x000000, align: 'center' },
+      'LOADING... 0%',
+      { fontFamily: 'Arial', fontSize: 14 * window.devicePixelRatio, fill: 0X942363, align: 'center' },
     );
     this._loaderText.scale = new PIXI.Point(1, 1);
     perc = (window.innerWidth * window.devicePixelRatio) * 0.2;
@@ -113,7 +113,7 @@ export class App {
         loaded();
       }, 2000);
     }, (percent: number) => {
-      this._loaderText.text = `Loading... ${percent}%`;
+      this._loaderText.text = `LOADING... ${percent}%`;
     });
   }
 
