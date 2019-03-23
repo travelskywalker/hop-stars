@@ -36,11 +36,11 @@ export class GameScene extends Scene {
   squareY: PIXI.Sprite;
 
   init(): void {
-    console.log('game scene');
-    // this.INITIAL_VELOCITY = this.INITIAL_VELOCITY * 2;
-    // this.GRAVITY = this.GRAVITY * 4;
-    console.log('velocity', this.INITIAL_VELOCITY);
-    console.log('gravity', this.GRAVITY);
+    // const current_velocity = this.INITIAL_VELOCITY * 2;
+    // this.INITIAL_VELOCITY = current_velocity;
+    // this.GRAVITY = current_velocity * .1;
+    // console.log('velocity', this.INITIAL_VELOCITY);
+    // console.log('gravity', this.GRAVITY);
   }
 
   start(): void {
@@ -58,40 +58,60 @@ export class GameScene extends Scene {
     bigWhiteTexture.orig.width = this.CIRCLEWIDTH * 6;
     bigWhiteTexture.orig.height = this.CIRCLEWIDTH * 4;
 
+    const initial_square_y = this.app.getScreenSize().h * 0.18;
+    const initial_square_distance = this.app.getScreenSize().h * 0.960;
+    const square_distance = initial_square_distance - initial_square_y;
+    const last_square_position = initial_square_distance + (initial_square_distance - initial_square_y) * 8;
+
     var initial_square = new PIXI.projection.Sprite2d(bigWhiteTexture);
     initial_square.tint = 0X70DFC8;
     initial_square.anchor.set(0.5);
-    initial_square.position.set(0, this.app.getScreenSize().h * 0.18);
+    initial_square.position.set(0, initial_square_y);
 
     var squareFar0 = new PIXI.projection.Sprite2d(bigWhiteTexture);
     squareFar0.tint = 0X70DFC8;
     squareFar0.anchor.set(0.5);
-    squareFar0.position.set(this.app.getScreenSize().w * 0.4, this.app.getScreenSize().h * 0.98);
+    squareFar0.position.set(0, initial_square_distance);
     
     var squareFar1 = new PIXI.projection.Sprite2d(bigWhiteTexture);
     squareFar1.tint = 0X70DFC8;
     squareFar1.anchor.set(0.5);
-    squareFar1.position.set(-(this.app.getScreenSize().w * 0.2), this.app.getScreenSize().h * 1.86);
+    squareFar1.position.set(0, (initial_square_distance + square_distance));
 
     var squareFar2 = new PIXI.projection.Sprite2d(bigWhiteTexture);
     squareFar2.tint = 0X70DFC8;
     squareFar2.anchor.set(0.5);
-    squareFar2.position.set(this.app.getScreenSize().w * 0.6, this.app.getScreenSize().h * 2.70);
+    squareFar2.position.set(this.app.getScreenSize().w * 0.4, (initial_square_distance + square_distance * 2));
 
     var squareFar3 = new PIXI.projection.Sprite2d(bigWhiteTexture);
     squareFar3.tint = 0X70DFC8;
     squareFar3.anchor.set(0.5);
-    squareFar3.position.set(this.app.getScreenSize().w * 0.4, this.app.getScreenSize().h * 3.58);
+    squareFar3.position.set(-this.app.getScreenSize().w * 0.4, (initial_square_distance + square_distance * 3));
 
     var squareFar4 = new PIXI.projection.Sprite2d(bigWhiteTexture);
     squareFar4.tint = 0X70DFC8;
     squareFar4.anchor.set(0.5);
-    squareFar4.position.set(-(this.app.getScreenSize().w * 0.4), this.app.getScreenSize().h * 4.46);
+    squareFar4.position.set(this.app.getScreenSize().w * 0.2, (initial_square_distance + square_distance * 4));
     
     var squareFar5 = new PIXI.projection.Sprite2d(bigWhiteTexture);
     squareFar5.tint = 0X70DFC8;
     squareFar5.anchor.set(0.5);
-    squareFar5.position.set(-(this.app.getScreenSize().w * 0.4), this.app.getScreenSize().h * 5.30);
+    squareFar5.position.set(-this.app.getScreenSize().w * 0.5, (initial_square_distance + square_distance * 5));
+
+    var squareFar6 = new PIXI.projection.Sprite2d(bigWhiteTexture);
+    squareFar6.tint = 0X70DFC8;
+    squareFar6.anchor.set(0.5);
+    squareFar6.position.set(0, (initial_square_distance + square_distance * 6));
+
+    var squareFar7 = new PIXI.projection.Sprite2d(bigWhiteTexture);
+    squareFar7.tint = 0X70DFC8;
+    squareFar7.anchor.set(0.5);
+    squareFar7.position.set(this.app.getScreenSize().w * 0.5, (initial_square_distance + square_distance * 7));
+
+    var squareFar8 = new PIXI.projection.Sprite2d(bigWhiteTexture);
+    squareFar8.tint = 0X70DFC8;
+    squareFar8.anchor.set(0.5);
+    squareFar8.position.set(0, last_square_position);
     
 
     this.squareY = new PIXI.Sprite(PIXI.Texture.WHITE);
@@ -120,6 +140,9 @@ export class GameScene extends Scene {
     this.container2d.addChild(squareFar3);
     this.container2d.addChild(squareFar4);
     this.container2d.addChild(squareFar5);
+    this.container2d.addChild(squareFar6);
+    this.container2d.addChild(squareFar7);
+    this.container2d.addChild(squareFar8);
 
     //illuminate the sprite from two points!
     var lightY = new PIXI.projection.Sprite2d(PIXI.Texture.WHITE);
@@ -158,7 +181,7 @@ export class GameScene extends Scene {
     this.circle_bg.addChild(this.circle);
 
     this.circle_bg.on('touchstart', (interactionData: PIXI.interaction.InteractionEvent) => {      
-      
+         
       this.TOUCHEND = false;
       this.ball_click();
       
@@ -178,29 +201,45 @@ export class GameScene extends Scene {
     });
 
 
-    console.log(squareFar0.position.y);
-    console.log(squareFar1.position.y);
-    console.log(squareFar2.position.y);
-    console.log(squareFar3.position.y);
-
-
     this.YVELOCITY = this.INITIAL_VELOCITY;
     const fall_position = this.app.getScreenSize().h - this.circleYPosition;
+   
+   //------------------ APP TICKER
+
     this.app._app.ticker.add(() => {
-      
       
       let posY = this.container2d.toLocal(this.squareY.position, undefined, undefined, undefined, PIXI.projection.TRANSFORM_STEP.BEFORE_PROJ);
       this.container2d.proj.setAxisY(posY, 1);
 
-      if(this.GAME_RESET != true) {
+      if(this.GAME_RESET != true) {       
 
-        // if(bunny.position.y <= 0 ) {
-        //   bunny.position.y = 0;
-        //   bunny.position.y = this.container.height * 2;
-        // } else {
-        //   bunny.position.y -= this.INITIAL_VELOCITY * 2;
-        // }
-
+        if(squareFar0.position.y <= -(bigWhiteTexture.height * 0.5)) {
+          squareFar0.position.y = squareFar8.position.y + square_distance ;
+        }
+        if(squareFar1.position.y <= -(bigWhiteTexture.height * 0.5)) {
+          squareFar1.position.y = squareFar0.position.y + square_distance;
+        }
+        if(squareFar2.position.y <= -(bigWhiteTexture.height * 0.5)) {
+          squareFar2.position.y = squareFar1.position.y + square_distance;
+        }
+        if(squareFar3.position.y <= -(bigWhiteTexture.height * 0.5)) {
+          squareFar3.position.y = squareFar2.position.y + square_distance;
+        }
+        if(squareFar4.position.y <= -(bigWhiteTexture.height * 0.5)) {
+          squareFar4.position.y = squareFar3.position.y + square_distance;
+        }
+        if(squareFar5.position.y <= -(bigWhiteTexture.height * 0.5)) {
+          squareFar5.position.y = squareFar4.position.y + square_distance;
+        }
+        if(squareFar6.position.y <= -(bigWhiteTexture.height * 0.5)) {
+          squareFar6.position.y = squareFar5.position.y;
+        }
+        if(squareFar7.position.y <= -(bigWhiteTexture.height * 0.5)) {
+          squareFar7.position.y = squareFar6.position.y;
+        }
+        if(squareFar8.position.y <= -(bigWhiteTexture.height * 0.5)) {
+          squareFar8.position.y = squareFar7.position.y;
+        }
 
         squareFar0.position.y -= this.INITIAL_VELOCITY;
         squareFar1.position.y -= this.INITIAL_VELOCITY;
@@ -208,15 +247,17 @@ export class GameScene extends Scene {
         squareFar3.position.y -= this.INITIAL_VELOCITY;
         squareFar4.position.y -= this.INITIAL_VELOCITY;
         squareFar5.position.y -= this.INITIAL_VELOCITY;
+        squareFar6.position.y -= this.INITIAL_VELOCITY;
+        squareFar7.position.y -= this.INITIAL_VELOCITY;
+        squareFar8.position.y -= this.INITIAL_VELOCITY;
         initial_square.position.y -= this.INITIAL_VELOCITY;
         
-        if( this.circle.position.y <= 0 ) {
+        if(this.circle.position.y <= 0 ) {
           
           // IF BALL IS BOUNCING
-          console.log('bouncing');
-          this.circle.position.y -= this.YVELOCITY;
           this.YVELOCITY -= this.GRAVITY;
-
+          this.circle.position.y -= this.YVELOCITY;
+          
         } else {
 
           // IF BALL FAILED TO BOUNCE
@@ -227,7 +268,8 @@ export class GameScene extends Scene {
 
               // IF BALL OUT OF SCREEN, RESET GAME
               console.log('reset game')
-              this.circle.position.y = 0;
+              // this.circle.position.y = 0;
+              this.circle.position.y = 0; 
               this.circle.position.x = 0;
               this.YVELOCITY = this.INITIAL_VELOCITY;
               this.GAME_RESET = true;
@@ -235,13 +277,15 @@ export class GameScene extends Scene {
 
               // BALL FALLING
               console.log('ballmove');
-              this.circle.position.y -= this.YVELOCITY;
               this.YVELOCITY -= this.GRAVITY;
+              this.circle.position.y -= this.YVELOCITY;
+              
             }
           } else {
-            
+            console.log('stilltouched');
             // SCREEN STILL ON TOUCH
             this.YVELOCITY = this.INITIAL_VELOCITY
+            this.YVELOCITY -= this.GRAVITY;
             this.circle.position.y -= this.YVELOCITY;
           }
         }
