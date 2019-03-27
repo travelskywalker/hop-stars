@@ -49,6 +49,9 @@ export class GameScene extends Scene {
   initial_square: projection.Sprite2d;
   squareFar: projection.Sprite2d [] = [];
 
+  // score
+  scoreText: Text;
+  score: number = 0;
 
   init(): void {
     
@@ -60,11 +63,17 @@ export class GameScene extends Scene {
 
   start(): void {
 
+   
+
     this.bg = new Graphics();
     this.bg.beginFill(0xF2F2F2, 1);
     this.bg.drawRect(0, 0, this.app.getScreenSize().w, this.app.getScreenSize().h);
     this.bg.endFill();
     this.container.addChild(this.bg);
+
+     // dummy score
+     this.scoreText = new Text(`${this.score}`,{fontFamily : 'Arial', fontSize: 100, fill : 0x000000, align : 'center'});
+     this.container.addChild(this.scoreText);
     
   /////////// SQUARES
     
@@ -258,13 +267,18 @@ export class GameScene extends Scene {
             // console.log('square0', this.squareFar[0].position.x); //center of square
             // console.log('square_local_1', this.squareFar[0].transform.worldTransform.tx);
 
-            console.log(this.squareFar[this.bounce_count].position.x);
-            console.log(this.circle.position.x);  
+            // console.log(this.squareFar[this.bounce_count].position.x);
+            // console.log(this.circle.position.x);  
 
+            let square = this.squareFar[this.bounce_count];
+            let bouncePosition = this.circle.position.x;
+            if(this.isInSquare(square,bouncePosition)) {
 
-            if(this.isInSquare(this.squareFar[this.bounce_count],this.circle.position.x)) {
+              if(this.isCoined(square, bouncePosition)){
+                this.scoreText.text = `${this.score+=1}`;
+              }
               
-              console.log("in square");
+              // console.log("in square");
             } else {
               this.TOUCHEND = true;
               this.reset_game();
@@ -284,26 +298,55 @@ export class GameScene extends Scene {
       }
   }
 
+  isCoined(square: projection.Sprite2d, bouncePosition: number){
+    // square coordinates
+    let square_start = (square.position.x/2.1) - (square.width/4);
+    let square_end = (square.position.x/2.1) + (square.width/4);
+
+    // coin width
+    let coinWidth = (square.width/2)*.30;
+
+    // center of square coordinates
+    let centerSquare = square_start + (square.width/4);
+
+    // coin position
+    let coinStart = centerSquare - (coinWidth/2);
+    let coinEnd = centerSquare + (coinWidth/2);
+
+    if(bouncePosition > coinStart && bouncePosition < coinEnd){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
   reset_game() {
 
     // PLAYER STOP ON TOUCHING
     // if(this.fall_position < this.circle.position.y) {
 
         // IF BALL OUT OF SCREEN, RESET GAME
-      console.log('reset game')
-      // this.circle.position.y = 0;
-      this.circle.position.y = 0; 
-      this.circle.position.x = 0;
-      this.container2d.position.x = this.deviceScreenSize;
-      this.YVELOCITY = this.INITIAL_VELOCITY;
-      this.GAME_RESET = true;
+
+      console.log('ballmove');
+      this.YVELOCITY -= this.GRAVITY;
+      this.circle.position.y -= this.YVELOCITY;
+
+      if(this.fall_position < this.circle.position.y) {
+        console.log('reset game')
+        // this.circle.position.y = 0;
+        this.circle.position.y = 0; 
+        this.circle.position.x = 0;
+        this.container2d.position.x = this.deviceScreenSize;
+        this.YVELOCITY = this.INITIAL_VELOCITY;
+        this.GAME_RESET = true;
+      }
+
+      
       
     // } else {
 
       // BALL FALLING
-      console.log('ballmove');
-      this.YVELOCITY -= this.GRAVITY;
-      this.circle.position.y -= this.YVELOCITY;
+      
       
     // }
 
