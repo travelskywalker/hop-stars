@@ -3,16 +3,25 @@ import { Subject } from 'rxjs/Subject';
 export class IAppState {
 
   explosionActive: boolean;
+  volume: number = 0;
 }
 
 export class AppState extends Subject<IAppState> {
 
-  public s: IAppState = new IAppState();
+  public state: IAppState = new IAppState();
 
   public setExplosion(active: boolean): void {
 
-    this.s.explosionActive = active;
-    this.next(this.s);
+    this.state.explosionActive = active;
+    this.next(this.state);
+  }
+
+  public toggle_volume() {
+
+    this.state.volume += 1;
+    if (this.state.volume === 4)
+      this.state.volume = 0;
+    this.next(this.state);
   }
 
 }
