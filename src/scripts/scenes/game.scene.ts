@@ -2,11 +2,13 @@ import { Scene } from '@src/core/scene';
 import { Text, Container, Graphics, Texture, projection } from 'pixi.js';
 import 'pixi-projection';
 import { App } from '@src/app';
+import { SpriteActor } from '@src/core/sprite.actor';
 
 export class GameScene extends Scene {
 
   // objects
   bg: Graphics;
+  bg_img: SpriteActor;
   circle: Graphics;
   square_bg: Graphics;
   circle_bg: Graphics;
@@ -63,12 +65,18 @@ export class GameScene extends Scene {
 
   start(): void {
 
-   
+    
+    this.bg_img = new SpriteActor('splash-bg', this.app, 'common', 'startscreen_bg.png');
+    this.bg_img.setAnchor(0, 0);
+    this.bg_img.setPosition(0,0);
+    this.bg_img.setScaleUpToScreenPercWidth(1);
+    
 
     this.bg = new Graphics();
-    this.bg.beginFill(0xF2F2F2, 1);
+    this.bg.beginFill(0xF2F2F2, 0);
     this.bg.drawRect(0, 0, this.app.getScreenSize().w, this.app.getScreenSize().h);
     this.bg.endFill();
+    this.addChild(this.bg_img);
     this.container.addChild(this.bg);
 
      // dummy score
@@ -78,47 +86,47 @@ export class GameScene extends Scene {
   /////////// SQUARES
     
     this.initial_square = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
-    this.initial_square.tint = 0X70DFC8;
+    this.initial_square.tint = 0xF37DAE;
     this.initial_square.anchor.set(0.5);
     this.initial_square.position.set(0, this.initial_square_y);
 
     this.squareFar[0] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
-    this.squareFar[0].tint = 0X70DFC8;
+    this.squareFar[0].tint = 0xF37DAE;
     this.squareFar[0].anchor.set(0.5);
     this.squareFar[0].position.set(0, this.initial_square_distance);
     
     this.squareFar[1] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
-    this.squareFar[1].tint = 0X70DFC8;
+    this.squareFar[1].tint = 0xF37DAE;
     this.squareFar[1].anchor.set(0.5);
     this.squareFar[1].position.set(this.app.getScreenSize().w * 0.5, (this.initial_square_distance + this.square_distance));
 
     this.squareFar[2] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
-    this.squareFar[2].tint = 0X70DFC8;
+    this.squareFar[2].tint = 0xF37DAE;
     this.squareFar[2].anchor.set(0.5);
     this.squareFar[2].position.set(-(this.app.getScreenSize().w * 0.5), (this.initial_square_distance + this.square_distance * 2));
 
     this.squareFar[3] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
-    this.squareFar[3].tint = 0X70DFC8;
+    this.squareFar[3].tint = 0xF37DAE;
     this.squareFar[3].anchor.set(0.5);
     this.squareFar[3].position.set(this.app.getScreenSize().w * 0.5, (this.initial_square_distance + this.square_distance * 3));
 
     this.squareFar[4] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
-    this.squareFar[4].tint = 0X70DFC8;
+    this.squareFar[4].tint = 0xF37DAE;
     this.squareFar[4].anchor.set(0.5);
     this.squareFar[4].position.set(this.app.getScreenSize().w * 0.25, (this.initial_square_distance + this.square_distance * 4));
     
     this.squareFar[5] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
-    this.squareFar[5].tint = 0X70DFC8;
+    this.squareFar[5].tint = 0xF37DAE;
     this.squareFar[5].anchor.set(0.5);
     this.squareFar[5].position.set(0, (this.initial_square_distance + this.square_distance * 5));
 
     this.squareFar[6] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
-    this.squareFar[6].tint = 0X70DFC8;
+    this.squareFar[6].tint = 0xF37DAE;
     this.squareFar[6].anchor.set(0.5);
     this.squareFar[6].position.set(-(this.app.getScreenSize().w * 0.25), (this.initial_square_distance + this.square_distance * 6));
 
     this.squareFar[7] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
-    this.squareFar[7].tint = 0X70DFC8;
+    this.squareFar[7].tint = 0xF37DAE;
     this.squareFar[7].anchor.set(0.5);
     this.squareFar[7].position.set(0, (this.initial_square_distance + this.square_distance * 7));
 
