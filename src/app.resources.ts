@@ -10,9 +10,10 @@ export function resourcesProvider(_app: App, loaded: (resources: any) => void, p
 
   // add assets
   // loader.add('barmaid', `./assets/barmaid${loader_resolution}.json`);
-  loader.add('spritesheet', `./assets/sample_game_spritesheet.json`);
-  loader.add('tilemap', `./assets/sample_tilemap.json`);
-  loader.add('tileset', `./assets/sample_tileset.json`);
+  loader.add('common', `./assets/spritesheet-common.json`);
+  loader.add('lvl1', `./assets/hop-game-level-1.json`);
+  loader.add('lvl2', `./assets/hop-game-level-2.json`);
+  loader.add('lvl3', `./assets/hop-game-level-3.json`);
 
   // start loading resources
   loader.load((_loader: any, resources: any) => {

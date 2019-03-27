@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 import { App } from '@src/app';
-import { Actor } from '@src/core/actor';
+import { Actor } from './actor';
 
 export class SpriteAnimatedActor extends Actor {
 
