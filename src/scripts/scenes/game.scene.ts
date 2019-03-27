@@ -160,7 +160,7 @@ export class GameScene extends Scene {
 
     this.circle_bg.on('touchstart', (interactionData: PIXI.interaction.InteractionEvent) => {      
          
-      this.TOUCHEND = false;
+      // this.TOUCHEND = false;
       this.ball_click();
       
       // get initial tapped postion
@@ -173,13 +173,13 @@ export class GameScene extends Scene {
       const point = interactionData.data.getLocalPosition(this.circle);
       const point2 = interactionData.data.getLocalPosition(this.container2d);
 
-      
-      
       // horizontal position
-      this.circle.position.x = Math.min(this.app.getScreenSize().w * 0.5 , this.circle.position.x + (point.x - this.initialPoint.x));
-      this.circle.position.x = Math.max(this.circle.position.x , -(this.deviceScreenSize));
-      
-      this.container2d.position.x = -((this.circle.position.x + (point.x - this.initialPoint.x)) - this.deviceScreenSize);
+      if(this.GAME_RESET !== true) {
+        this.circle.position.x = Math.min(this.app.getScreenSize().w * 0.5 , this.circle.position.x + (point.x - this.initialPoint.x));
+        this.circle.position.x = Math.max(this.circle.position.x , -(this.deviceScreenSize));
+        
+        this.container2d.position.x = -((this.circle.position.x + (point.x - this.initialPoint.x)) - this.deviceScreenSize);
+      }
 
     });
     this.circle_bg.on('touchend', () => {
@@ -203,11 +203,11 @@ export class GameScene extends Scene {
 
   update(_delta: number): void {
     
+      // Project camera angle
       let posY = this.container2d.toLocal(this.squareY.position, undefined, undefined, undefined, PIXI.projection.TRANSFORM_STEP.BEFORE_PROJ);
       this.container2d.proj.setAxisY(posY, 1);
 
       if(this.GAME_RESET != true) {       
-
         if(this.squareFar[0].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
           this.squareFar[0].position.y = this.squareFar[7].position.y + this.square_distance; }
         if(this.squareFar[1].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
@@ -235,51 +235,55 @@ export class GameScene extends Scene {
         this.squareFar[7].position.y -= this.INITIAL_VELOCITY;
         this.initial_square.position.y -= this.INITIAL_VELOCITY;
         
-        if(this.circle.position.y <= 0 ) {
-          
+        if(this.circle.position.y <= 0 && this.TOUCHEND == false) {
+          console.log('ball bouncing');
           // IF BALL IS BOUNCING
           this.YVELOCITY -= this.GRAVITY;
           this.circle.position.y -= this.YVELOCITY;
           
         } else {
 
+          
           // IF BALL FAILED TO BOUNCE
-          if(this.TOUCHEND == true) {
+          // if(this.TOUCHEND == true) {
+          //   console.log('ball failed to bounce');
+          //   this.reset_game();
+          // } else {
 
-            this.reset_game();
-          } else {
-            // console.log('stilltouched');
-            // // SCREEN STILL ON TOUCH
-
-
-            // console.log('circle x position', this.circle.position.x);
-            // // console.log('square1', this.squareFar[1].position.x);
-            // console.log('square width', this.squareFar[0].width);
-            // console.log('square0', this.squareFar[0].position.x); //center of square
-            // console.log('square_local_1', this.squareFar[0].transform.worldTransform.tx);
-
-            console.log(this.squareFar[this.bounce_count].position.x);
-            console.log(this.circle.position.x);  
-
+            console.log('stilltouched');
+            // SCREEN STILL ON TOUCH
 
             if(this.isInSquare(this.squareFar[this.bounce_count],this.circle.position.x)) {
               
               console.log("in square");
             } else {
               this.TOUCHEND = true;
-              this.reset_game();
               console.log("outside of square");
+              // this.reset_game();
             }
 
+            // detect current falling square
             this.bounce_count += 1;
             if (this.bounce_count > this.squareFar.length - 1) {
               this.bounce_count = 0;
             }
 
-            this.YVELOCITY = this.INITIAL_VELOCITY;
-            this.YVELOCITY -= this.GRAVITY;
-            this.circle.position.y -= this.YVELOCITY;
-          }
+            if(this.TOUCHEND == true) {
+              if(this.fall_position < this.circle.position.y) {
+                this.reset_game();
+              } else {
+                this.YVELOCITY -= this.GRAVITY;
+                this.circle.position.y -= this.YVELOCITY;
+              }
+              
+
+            } else {
+              this.YVELOCITY = this.INITIAL_VELOCITY;
+              this.YVELOCITY -= this.GRAVITY;
+              this.circle.position.y -= this.YVELOCITY;
+            }
+            
+          // }
         }
       }
   }
@@ -297,13 +301,24 @@ export class GameScene extends Scene {
       this.container2d.position.x = this.deviceScreenSize;
       this.YVELOCITY = this.INITIAL_VELOCITY;
       this.GAME_RESET = true;
-      
+      this.TOUCHEND = false;
+      this.bounce_count = 0;
+
+      this.initial_square.position.y = this.initial_square_y;
+      this.squareFar[0].position.y = this.initial_square_distance;
+      this.squareFar[1].position.y = this.initial_square_distance + this.square_distance;
+      this.squareFar[2].position.y = this.initial_square_distance + this.square_distance * 2;
+      this.squareFar[3].position.y = this.initial_square_distance + this.square_distance * 3;
+      this.squareFar[4].position.y = this.initial_square_distance + this.square_distance * 4;
+      this.squareFar[5].position.y = this.initial_square_distance + this.square_distance * 5;
+      this.squareFar[6].position.y = this.initial_square_distance + this.square_distance * 6;
+      this.squareFar[7].position.y = this.initial_square_distance + this.square_distance * 7;
     // } else {
 
       // BALL FALLING
-      console.log('ballmove');
-      this.YVELOCITY -= this.GRAVITY;
-      this.circle.position.y -= this.YVELOCITY;
+      // console.log('ballmove');
+      // this.YVELOCITY -= this.GRAVITY;
+      // this.circle.position.y -= this.YVELOCITY;
       
     // }
 
@@ -341,9 +356,7 @@ export class GameScene extends Scene {
   ball_click(): void {
     // bounce ball when tapped
     if(this.GAME_RESET == false) {
-      if(this.TICKSTARTED == false) {
-        this.TICKSTARTED = true;
-      }
+     this.TOUCHEND = false;
     } else {
       this.GAME_RESET = false;
     }
