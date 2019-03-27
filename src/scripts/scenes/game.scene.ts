@@ -15,6 +15,8 @@ export class GameScene extends Scene {
   initialPoint: any;
   finalPoint: any;
   
+  bounce_count = 0;
+
   // Circle
   CIRCLEWIDTH = this.app.getScreenSize().w * .08;
   circleYPosition: number = this.app.getScreenSize().h - this.app.getScreenSize().h * 0.2;
@@ -45,14 +47,8 @@ export class GameScene extends Scene {
 
   // squares
   initial_square: projection.Sprite2d;
-  squareFar0: projection.Sprite2d;
-  squareFar1: projection.Sprite2d;
-  squareFar2: projection.Sprite2d;
-  squareFar3: projection.Sprite2d;
-  squareFar4: projection.Sprite2d;
-  squareFar5: projection.Sprite2d;
-  squareFar6: projection.Sprite2d;
-  squareFar7: projection.Sprite2d;
+  squareFar: projection.Sprite2d [] = [];
+
 
   init(): void {
     
@@ -77,45 +73,45 @@ export class GameScene extends Scene {
     this.initial_square.anchor.set(0.5);
     this.initial_square.position.set(0, this.initial_square_y);
 
-    this.squareFar0 = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
-    this.squareFar0.tint = 0X70DFC8;
-    this.squareFar0.anchor.set(0.5);
-    this.squareFar0.position.set(0, this.initial_square_distance);
+    this.squareFar[0] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
+    this.squareFar[0].tint = 0X70DFC8;
+    this.squareFar[0].anchor.set(0.5);
+    this.squareFar[0].position.set(0, this.initial_square_distance);
     
-    this.squareFar1 = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
-    this.squareFar1.tint = 0X70DFC8;
-    this.squareFar1.anchor.set(0.5);
-    this.squareFar1.position.set(0, (this.initial_square_distance + this.square_distance));
+    this.squareFar[1] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
+    this.squareFar[1].tint = 0X70DFC8;
+    this.squareFar[1].anchor.set(0.5);
+    this.squareFar[1].position.set(this.app.getScreenSize().w * 0.5, (this.initial_square_distance + this.square_distance));
 
-    this.squareFar2 = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
-    this.squareFar2.tint = 0X70DFC8;
-    this.squareFar2.anchor.set(0.5);
-    this.squareFar2.position.set(0, (this.initial_square_distance + this.square_distance * 2));
+    this.squareFar[2] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
+    this.squareFar[2].tint = 0X70DFC8;
+    this.squareFar[2].anchor.set(0.5);
+    this.squareFar[2].position.set(-(this.app.getScreenSize().w * 0.5), (this.initial_square_distance + this.square_distance * 2));
 
-    this.squareFar3 = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
-    this.squareFar3.tint = 0X70DFC8;
-    this.squareFar3.anchor.set(0.5);
-    this.squareFar3.position.set(0, (this.initial_square_distance + this.square_distance * 3));
+    this.squareFar[3] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
+    this.squareFar[3].tint = 0X70DFC8;
+    this.squareFar[3].anchor.set(0.5);
+    this.squareFar[3].position.set(this.app.getScreenSize().w * 0.5, (this.initial_square_distance + this.square_distance * 3));
 
-    this.squareFar4 = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
-    this.squareFar4.tint = 0X70DFC8;
-    this.squareFar4.anchor.set(0.5);
-    this.squareFar4.position.set(0, (this.initial_square_distance + this.square_distance * 4));
+    this.squareFar[4] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
+    this.squareFar[4].tint = 0X70DFC8;
+    this.squareFar[4].anchor.set(0.5);
+    this.squareFar[4].position.set(this.app.getScreenSize().w * 0.25, (this.initial_square_distance + this.square_distance * 4));
     
-    this.squareFar5 = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
-    this.squareFar5.tint = 0X70DFC8;
-    this.squareFar5.anchor.set(0.5);
-    this.squareFar5.position.set(0, (this.initial_square_distance + this.square_distance * 5));
+    this.squareFar[5] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
+    this.squareFar[5].tint = 0X70DFC8;
+    this.squareFar[5].anchor.set(0.5);
+    this.squareFar[5].position.set(0, (this.initial_square_distance + this.square_distance * 5));
 
-    this.squareFar6 = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
-    this.squareFar6.tint = 0X70DFC8;
-    this.squareFar6.anchor.set(0.5);
-    this.squareFar6.position.set(0, (this.initial_square_distance + this.square_distance * 6));
+    this.squareFar[6] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
+    this.squareFar[6].tint = 0X70DFC8;
+    this.squareFar[6].anchor.set(0.5);
+    this.squareFar[6].position.set(-(this.app.getScreenSize().w * 0.25), (this.initial_square_distance + this.square_distance * 6));
 
-    this.squareFar7 = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
-    this.squareFar7.tint = 0X70DFC8;
-    this.squareFar7.anchor.set(0.5);
-    this.squareFar7.position.set(0, (this.initial_square_distance + this.square_distance * 7));
+    this.squareFar[7] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
+    this.squareFar[7].tint = 0X70DFC8;
+    this.squareFar[7].anchor.set(0.5);
+    this.squareFar[7].position.set(0, (this.initial_square_distance + this.square_distance * 7));
 
     this.squareY = new PIXI.Sprite(PIXI.Texture.WHITE);
     this.squareY.anchor.set(0.5);
@@ -187,21 +183,21 @@ export class GameScene extends Scene {
 
     });
     this.circle_bg.on('touchend', () => {
-      this.TOUCHEND = true;
+      // this.TOUCHEND = true;
     });
 
 
     this.YVELOCITY = this.INITIAL_VELOCITY;
 
     this.container2d.addChild(this.initial_square);
-    this.container2d.addChild(this.squareFar0);
-    this.container2d.addChild(this.squareFar1);
-    this.container2d.addChild(this.squareFar2);
-    this.container2d.addChild(this.squareFar3);
-    this.container2d.addChild(this.squareFar4);
-    this.container2d.addChild(this.squareFar5);
-    this.container2d.addChild(this.squareFar6);
-    this.container2d.addChild(this.squareFar7);
+    this.container2d.addChild(this.squareFar[0]);
+    this.container2d.addChild(this.squareFar[1]);
+    this.container2d.addChild(this.squareFar[2]);
+    this.container2d.addChild(this.squareFar[3]);
+    this.container2d.addChild(this.squareFar[4]);
+    this.container2d.addChild(this.squareFar[5]);
+    this.container2d.addChild(this.squareFar[6]);
+    this.container2d.addChild(this.squareFar[7]);
 
   }
 
@@ -212,31 +208,31 @@ export class GameScene extends Scene {
 
       if(this.GAME_RESET != true) {       
 
-        if(this.squareFar0.position.y <= -(this.bigWhiteTexture.height * 0.5)) {
-          this.squareFar0.position.y = this.squareFar0.position.y + this.square_distance; }
-        // if(this.squareFar1.position.y <= -(this.bigWhiteTexture.height * 0.5)) {
-        //   this.squareFar1.position.y = this.squareFar0.position.y + this.square_distance; }
-        // if(this.squareFar2.position.y <= -(this.bigWhiteTexture.height * 0.5)) {
-        //   this.squareFar2.position.y = this.squareFar1.position.y + this.square_distance; }
-        // if(this.squareFar3.position.y <= -(this.bigWhiteTexture.height * 0.5)) {
-        //   this.squareFar3.position.y = this.squareFar2.position.y + this.square_distance; }
-        // if(this.squareFar4.position.y <= -(this.bigWhiteTexture.height * 0.5)) {
-        //   this.squareFar4.position.y = this.squareFar3.position.y + this.square_distance; }
-        // if(this.squareFar5.position.y <= -(this.bigWhiteTexture.height * 0.5)) {
-        //   this.squareFar5.position.y = this.squareFar4.position.y + this.square_distance; }
-        // if(this.squareFar6.position.y <= -(this.bigWhiteTexture.height * 0.5)) {
-        //   this.squareFar6.position.y = this.squareFar5.position.y + this.square_distance; }
-        // if(this.squareFar7.position.y <= -(this.bigWhiteTexture.height * 0.5)) {
-        //   this.squareFar7.position.y = this.squareFar6.position.y + this.square_distance; }
+        if(this.squareFar[0].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
+          this.squareFar[0].position.y = this.squareFar[7].position.y + this.square_distance; }
+        if(this.squareFar[1].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
+          this.squareFar[1].position.y = this.squareFar[0].position.y + this.square_distance; }
+        if(this.squareFar[2].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
+          this.squareFar[2].position.y = this.squareFar[1].position.y + this.square_distance; }
+        if(this.squareFar[3].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
+          this.squareFar[3].position.y = this.squareFar[2].position.y + this.square_distance; }
+        if(this.squareFar[4].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
+          this.squareFar[4].position.y = this.squareFar[3].position.y + this.square_distance; }
+        if(this.squareFar[5].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
+          this.squareFar[5].position.y = this.squareFar[4].position.y + this.square_distance; }
+        if(this.squareFar[6].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
+          this.squareFar[6].position.y = this.squareFar[5].position.y + this.square_distance; }
+        if(this.squareFar[7].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
+          this.squareFar[7].position.y = this.squareFar[6].position.y + this.square_distance; }
 
-        this.squareFar0.position.y -= this.INITIAL_VELOCITY;
-        this.squareFar1.position.y -= this.INITIAL_VELOCITY;
-        this.squareFar2.position.y -= this.INITIAL_VELOCITY;
-        this.squareFar3.position.y -= this.INITIAL_VELOCITY;
-        this.squareFar4.position.y -= this.INITIAL_VELOCITY;
-        this.squareFar5.position.y -= this.INITIAL_VELOCITY;
-        this.squareFar6.position.y -= this.INITIAL_VELOCITY;
-        this.squareFar7.position.y -= this.INITIAL_VELOCITY;
+        this.squareFar[0].position.y -= this.INITIAL_VELOCITY;
+        this.squareFar[1].position.y -= this.INITIAL_VELOCITY;
+        this.squareFar[2].position.y -= this.INITIAL_VELOCITY;
+        this.squareFar[3].position.y -= this.INITIAL_VELOCITY;
+        this.squareFar[4].position.y -= this.INITIAL_VELOCITY;
+        this.squareFar[5].position.y -= this.INITIAL_VELOCITY;
+        this.squareFar[6].position.y -= this.INITIAL_VELOCITY;
+        this.squareFar[7].position.y -= this.INITIAL_VELOCITY;
         this.initial_square.position.y -= this.INITIAL_VELOCITY;
         
         if(this.circle.position.y <= 0 ) {
@@ -250,37 +246,35 @@ export class GameScene extends Scene {
           // IF BALL FAILED TO BOUNCE
           if(this.TOUCHEND == true) {
 
-            // PLAYER STOP ON TOUCHING
-            if(this.fall_position < this.circle.position.y) {
-
-              // IF BALL OUT OF SCREEN, RESET GAME
-              console.log('reset game')
-              // this.circle.position.y = 0;
-              this.circle.position.y = 0; 
-              this.circle.position.x = 0;
-              this.container2d.position.x = this.deviceScreenSize;
-              this.YVELOCITY = this.INITIAL_VELOCITY;
-              this.GAME_RESET = true;
-            } else {
-
-              // BALL FALLING
-              console.log('ballmove');
-              this.YVELOCITY -= this.GRAVITY;
-              this.circle.position.y -= this.YVELOCITY;
-              
-            }
+            this.reset_game();
           } else {
-            console.log('stilltouched');
-            // SCREEN STILL ON TOUCH
+            // console.log('stilltouched');
+            // // SCREEN STILL ON TOUCH
 
 
-            console.log('circle x position', this.circle.position.x);
-            // console.log('square1', this.squareFar1.position.x);
-            console.log('square width', this.squareFar0.width);
-            console.log('square0', this.squareFar0.position.x);
-            console.log('square_local_1', this.squareFar0.transform.worldTransform.tx);
+            // console.log('circle x position', this.circle.position.x);
+            // // console.log('square1', this.squareFar[1].position.x);
+            // console.log('square width', this.squareFar[0].width);
+            // console.log('square0', this.squareFar[0].position.x); //center of square
+            // console.log('square_local_1', this.squareFar[0].transform.worldTransform.tx);
+
+            console.log(this.squareFar[this.bounce_count].position.x);
+            console.log(this.circle.position.x);  
 
 
+            if(this.isInSquare(this.squareFar[this.bounce_count],this.circle.position.x)) {
+              
+              console.log("in square");
+            } else {
+              this.TOUCHEND = true;
+              this.reset_game();
+              console.log("outside of square");
+            }
+
+            this.bounce_count += 1;
+            if (this.bounce_count > this.squareFar.length - 1) {
+              this.bounce_count = 0;
+            }
 
             this.YVELOCITY = this.INITIAL_VELOCITY;
             this.YVELOCITY -= this.GRAVITY;
@@ -288,6 +282,57 @@ export class GameScene extends Scene {
           }
         }
       }
+  }
+
+  reset_game() {
+
+    // PLAYER STOP ON TOUCHING
+    // if(this.fall_position < this.circle.position.y) {
+
+        // IF BALL OUT OF SCREEN, RESET GAME
+      console.log('reset game')
+      // this.circle.position.y = 0;
+      this.circle.position.y = 0; 
+      this.circle.position.x = 0;
+      this.container2d.position.x = this.deviceScreenSize;
+      this.YVELOCITY = this.INITIAL_VELOCITY;
+      this.GAME_RESET = true;
+      
+    // } else {
+
+      // BALL FALLING
+      console.log('ballmove');
+      this.YVELOCITY -= this.GRAVITY;
+      this.circle.position.y -= this.YVELOCITY;
+      
+    // }
+
+  }
+
+  isInSquare(square:projection.Sprite2d, ball_bounce: number){
+    // if ball bounce at the center and square is in the center
+    let square_position = square.position.x;
+    let ball_position = ball_bounce;
+
+
+    // for center square || square0
+    // let square_start = square.position.x - (square.width/4);
+    // let square_end = square.position.x + (square.width/4);
+
+    // for right square || square1
+    let square_start = (square.position.x/2.1) - (square.width/4);
+    let square_end = (square.position.x/2.1) + (square.width/4);
+    
+    // width of square
+    // console.log(this.squareFar[0].width);
+    // console.log("square position", this.squareFar[0].position.x)
+    // console.log("square start coordinate", (this.squareFar[0].width/2) - this.squareFar[0].position.x )  
+    // if ball bounced in center of square
+    if(ball_position > square_start && ball_position < square_end){
+      return true;
+    }else{
+      return false;
+    }
   }
 
   remove(): void {
