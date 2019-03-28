@@ -69,7 +69,7 @@ export class GameScene extends Scene {
   ///// BACKGROUND IMAGE
 
     
-    this.bg_img = new SpriteActor('splash-bg', this.app, 'common', 'startscreen_bg.png');
+    this.bg_img = new SpriteActor('splash-bg', this.app, 'lvl1', 'lv1_mountainbg_mountains.png');
     this.bg_img.setScaleUpToScreenPercWidth(1.2);
 
     const bg_initial_x = -((this.bg_img.getSprite().width - this.app.getScreenSize().w) / 2);
@@ -89,57 +89,87 @@ export class GameScene extends Scene {
     this.initial_square.tint = 0xF37DAE;
     this.initial_square.anchor.set(0.5);
     this.initial_square.position.set(0, this.initial_square_y);
-
-    const square_coin = new SpriteActor('ball', this.app, 'common', 'coin.png');
-    square_coin.setAnchor(0.5, 0);
-    square_coin.setScaleUpToScreenPercWidth(0.15);
-
-    console.log(square_coin);
-
-    // const square_coin_container = new PIXI.projection.Sprite2d(square_coin.getDisplayObject()));
-    // square_coin_container.anchor.set(0.5, 1.0);
     
 
     this.squareFar[0] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[0].tint = 0xF37DAE;
     this.squareFar[0].anchor.set(0.5);
     this.squareFar[0].position.set(0, this.initial_square_distance);
-    this.squareFar[0].addChild(square_coin.getSprite());
+    const coin0 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
+    coin0.proj.affine = PIXI.projection.AFFINE.AXIS_X;
+    coin0.scale.set(this.squareFar[0].width * 0.01);
+    coin0.anchor.set(0.5, 1);
+    this.squareFar[0].addChild(coin0);
     
     this.squareFar[1] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[1].tint = 0xF37DAE;
     this.squareFar[1].anchor.set(0.5);
     this.squareFar[1].position.set(this.app.getScreenSize().w * 0.5, (this.initial_square_distance + this.square_distance));
+    const coin1 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
+    coin1.proj.affine = PIXI.projection.AFFINE.AXIS_X;
+    coin1.scale.set(this.squareFar[0].width * 0.01);
+    coin1.anchor.set(0.5, 1);
+    this.squareFar[1].addChild(coin1);
 
     this.squareFar[2] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[2].tint = 0xF37DAE;
     this.squareFar[2].anchor.set(0.5);
     this.squareFar[2].position.set(-(this.app.getScreenSize().w * 0.5), (this.initial_square_distance + this.square_distance * 2));
+    const coin2 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
+    coin2.proj.affine = PIXI.projection.AFFINE.AXIS_X;
+    coin2.scale.set(this.squareFar[0].width * 0.01);
+    coin2.anchor.set(0.5, 1);
+    this.squareFar[2].addChild(coin2);
 
     this.squareFar[3] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[3].tint = 0xF37DAE;
     this.squareFar[3].anchor.set(0.5);
     this.squareFar[3].position.set(this.app.getScreenSize().w * 0.5, (this.initial_square_distance + this.square_distance * 3));
+    const coin3 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
+    coin3.proj.affine = PIXI.projection.AFFINE.AXIS_X;
+    coin3.scale.set(this.squareFar[0].width * 0.01);
+    coin3.anchor.set(0.5, 1);
+    this.squareFar[3].addChild(coin3);
 
     this.squareFar[4] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[4].tint = 0xF37DAE;
     this.squareFar[4].anchor.set(0.5);
     this.squareFar[4].position.set(this.app.getScreenSize().w * 0.25, (this.initial_square_distance + this.square_distance * 4));
-    
+    const coin4 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
+    coin4.proj.affine = PIXI.projection.AFFINE.AXIS_X;
+    coin4.scale.set(this.squareFar[0].width * 0.01);
+    coin4.anchor.set(0.5, 1);
+    this.squareFar[4].addChild(coin4);
+
     this.squareFar[5] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[5].tint = 0xF37DAE;
     this.squareFar[5].anchor.set(0.5);
     this.squareFar[5].position.set(0, (this.initial_square_distance + this.square_distance * 5));
+    const coin5 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
+    coin5.proj.affine = PIXI.projection.AFFINE.AXIS_X;
+    coin5.scale.set(this.squareFar[0].width * 0.01);
+    coin5.anchor.set(0.5, 1);
+    this.squareFar[5].addChild(coin5);
 
     this.squareFar[6] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[6].tint = 0xF37DAE;
     this.squareFar[6].anchor.set(0.5);
     this.squareFar[6].position.set(-(this.app.getScreenSize().w * 0.25), (this.initial_square_distance + this.square_distance * 6));
+    const coin6 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
+    coin6.proj.affine = PIXI.projection.AFFINE.AXIS_X;
+    coin6.scale.set(this.squareFar[0].width * 0.01);
+    coin6.anchor.set(0.5, 1);
+    this.squareFar[6].addChild(coin6);
 
     this.squareFar[7] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[7].tint = 0xF37DAE;
     this.squareFar[7].anchor.set(0.5);
     this.squareFar[7].position.set(0, (this.initial_square_distance + this.square_distance * 7));
+    const coin7 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
+    coin7.proj.affine = PIXI.projection.AFFINE.AXIS_X;
+    coin7.scale.set(this.squareFar[0].width * 0.01);
+    coin7.anchor.set(0.5, 1);
+    this.squareFar[7].addChild(coin7);
 
     this.squareY = new PIXI.Sprite(PIXI.Texture.WHITE);
     this.squareY.anchor.set(0.5);
@@ -160,7 +190,7 @@ export class GameScene extends Scene {
 
   // Gradient Overlay --- > from top screen to make fading squares effect
     this.gradient_bg = new SpriteActor('splash-bg', this.app, 'lvl1', 'lv1_mountainbg_gradientoverlay.png');
-    this.gradient_bg.getSprite().alpha = 0.9;
+    this.gradient_bg.getSprite().alpha = 0;
     this.gradient_bg.setScaleUpToScreenPercWidth(1);
     this.container.addChild(this.gradient_bg.getSprite());
     
