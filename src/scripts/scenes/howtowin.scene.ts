@@ -14,15 +14,6 @@ export class HowtowinScene extends Scene  {
   copyText1Style: PIXI.TextStyle;
   copyText2: PIXI.Text;
   copyText2Style: PIXI.TextStyle;
-  copyText3: PIXI.Text;
-  copyText3Style: PIXI.TextStyle;
-  copyText4: PIXI.Text;
-  copyText4Style: PIXI.TextStyle;
-  pointsCorText: PIXI.Text;
-  pointsCorStyle: PIXI.TextStyle;
-  pointsTotText: PIXI.Text;
-  pointsTotStyle: PIXI.TextStyle; 
-
 
   // button
   closeBtn: SpriteActor;
@@ -59,7 +50,7 @@ export class HowtowinScene extends Scene  {
         fontSize: `${modal.height * .05}px`,
         fontStyle: 'normal',
         fontWeight: 'bold',
-        fill: ['#f37cae'],
+        fill: ['#fe68a7'],
         wordWrap: true,
         wordWrapWidth: modal.width
     });
@@ -75,7 +66,7 @@ export class HowtowinScene extends Scene  {
         fontStyle: 'normal',
         fontWeight: 'normal',
         align: 'center',
-        fill: ['#5aa3c7'],
+        fill: ['#0285c6'],
         wordWrap: true,
         wordWrapWidth: modal.width * .8
     });
@@ -94,9 +85,14 @@ export class HowtowinScene extends Scene  {
 
     this.closeBtn = new SpriteActor('close-btn', this.app, 'common', 'close_btn.png');
     this.closeBtn.setAnchor(0, 0);
-    console.log(modal.position.y, this.closeBtn.getSprite().height);
-    this.closeBtn.setPosition(modal.position.x + (modal.width - (this.closeBtn.getSprite().width * .8)), modal.position.y - (this.closeBtn.getSprite().height *.7));
+    console.log(modal.position.y, modal.height, this.closeBtn.getSprite().height );
+    this.closeBtn.setPosition(modal.position.x + (modal.width - this.closeBtn.getSprite().width), modal.position.y - (this.closeBtn.getSprite().height * .7));
     this.closeBtn.setScaleUpToScreenPercWidth(.099);
+    this.closeBtn.getSprite().interactive = true;
+    this.closeBtn.getSprite().on('pointerup', () => { 
+      console.log('back howtowin scene');
+      setTimeout(() => { this.app.goToScene(0); }, 200);
+    });
     this.addChild(this.closeBtn);
 
   }  

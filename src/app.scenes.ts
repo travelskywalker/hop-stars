@@ -6,6 +6,7 @@ import { SplashScene } from '@src/scripts/scenes/splash.scene';
 import { InstructionScene } from '@src/scripts/scenes/instruction.scene';
 import { GameScene } from '@src/scripts/scenes/game.scene';
 import { HowtowinScene } from '@src/scripts/scenes/howtowin.scene';
+import { GameOverScene } from '@src/scripts/scenes/gameover.scene';
 
 export function scenesProvider(_app: App, _scenes: Scene[]): void {
 
@@ -14,4 +15,5 @@ export function scenesProvider(_app: App, _scenes: Scene[]): void {
     _scenes.push(new InstructionScene(_app));
     _scenes.push(new GameScene(_app));
     _scenes.push(new HowtowinScene(_app));
+    _scenes.push(new GameOverScene(_app));
 }
