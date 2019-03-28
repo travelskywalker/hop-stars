@@ -83,6 +83,7 @@ export class SplashScene extends Scene {
     this.howtowin_btn.getSprite().interactive = true;
     this.howtowin_btn.getSprite().on('pointerup', () => { 
       console.log('show howtowin scene');
+      this.app.goToScene(3);
     });
     this.addChild(this.howtowin_btn);
   }
