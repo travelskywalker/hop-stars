@@ -26,7 +26,7 @@ export class GameScene extends Scene {
 
   // bounce speed
   YVELOCITY: number;
-  INITIAL_VELOCITY = this.app.getScreenSize().h * 0.02;
+  INITIAL_VELOCITY: number = this.app.getScreenSize().h * 0.02;
   GRAVITY: number = this.INITIAL_VELOCITY * .05;
 
   // squares position
@@ -55,17 +55,23 @@ export class GameScene extends Scene {
   scoreText: Text;
   score: number = 0;
 
+  // stage
+  stageText: Text;
+  stage: number = 1;
+  stageProgress: number = 1;
+  stageLimit: number = 5;
+
   init(): void {
     
     this.bigWhiteTexture = new PIXI.Texture(PIXI.Texture.WHITE.baseTexture);
     this.bigWhiteTexture.orig.width = this.CIRCLEWIDTH * 6;
     this.bigWhiteTexture.orig.height = this.CIRCLEWIDTH * 4;
     this.last_square_position = this.initial_square_distance + (this.initial_square_distance - this.initial_square_y) * 8;
+  
   }
 
   start(): void {
 
-    
     this.bg_img = new SpriteActor('splash-bg', this.app, 'common', 'startscreen_bg.png');
     this.bg_img.setAnchor(0, 0);
     this.bg_img.setPosition(0,0);
@@ -79,10 +85,17 @@ export class GameScene extends Scene {
     this.addChild(this.bg_img);
     this.container.addChild(this.bg);
 
-     // dummy score
-     this.scoreText = new Text(`${this.score}`,{fontFamily : 'Arial', fontSize: 100, fill : 0x000000, align : 'center'});
-     this.container.addChild(this.scoreText);
-    
+    // dummy score
+    this.scoreText = new Text(`${this.score}`,{fontFamily : 'Arial', fontSize: 100, fill : 0x000000, align : 'center'});
+    this.container.addChild(this.scoreText);
+
+   // stage
+   this.stageText = new Text('',{fontFamily : 'Arial', fontSize: 100, fill : 0x000000, align : 'center'});
+   this.scoreText.addChild(this.stageText);
+   this.stageText.y = 100;
+
+   this.renderStage(1);
+     
   /////////// SQUARES
     
     this.initial_square = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
@@ -218,6 +231,34 @@ export class GameScene extends Scene {
 
   }
 
+  renderStage(number: number){
+    console.log("render stage ", number);
+
+    // increase speed
+    // change background
+    // update stage Text
+    this.stage = number;
+    this.stageText.text = `Stage ${number}`;
+
+    let velocity = 0.2 + parseInt(`0.${number}`);
+    let gravity = parseInt(`${number}.05`);
+
+    // console.log("velocity" , velocity, "gravity", gravity);
+
+    // this.INITIAL_VELOCITY = this.app.getScreenSize().h * velocity;
+    // this.GRAVITY = this.INITIAL_VELOCITY * gravity;
+
+    // this.INITIAL_VELOCITY = this.INITIAL_VELOCITY / number;
+    // this.GRAVITY = this.GRAVITY += (number-1);
+    // console.log()
+
+    // velocity 57.6
+    // gravity 2.8800000000000003
+
+    console.log("initial velocity", this.INITIAL_VELOCITY, "gravity", this.GRAVITY);
+    // this.GRAVITY = 3.90;
+  }
+
   update(_delta: number): void {
     
       // Project camera angle
@@ -279,6 +320,18 @@ export class GameScene extends Scene {
 
               if(this.isCoined(square, bouncePosition) && this.TOUCHEND == false){
                 this.scoreText.text = `${this.score+=1}`;
+
+                // change stage
+                // point per stage
+
+                if(this.stageProgress == this.stageLimit){
+                  this.stage+=1;
+                  this.stageProgress = 1;
+                  this.renderStage(this.stage);
+                }else{
+                  console.log("Progress", this.stageProgress)
+                  this.stageProgress+=1;
+                }
               }
               
               // console.log("in square");
@@ -316,6 +369,13 @@ export class GameScene extends Scene {
       }
   }
 }
+
+  resetStage(){
+    this.stage = 1;
+    this.stageProgress = 1;
+
+    this.stageText.text = `Stage ${this.stage}`;
+  }
 
   isCoined(square: projection.Sprite2d, bouncePosition: number){
     // square coordinates
@@ -355,6 +415,8 @@ export class GameScene extends Scene {
       this.TOUCHEND = false;
       this.bounce_count = 0;
       this.scoreText.text = `${this.score = 0}`;
+
+      this.resetStage();
 
       this.initial_square.position.y = this.initial_square_y;
       this.squareFar[0].position.y = this.initial_square_distance;
