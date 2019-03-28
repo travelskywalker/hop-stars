@@ -1,5 +1,6 @@
 import * as PIXI from 'pixi.js';
 import { App } from '@src/app';
+import * as WebFont from 'webfontloader';
 
 export function resourcesProvider(_app: App, loaded: (resources: any) => void, progress?: (percent: number) => void): void {
 
@@ -17,9 +18,23 @@ export function resourcesProvider(_app: App, loaded: (resources: any) => void, p
 
   // start loading resources
   loader.load((_loader: any, resources: any) => {
-
-    // provide loaded textures
-    loaded(resources);
+    WebFont.load({
+      custom: {
+        families: ['Chennai', 'Chennai-Bold'],
+      },
+      fontactive: (name, fvd) => {
+        console.log(`Loading font files ${name}:${fvd}`);
+      },
+      active: () => {
+        console.log('All font files loaded.');
+        // provide loaded textures
+        loaded(resources);
+      },
+      inactive: () => {
+        console.error('Error loading fonts');
+        // REPORT ERROR here
+      },
+    });
   });
 
   loader.on('progress', (_loader, res) => {

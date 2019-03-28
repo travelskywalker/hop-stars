@@ -17,10 +17,10 @@ export class AppState extends Subject<IAppState> {
   }
 
   public toggle_volume() {
-
     this.state.volume += 1;
-    if (this.state.volume === 4)
+    if (this.state.volume === 2) {
       this.state.volume = 0;
+    }
     this.next(this.state);
   }
 

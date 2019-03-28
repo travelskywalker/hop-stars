@@ -29,7 +29,7 @@ export class SpriteAnimatedActor extends Actor {
   }
 
   public getAnimatedSprite(): PIXI.extras.AnimatedSprite {
-
+   
     return this.animatedSprite;
   }
 

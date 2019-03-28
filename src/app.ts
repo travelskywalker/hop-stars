@@ -55,7 +55,7 @@ export class App {
     // loader slider
     this._loaderText = new PIXI.Text(
       'LOADING... 0%',
-      { fontFamily: 'Arial', fontSize: 14 * window.devicePixelRatio, fill: 0X942363, align: 'center' },
+      { fontFamily: 'Chennai', fontSize: 14 * window.devicePixelRatio, fill: 0X942363, align: 'center' },
     );
     this._loaderText.scale = new PIXI.Point(1, 1);
     perc = (window.innerWidth * window.devicePixelRatio) * 0.2;
