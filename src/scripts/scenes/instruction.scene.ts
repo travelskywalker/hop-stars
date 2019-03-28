@@ -15,7 +15,7 @@ export class InstructionScene extends Scene {
 
   start(): void {
     // initialize and set bg
-    this.bg1 = new SpriteActor('splash-bg', this.app, 'common', 'startscreen_bg.png');
+    this.bg1 = new SpriteActor('splash-bg', this.app, 'common', 'startscreen_bg.jpg');
     this.bg1.setAnchor(0, 0);
     this.bg1.setPosition(0,0);
     this.bg1.setScaleUpToScreenPercWidth(1);

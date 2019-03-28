@@ -69,7 +69,7 @@ export class GameScene extends Scene {
   ///// BACKGROUND IMAGE
 
     
-    this.bg_img = new SpriteActor('splash-bg', this.app, 'lvl1', 'lv1_mountainbg_mountains.png');
+    this.bg_img = new SpriteActor('splash-bg', this.app, 'lvl1', 'lv1_gamearea_bgsample.png');
     this.bg_img.setScaleUpToScreenPercWidth(1.2);
 
     const bg_initial_x = -((this.bg_img.getSprite().width - this.app.getScreenSize().w) / 2);
@@ -190,7 +190,7 @@ export class GameScene extends Scene {
 
   // Gradient Overlay --- > from top screen to make fading squares effect
     this.gradient_bg = new SpriteActor('splash-bg', this.app, 'lvl1', 'lv1_mountainbg_gradientoverlay.png');
-    this.gradient_bg.getSprite().alpha = 0;
+    this.gradient_bg.getSprite().alpha = 1;
     this.gradient_bg.setScaleUpToScreenPercWidth(1);
     this.container.addChild(this.gradient_bg.getSprite());
     
