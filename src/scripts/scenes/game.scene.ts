@@ -8,6 +8,7 @@ export class GameScene extends Scene {
 
   // objects
   bg: Graphics;
+  bg_initial_x: number;
   bg_img: SpriteActor;
   gradient_bg: SpriteActor;
   circle: Graphics;
@@ -79,9 +80,9 @@ export class GameScene extends Scene {
     this.bg_img = new SpriteActor('splash-bg', this.app, 'lvl1', 'lv1_gamearea_bgsample.png');
     this.bg_img.setScaleUpToScreenPercWidth(1.2);
 
-    const bg_initial_x = -((this.bg_img.getSprite().width - this.app.getScreenSize().w) / 2);
+    this.bg_initial_x = -((this.bg_img.getSprite().width - this.app.getScreenSize().w) / 2);
 
-    this.bg_img.getSprite().position.x = bg_initial_x;
+    this.bg_img.getSprite().position.x = this.bg_initial_x;
     this.bg = new Graphics();
     this.bg.beginFill(0xF2F2F2, 0);
     this.bg.drawRect(0, 0, this.app.getScreenSize().w, this.app.getScreenSize().h);
@@ -485,6 +486,7 @@ export class GameScene extends Scene {
       this.TOUCHEND = false;
       this.bounce_count = 0;
       this.scoreText.text = `${this.score = 0}`;
+      this.bg_img.getSprite().position.x = this.bg_initial_x;
 
       this.resetStage();
 
