@@ -2,6 +2,7 @@ import { Scene } from '@src/core/scene';
 import { IAppState } from '@src/app.state';
 import { SpriteActor } from '@src/core/sprite.actor';
 import { SpriteAnimatedActor } from '@src/core/sprite.animated.actor';
+import { Graphics } from 'pixi.js';
 
 export class GameOverScene extends Scene {
 
@@ -10,11 +11,26 @@ export class GameOverScene extends Scene {
 
   // logo
   gameOverLogo: SpriteActor;
+
+  // coin
+  coin: SpriteActor;
  
   // buttons
   play_again_btn: SpriteActor;
   sound_btn: SpriteAnimatedActor;
   leaderboard_btn: SpriteActor;
+
+  // Texts
+  copyText1: PIXI.Text;
+  copyText1Style: PIXI.TextStyle;
+  copyText2: PIXI.Text;
+  copyText2Style: PIXI.TextStyle;
+
+  // dummy score data
+  data = {
+    best_score: 240,
+    current_score: 0
+  };
 
   init(): void {
 
@@ -35,7 +51,55 @@ export class GameOverScene extends Scene {
     this.gameOverLogo.setScaleUpToScreenPercWidth(0.675);
     this.addChild(this.gameOverLogo);
 
+    
+    // TEXTS 
+    // initialize and set text copy 1
+    this.copyText1Style = new PIXI.TextStyle({
+      fontFamily: 'Chennai-Bold',
+      fontSize: `${this.gameOverLogo.getSprite().height * .105}px`,
+      fontStyle: 'normal',
+      fontWeight: 'bold',
+      fill: ['#ffffff'],
+      wordWrap: false
+    });
+   
+    this.copyText1 = new PIXI.Text(`BEST SCORE: ${this.data.best_score}`, this.copyText1Style);
+    this.copyText1.anchor.x = .5;
+    this.copyText1.anchor.y = .5;
+    this.copyText1.position.x = this.app.getScreenSize().w * 0.5;
+    this.copyText1.position.y = this.gameOverLogo.getSprite().position.y + ((this.gameOverLogo.getSprite().height / 2) + this.copyText1.height);
+    this.container.addChild(this.copyText1);
 
+    // SCORE
+    const scoreText = new PIXI.Text(
+      `${this.data.current_score}`,
+      {
+        fontFamily: 'Chennai-Bold',
+        fontSize: `${this.gameOverLogo.getSprite().height * .5}px`,
+        fill : 0Xffffff, 
+        align : 'right',
+      });
+    scoreText.anchor.set(0 , 0);
+
+    // COIN
+    const score_coin = new SpriteActor('ball', this.app, 'common', 'coin.png');
+    score_coin.setAnchor(0, 0);
+    score_coin.getSprite().position.x = scoreText.width + score_coin.getSprite().width * 0.4;
+    score_coin.getSprite().position.y = scoreText.position.y + scoreText.height / 3;
+    score_coin.setScaleUpToScreenPercWidth(0.115);
+
+    const score_container = new Graphics();
+    score_container.beginFill(0xF2F2F2, 0);
+    score_container.drawRect(0, 0, scoreText.width + score_coin.getSprite().width * 1.2, this.app.getScreenSize().h * 0.175);
+    score_container.endFill();
+    score_container.position.x = this.app.getScreenSize().w / 2 - score_container.width / 2;
+    score_container.position.y = this.copyText1.position.y + this.copyText1.height;
+    this.container.addChild(score_container);
+
+    score_container.addChild(scoreText);
+    score_container.addChild(score_coin.getSprite());
+
+    // sound button
     this.sound_btn = new SpriteAnimatedActor('volume', this.app);
     this.sound_btn.addAnimation('common', 'volume');
     this.sound_btn.getAnimatedSprite().gotoAndStop(this.app.getState().state.volume);

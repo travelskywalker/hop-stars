@@ -19,6 +19,11 @@ export class InstructionScene extends Scene {
     this.bg.setAnchor(0, 0);
     this.bg.setPosition(0,0);
     this.bg.setScaleUpToScreenPercWidth(1);
+    this.bg.getSprite().interactive = true;
+    this.bg.getSprite().on('pointerup', () => { 
+      console.log('go to game scene ');
+      setTimeout(() => { this.app.goToScene(2); }, 200);
+    });
     this.addChild(this.bg);
 
     this.swipe = new SpriteActor('int-bg', this.app, 'common', 'Instruction-group.png');
