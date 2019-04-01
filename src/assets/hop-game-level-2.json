@@ -1,6 +1,6 @@
 {"frames": {
 
-"lv2_skybg_gradient.png":
+"lv2_skybg_gradientoverlay.png":
 {
 	"frame": {"x":0,"y":0,"w":360,"h":640},
 	"rotated": false,
@@ -8,17 +8,9 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":360,"h":640},
 	"sourceSize": {"w":360,"h":640}
 },
-"lv2_skybg_gradientoverlay.png":
+"lv2_skybg_mountains.jpg":
 {
 	"frame": {"x":0,"y":640,"w":360,"h":640},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":360,"h":640},
-	"sourceSize": {"w":360,"h":640}
-},
-"lv2_skybg_mountains.png":
-{
-	"frame": {"x":0,"y":1280,"w":360,"h":640},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":360,"h":640},
@@ -29,8 +21,8 @@
 	"version": "1.0",
 	"image": "hop-game-level-2.png",
 	"format": "RGBA8888",
-	"size": {"w":360,"h":1920},
+	"size": {"w":360,"h":1280},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:3b560a74232cafab057d570858813ba9:543826535ee180b8e537e78513b4b072:86ce4c79a5c3cdf6cb117f99f40b0f38$"
+	"smartupdate": "$TexturePacker:SmartUpdate:502b4153b233076a7ca75bd9314e49f3:fe06bc1c527e8f77380d65bbfc7a5a9a:86ce4c79a5c3cdf6cb117f99f40b0f38$"
 }
 }
