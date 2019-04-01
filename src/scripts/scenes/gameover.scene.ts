@@ -213,6 +213,7 @@ export class GameOverScene extends Scene {
     this.bg = new SpriteActor('gameover-bg', this.app, 'common', 'GAMEOVER_layover.png');
     this.bg.setAnchor(0, 0);
     this.bg.setPosition(0,0);
+    this.bg.setScaleUpToScreenPercWidth(1);
     this.bg.setScaleUpToScreenPercHeight(1);
     this.addChild(this.bg);
 

@@ -156,6 +156,7 @@ export class LeaderboardModal extends PIXI.Container {
     this.bg_image = new SpriteActor('lboared-bg', data.app, 'common', 'leaderbord_bg.png');
     this.bg_image.setAnchor(0, 0);
     this.bg_image.setPosition(0,0);
+    this.bg_image.setScaleUpToScreenPercWidth(1);
     this.bg_image.setScaleUpToScreenPercHeight(1);
     this.addChild(this.bg_image.getSprite());
     
