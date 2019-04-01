@@ -273,7 +273,7 @@ export class GameScene extends Scene {
    //// TOUCH MOVE
     this.circle_bg.on('touchmove', (interactionData: PIXI.interaction.InteractionEvent) => {
       const point = interactionData.data.getLocalPosition(this.circle);
-
+console.log('touch move');
       if(this.GAME_RESET !== true) {
         this.circle.position.x = Math.min(this.app.getScreenSize().w * 0.5 , this.circle.position.x + (point.x - this.initialPoint.x));
         this.circle.position.x = Math.max(this.circle.position.x , -(this.deviceScreenSize));
@@ -303,16 +303,15 @@ export class GameScene extends Scene {
   }
 
   renderStage(number: number){
-    console.log("render stage ", number);
 
     // increase speed
     // change background
     // update stage Text
-    this.stage = number;
-    this.stageText.text = `Stage ${number}`;
+    // this.stage = number;
+    // this.stageText.text = `Stage ${number}`;
 
-    let velocity = 0.2 + parseInt(`0.${number}`);
-    let gravity = parseInt(`${number}.05`);
+    // let velocity = 0.2 + parseInt(`0.${number}`);
+    // let gravity = parseInt(`${number}.05`);
 
     // console.log("velocity" , velocity, "gravity", gravity);
 
@@ -326,7 +325,7 @@ export class GameScene extends Scene {
     // velocity 57.6
     // gravity 2.8800000000000003
 
-    console.log("initial velocity", this.INITIAL_VELOCITY, "gravity", this.GRAVITY);
+    // console.log("initial velocity", this.INITIAL_VELOCITY, "gravity", this.GRAVITY);
     // this.GRAVITY = 3.90;
   }
 
@@ -364,27 +363,20 @@ export class GameScene extends Scene {
         this.squareFar[7].position.y -= this.INITIAL_VELOCITY;
         this.initial_square.position.y -= this.INITIAL_VELOCITY;
         
-        if(this.circle.position.y <= 0 && this.TOUCHEND == false) {
+        if (this.circle.position.y <= 0 && this.TOUCHEND == false) {
           console.log('ball bouncing');
           // IF BALL IS BOUNCING
+
+          if(this.YVELOCITY > 0) {
+            console.log('ball up');
+          }
           this.YVELOCITY -= this.GRAVITY;
           this.circle.position.y -= this.YVELOCITY;
           
-        } else {
-
           
-          // IF BALL FAILED TO BOUNCE
-          // if(this.TOUCHEND == true) {
-          //   console.log('ball failed to bounce');
-          //   this.reset_game();
-          // } else {
-
-            console.log('stilltouched');
-            // SCREEN STILL ON TOUCH
+        } else {
          
             // // SCREEN STILL ON TOUCH
-
-            console.log('stilltouched');
             let square = this.squareFar[this.bounce_count];
             let bouncePosition = this.circle.position.x;
             if(this.isInSquare(square,bouncePosition)) {
@@ -408,11 +400,10 @@ export class GameScene extends Scene {
               // console.log("in square");
             } else {
               this.TOUCHEND = true;
-
-              console.log("outside of square");
             }
 
             // detect current falling square
+            // count of bounce
             this.bounce_count += 1;
             if (this.bounce_count > this.squareFar.length - 1) {
               this.bounce_count = 0;
@@ -420,10 +411,10 @@ export class GameScene extends Scene {
 
             if(this.TOUCHEND == true) {
               if(this.fall_position < this.circle.position.y) {
-                console.log(this.fall_position);
+                // if ball out of screen
                 this.reset_game();
               } else {
-                console.log('continous falling');
+                // continuous falling
                 this.YVELOCITY -= this.GRAVITY;
                 this.circle.position.y -= this.YVELOCITY;
               }
@@ -472,10 +463,7 @@ export class GameScene extends Scene {
 
   reset_game() {
 
-    // PLAYER STOP ON TOUCHING
-    // if(this.fall_position < this.circle.position.y) {
-
-        // IF BALL OUT OF SCREEN, RESET GAME
+    // IF BALL OUT OF SCREEN, RESET GAME
       console.log('reset game')
       // this.circle.position.y = 0;
       this.circle.position.y = 0; 
@@ -488,8 +476,7 @@ export class GameScene extends Scene {
       this.scoreText.text = `${this.score = 0}`;
       this.bg_img.getSprite().position.x = this.bg_initial_x;
 
-      this.resetStage();
-
+      // this.resetStage();
       this.initial_square.position.y = this.initial_square_y;
       this.squareFar[0].position.y = this.initial_square_distance;
       this.squareFar[1].position.y = this.initial_square_distance + this.square_distance;
@@ -499,15 +486,7 @@ export class GameScene extends Scene {
       this.squareFar[5].position.y = this.initial_square_distance + this.square_distance * 5;
       this.squareFar[6].position.y = this.initial_square_distance + this.square_distance * 6;
       this.squareFar[7].position.y = this.initial_square_distance + this.square_distance * 7;
-    // } else {
-
-      // BALL FALLING
-      // console.log('ballmove');
-      // this.YVELOCITY -= this.GRAVITY;
-      // this.circle.position.y -= this.YVELOCITY;
-      
-    // }
-
+      // this.app.goToScene(2);
   }
 
   isInSquare(square:projection.Sprite2d, ball_bounce: number){
@@ -515,20 +494,9 @@ export class GameScene extends Scene {
     let square_position = square.position.x;
     let ball_position = ball_bounce;
 
-
-    // for center square || square0
-    // let square_start = square.position.x - (square.width/4);
-    // let square_end = square.position.x + (square.width/4);
-
-    // for right square || square1
     let square_start = (square.position.x/2.1) - (square.width/4);
     let square_end = (square.position.x/2.1) + (square.width/4);
     
-    // width of square
-    // console.log(this.squareFar[0].width);
-    // console.log("square position", this.squareFar[0].position.x)
-    // console.log("square start coordinate", (this.squareFar[0].width/2) - this.squareFar[0].position.x )  
-    // if ball bounced in center of square
     if(ball_position > square_start && ball_position < square_end){
       return true;
     }else{
