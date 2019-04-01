@@ -75,7 +75,9 @@ export class GameScene extends Scene {
   start(): void {
 
   ///// BACKGROUND IMAGE
-
+console.log('initial velocity', this.INITIAL_VELOCITY);
+console.log('gravity', this.GRAVITY);
+console.log('square distance', this.initial_square_distance);
     
     this.bg_img = new SpriteActor('splash-bg', this.app, 'lvl1', 'lv1_gamearea_bgsample.png');
     this.bg_img.setScaleUpToScreenPercWidth(1.2);
@@ -118,7 +120,7 @@ export class GameScene extends Scene {
     this.squareFar[1] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[1].tint = 0xF37DAE;
     this.squareFar[1].anchor.set(0.5);
-    this.squareFar[1].position.set(this.app.getScreenSize().w * 0.5, (this.initial_square_distance + this.square_distance));
+    this.squareFar[1].position.set(0, (this.initial_square_distance + this.square_distance));
     const coin1 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
     coin1.proj.affine = PIXI.projection.AFFINE.AXIS_X;
     coin1.scale.set(this.squareFar[0].width * 0.01);
@@ -128,7 +130,7 @@ export class GameScene extends Scene {
     this.squareFar[2] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[2].tint = 0xF37DAE;
     this.squareFar[2].anchor.set(0.5);
-    this.squareFar[2].position.set(-(this.app.getScreenSize().w * 0.5), (this.initial_square_distance + this.square_distance * 2));
+    this.squareFar[2].position.set(0, (this.initial_square_distance + this.square_distance * 2));
     const coin2 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
     coin2.proj.affine = PIXI.projection.AFFINE.AXIS_X;
     coin2.scale.set(this.squareFar[0].width * 0.01);
@@ -138,7 +140,7 @@ export class GameScene extends Scene {
     this.squareFar[3] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[3].tint = 0xF37DAE;
     this.squareFar[3].anchor.set(0.5);
-    this.squareFar[3].position.set(this.app.getScreenSize().w * 0.5, (this.initial_square_distance + this.square_distance * 3));
+    this.squareFar[3].position.set(0, (this.initial_square_distance + this.square_distance * 3));
     const coin3 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
     coin3.proj.affine = PIXI.projection.AFFINE.AXIS_X;
     coin3.scale.set(this.squareFar[0].width * 0.01);
@@ -148,7 +150,7 @@ export class GameScene extends Scene {
     this.squareFar[4] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[4].tint = 0xF37DAE;
     this.squareFar[4].anchor.set(0.5);
-    this.squareFar[4].position.set(this.app.getScreenSize().w * 0.25, (this.initial_square_distance + this.square_distance * 4));
+    this.squareFar[4].position.set(0, (this.initial_square_distance + this.square_distance * 4));
     const coin4 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
     coin4.proj.affine = PIXI.projection.AFFINE.AXIS_X;
     coin4.scale.set(this.squareFar[0].width * 0.01);
@@ -168,7 +170,7 @@ export class GameScene extends Scene {
     this.squareFar[6] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[6].tint = 0xF37DAE;
     this.squareFar[6].anchor.set(0.5);
-    this.squareFar[6].position.set(-(this.app.getScreenSize().w * 0.25), (this.initial_square_distance + this.square_distance * 6));
+    this.squareFar[6].position.set(0, (this.initial_square_distance + this.square_distance * 6));
     const coin6 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
     coin6.proj.affine = PIXI.projection.AFFINE.AXIS_X;
     coin6.scale.set(this.squareFar[0].width * 0.01);
@@ -273,7 +275,7 @@ export class GameScene extends Scene {
    //// TOUCH MOVE
     this.circle_bg.on('touchmove', (interactionData: PIXI.interaction.InteractionEvent) => {
       const point = interactionData.data.getLocalPosition(this.circle);
-console.log('touch move');
+
       if(this.GAME_RESET !== true) {
         this.circle.position.x = Math.min(this.app.getScreenSize().w * 0.5 , this.circle.position.x + (point.x - this.initialPoint.x));
         this.circle.position.x = Math.max(this.circle.position.x , -(this.deviceScreenSize));
@@ -310,17 +312,17 @@ console.log('touch move');
     // this.stage = number;
     // this.stageText.text = `Stage ${number}`;
 
-    let velocity = (number/2);
-    let gravity = (number*4);
+    // let velocity = (number/2);
+    // let gravity = (number*4);
 
     // console.log("velocity" , velocity, "gravity", gravity);
 
     // this.INITIAL_VELOCITY = this.INITIAL_VELOCITY * velocity;
     // this.GRAVITY = (this.INITIAL_VELOCITY * .05)*number;
-    if (number > 1){
-    this.INITIAL_VELOCITY = this.INITIAL_VELOCITY * 2.1; //higher the faster
-    this.GRAVITY = this.GRAVITY * 4.15 //higher the faster
-    }
+    // if (number > 1){
+    // this.INITIAL_VELOCITY = this.INITIAL_VELOCITY * 2.1; //higher the faster
+    // this.GRAVITY = this.GRAVITY * 4.15 //higher the faster
+    // }
     // this.GRAVITY = 2.8800000000000003
     // console.log()
 
@@ -366,15 +368,10 @@ console.log('touch move');
         this.initial_square.position.y -= this.INITIAL_VELOCITY;
         
         if (this.circle.position.y <= 0 && this.TOUCHEND == false) {
-          console.log('ball bouncing');
+          
           // IF BALL IS BOUNCING
-
-          if(this.YVELOCITY > 0) {
-            console.log('ball up');
-          }
           this.YVELOCITY -= this.GRAVITY;
           this.circle.position.y -= this.YVELOCITY;
-          
           
         } else {
          
@@ -389,14 +386,14 @@ console.log('touch move');
                 // change stage
                 // point per stage
 
-                if(this.stageProgress == this.stageLimit){
-                  this.stage+=1;
-                  this.stageProgress = 1;
-                  this.renderStage(this.stage);
-                }else{
-                  console.log("Progress", this.stageProgress)
-                  this.stageProgress+=1;
-                }
+                // if(this.stageProgress == this.stageLimit){
+                //   this.stage+=1;
+                //   this.stageProgress = 1;
+                //   this.renderStage(this.stage);
+                // }else{
+                //   console.log("Progress", this.stageProgress)
+                //   this.stageProgress+=1;
+                // }
               }
               
               // console.log("in square");
