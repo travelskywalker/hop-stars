@@ -26,10 +26,7 @@ export class GameScene extends Scene {
   circleYPosition: number = this.app.getScreenSize().h - this.app.getScreenSize().h * 0.2;
   fall_position: number = this.app.getScreenSize().h - this.circleYPosition;
 
-  // bounce speed
-  YVELOCITY: number;
-  INITIAL_VELOCITY: number = this.app.getScreenSize().h * 0.02;
-  GRAVITY: number = this.INITIAL_VELOCITY * .05;
+  
 
   // squares position
   SQUARE_HOP_POSITION = this.app.getScreenSize().h * 0.15;
@@ -63,6 +60,18 @@ export class GameScene extends Scene {
   stageProgress: number = 1;
   stageLimit: number = 5;
 
+
+
+// SPEED -------------------
+  
+  // initial speed
+  FREE_FALL: number = 12.5;
+  INITIAL_VELOCITY: number = (this.app.getScreenSize().h * 0.02) * 2.55;
+  GRAVITY: number = this.INITIAL_VELOCITY / this.FREE_FALL;
+  YVELOCITY: number;
+  // square speed
+  SQUARE_VELOCITY: number = this.square_distance / (this.FREE_FALL * 2 - 1);
+
   init(): void {
     
     this.bigWhiteTexture = new PIXI.Texture(PIXI.Texture.WHITE.baseTexture);
@@ -73,12 +82,16 @@ export class GameScene extends Scene {
   }
 
   start(): void {
-
-  ///// BACKGROUND IMAGE
-console.log('initial velocity', this.INITIAL_VELOCITY);
+  
+console.log('time', this.FREE_FALL);
+console.log('velocity', this.INITIAL_VELOCITY);
 console.log('gravity', this.GRAVITY);
+console.log('square speed', this.SQUARE_VELOCITY);
 console.log('square distance', this.initial_square_distance);
+console.log('square position', this.initial_square_y);
+console.log('square distance', this.square_distance);
     
+    ///// BACKGROUND IMAGE
     this.bg_img = new SpriteActor('splash-bg', this.app, 'lvl1', 'lv1_gamearea_bgsample.png');
     this.bg_img.setScaleUpToScreenPercWidth(1.2);
 
@@ -105,7 +118,6 @@ console.log('square distance', this.initial_square_distance);
     this.initial_square.tint = 0xF37DAE;
     this.initial_square.anchor.set(0.5);
     this.initial_square.position.set(0, this.initial_square_y);
-    
 
     this.squareFar[0] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[0].tint = 0xF37DAE;
@@ -116,7 +128,7 @@ console.log('square distance', this.initial_square_distance);
     coin0.scale.set(this.squareFar[0].width * 0.01);
     coin0.anchor.set(0.5, 1);
     this.squareFar[0].addChild(coin0);
-    
+
     this.squareFar[1] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[1].tint = 0xF37DAE;
     this.squareFar[1].anchor.set(0.5);
@@ -251,7 +263,6 @@ console.log('square distance', this.initial_square_distance);
     this.circle = new Graphics();
     this.circle.beginFill(0X942363);
     this.circle.drawCircle(this.deviceScreenSize, this.circleYPosition, this.CIRCLEWIDTH);
-    
   // EVENTS
     const circle1 = new SpriteActor('ball', this.app, 'common', 'ball.png');
     // circle1.setAnchor(this.circle.position.x, 0);
@@ -357,17 +368,17 @@ console.log('square distance', this.initial_square_distance);
         if(this.squareFar[7].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
           this.squareFar[7].position.y = this.squareFar[6].position.y + this.square_distance; }
 
-        this.squareFar[0].position.y -= this.INITIAL_VELOCITY;
-        this.squareFar[1].position.y -= this.INITIAL_VELOCITY;
-        this.squareFar[2].position.y -= this.INITIAL_VELOCITY;
-        this.squareFar[3].position.y -= this.INITIAL_VELOCITY;
-        this.squareFar[4].position.y -= this.INITIAL_VELOCITY;
-        this.squareFar[5].position.y -= this.INITIAL_VELOCITY;
-        this.squareFar[6].position.y -= this.INITIAL_VELOCITY;
-        this.squareFar[7].position.y -= this.INITIAL_VELOCITY;
-        this.initial_square.position.y -= this.INITIAL_VELOCITY;
+        this.squareFar[0].position.y -= this.SQUARE_VELOCITY;
+        this.squareFar[1].position.y -= this.SQUARE_VELOCITY;
+        this.squareFar[2].position.y -= this.SQUARE_VELOCITY;
+        this.squareFar[3].position.y -= this.SQUARE_VELOCITY;
+        this.squareFar[4].position.y -= this.SQUARE_VELOCITY;
+        this.squareFar[5].position.y -= this.SQUARE_VELOCITY;
+        this.squareFar[6].position.y -= this.SQUARE_VELOCITY;
+        this.squareFar[7].position.y -= this.SQUARE_VELOCITY;
+        this.initial_square.position.y -= this.SQUARE_VELOCITY;
         
-        if (this.circle.position.y <= 0 && this.TOUCHEND == false) {
+        if (this.circle.position.y < 0 && this.TOUCHEND == false) {
           
           // IF BALL IS BOUNCING
           this.YVELOCITY -= this.GRAVITY;
