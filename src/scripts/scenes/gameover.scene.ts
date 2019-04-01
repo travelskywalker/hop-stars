@@ -3,8 +3,180 @@ import { IAppState } from '@src/app.state';
 import { SpriteActor } from '@src/core/sprite.actor';
 import { SpriteAnimatedActor } from '@src/core/sprite.animated.actor';
 import { Graphics } from 'pixi.js';
+import { LeaderboardModal } from './../components/leaderboard.modal';
 
 export class GameOverScene extends Scene {
+
+  lmodal: LeaderboardModal;
+  // Dummy data for testing
+  dummy_data:object = { 
+      alltime: [
+        {
+          name: 'Sander',
+          score: '2500',
+          prize: 'P5000',
+          user_id: 99991,
+        },
+        {
+          name: 'Alben',
+          score: '250',
+          prize: 'P3000',
+          user_id: 99992,
+        },
+        {
+          name: 'Lei',
+          score: '250',
+          prize: 'P1000',
+          user_id: 99991,
+        },
+        {
+          name: 'Edric',
+          score: '250',
+          prize: 'P100',
+          user_id: 99992,
+        },
+        {
+          name: 'Ben',
+          score: '25',
+          prize: 'P100',
+          user_id: 99991,
+        },
+        {
+          name: 'Sander',
+          score: '25',
+          prize: 'P100',
+          user_id: 99992,
+        },
+        {
+          name: 'Sander',
+          score: '25',
+          prize: 'P100',
+          user_id: 99991,
+        },
+        {
+          name: 'Sander',
+          score: '25',
+          prize: 'P100',
+          user_id: 99992,
+        },
+        {
+          name: 'Sander',
+          score: '25',
+          prize: 'P50',
+          user_id: 99991,
+        },
+        {
+          name: 'Sander',
+          score: '25',
+          prize: 'P50',
+          user_id: 99992,
+        },
+        {
+          name: 'Sander',
+          score: '25',
+          prize: 'P50',
+          user_id: 99991,
+        },
+        {
+          name: 'Sander',
+          score: '25',
+          prize: 'P50',
+          user_id: 99992,
+        }
+      ],
+      weekly: [
+        {
+          name: 'Alben',
+          score: '2500',
+          prize: 'P5000',
+          user_id: 99991,
+        },
+        {
+          name: 'Levy',
+          score: '250',
+          prize: 'P3000',
+          user_id: 99991,
+        },
+        {
+          name: 'Sander',
+          score: '25',
+          prize: 'P1000',
+          user_id: 99991,
+        },
+        {
+          name: 'Edric',
+          score: '25',
+          prize: 'P100',
+          user_id: 99992,
+        },
+        {
+          name: 'Ben',
+          score: '25',
+          prize: 'P100',
+          user_id: 99991,
+        },
+        {
+          name: 'Alben',
+          score: '25',
+          prize: 'P100',
+          user_id: 99991,
+        },
+        {
+          name: 'Alben',
+          score: '25',
+          prize: 'P100',
+          user_id: 99991,
+        },
+        {
+          name: 'Alben',
+          score: '25',
+          prize: 'P100',
+          user_id: 99991,
+        },
+        {
+          name: 'Alben',
+          score: '25',
+          prize: 'P100',
+          user_id: 99991,
+        },
+        {
+          name: 'Alben',
+          score: '25',
+          prize: 'P100',
+          user_id: 99992,
+        },
+        {
+          name: 'Alben',
+          score: '25',
+          prize: 'P50',
+          user_id: 99991,
+        },
+        {
+          name: 'Alben',
+          score: '25',
+          prize: 'P50',
+          user_id: 99991,
+        },
+        {
+          name: 'Alben',
+          score: '25',
+          prize: 'P50',
+          user_id: 99991,
+        },
+        {
+          name: 'Alben',
+          score: '25',
+          prize: 'P50',
+          user_id: 99991,
+        },
+        {
+          name: 'Alben',
+          score: '25',
+          prize: 'P50',
+          user_id: 99991,
+        }
+      ]
+  };
 
   // bg
   bg: SpriteActor;
@@ -42,6 +214,7 @@ export class GameOverScene extends Scene {
     this.bg.setAnchor(0, 0);
     this.bg.setPosition(0,0);
     this.bg.setScaleUpToScreenPercWidth(1);
+    this.bg.setScaleUpToScreenPercHeight(1);
     this.addChild(this.bg);
 
     // initialize and set logo
@@ -135,6 +308,9 @@ export class GameOverScene extends Scene {
     this.leaderboard_btn.getSprite().interactive = true;
     this.leaderboard_btn.getSprite().on('pointerup', () => { 
       console.log('show leaderboard scene');
+          // for modal
+          this.lmodal = new LeaderboardModal({app: this.app, var: this.dummy_data});
+          this.container.addChild(this.lmodal);
     });
     this.addChild(this.leaderboard_btn);
 
