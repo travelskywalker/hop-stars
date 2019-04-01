@@ -18,7 +18,7 @@ export class InstructionScene extends Scene {
     this.bg = new SpriteActor('splash-bg', this.app, 'common', 'startscreen_bg.jpg');
     this.bg.setAnchor(0, 0);
     this.bg.setPosition(0,0);
-    this.bg.setScaleUpToScreenPercWidth(1);
+    this.bg.setScaleUpToScreenPercHeight(1);
     this.bg.getSprite().interactive = true;
     this.bg.getSprite().on('pointerup', () => { 
       console.log('go to game scene ');
