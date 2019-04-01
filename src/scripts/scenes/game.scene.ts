@@ -53,6 +53,9 @@ export class GameScene extends Scene {
   initial_square: projection.Sprite2d;
   squareFar: projection.Sprite2d [] = [];
 
+  // coins
+  coin: projection.Sprite2d [] = [];
+
   // score
   scoreText: Text;
   score: number = 0;
@@ -111,81 +114,81 @@ console.log('square distance', this.initial_square_distance);
     this.squareFar[0].tint = 0xF37DAE;
     this.squareFar[0].anchor.set(0.5);
     this.squareFar[0].position.set(0, this.initial_square_distance);
-    const coin0 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
-    coin0.proj.affine = PIXI.projection.AFFINE.AXIS_X;
-    coin0.scale.set(this.squareFar[0].width * 0.01);
-    coin0.anchor.set(0.5, 1);
-    this.squareFar[0].addChild(coin0);
+    this.coin[0] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
+    this.coin[0].proj.affine = PIXI.projection.AFFINE.AXIS_X;
+    this.coin[0].scale.set(this.squareFar[0].width * 0.01);
+    this.coin[0].anchor.set(0.5, 1);
+    this.squareFar[0].addChild(this.coin[0]);
     
     this.squareFar[1] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[1].tint = 0xF37DAE;
     this.squareFar[1].anchor.set(0.5);
     this.squareFar[1].position.set(0, (this.initial_square_distance + this.square_distance));
-    const coin1 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
-    coin1.proj.affine = PIXI.projection.AFFINE.AXIS_X;
-    coin1.scale.set(this.squareFar[0].width * 0.01);
-    coin1.anchor.set(0.5, 1);
-    this.squareFar[1].addChild(coin1);
+    this.coin[1] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
+    this.coin[1].proj.affine = PIXI.projection.AFFINE.AXIS_X;
+    this.coin[1].scale.set(this.squareFar[0].width * 0.01);
+    this.coin[1].anchor.set(0.5, 1);
+    this.squareFar[1].addChild(this.coin[1]);
 
     this.squareFar[2] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[2].tint = 0xF37DAE;
     this.squareFar[2].anchor.set(0.5);
     this.squareFar[2].position.set(0, (this.initial_square_distance + this.square_distance * 2));
-    const coin2 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
-    coin2.proj.affine = PIXI.projection.AFFINE.AXIS_X;
-    coin2.scale.set(this.squareFar[0].width * 0.01);
-    coin2.anchor.set(0.5, 1);
-    this.squareFar[2].addChild(coin2);
+    this.coin[2] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
+    this.coin[2].proj.affine = PIXI.projection.AFFINE.AXIS_X;
+    this.coin[2].scale.set(this.squareFar[0].width * 0.01);
+    this.coin[2].anchor.set(0.5, 1);
+    this.squareFar[2].addChild(this.coin[2]);
 
     this.squareFar[3] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[3].tint = 0xF37DAE;
     this.squareFar[3].anchor.set(0.5);
     this.squareFar[3].position.set(0, (this.initial_square_distance + this.square_distance * 3));
-    const coin3 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
-    coin3.proj.affine = PIXI.projection.AFFINE.AXIS_X;
-    coin3.scale.set(this.squareFar[0].width * 0.01);
-    coin3.anchor.set(0.5, 1);
-    this.squareFar[3].addChild(coin3);
+    this.coin[3] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
+    this.coin[3].proj.affine = PIXI.projection.AFFINE.AXIS_X;
+    this.coin[3].scale.set(this.squareFar[0].width * 0.01);
+    this.coin[3].anchor.set(0.5, 1);
+    this.squareFar[3].addChild(this.coin[3]);
 
     this.squareFar[4] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[4].tint = 0xF37DAE;
     this.squareFar[4].anchor.set(0.5);
     this.squareFar[4].position.set(0, (this.initial_square_distance + this.square_distance * 4));
-    const coin4 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
-    coin4.proj.affine = PIXI.projection.AFFINE.AXIS_X;
-    coin4.scale.set(this.squareFar[0].width * 0.01);
-    coin4.anchor.set(0.5, 1);
-    this.squareFar[4].addChild(coin4);
+    this.coin[4] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
+    this.coin[4].proj.affine = PIXI.projection.AFFINE.AXIS_X;
+    this.coin[4].scale.set(this.squareFar[0].width * 0.01);
+    this.coin[4].anchor.set(0.5, 1);
+    this.squareFar[4].addChild(this.coin[4]);
 
     this.squareFar[5] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[5].tint = 0xF37DAE;
     this.squareFar[5].anchor.set(0.5);
     this.squareFar[5].position.set(0, (this.initial_square_distance + this.square_distance * 5));
-    const coin5 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
-    coin5.proj.affine = PIXI.projection.AFFINE.AXIS_X;
-    coin5.scale.set(this.squareFar[0].width * 0.01);
-    coin5.anchor.set(0.5, 1);
-    this.squareFar[5].addChild(coin5);
+    this.coin[5] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
+    this.coin[5].proj.affine = PIXI.projection.AFFINE.AXIS_X;
+    this.coin[5].scale.set(this.squareFar[0].width * 0.01);
+    this.coin[5].anchor.set(0.5, 1);
+    this.squareFar[5].addChild(this.coin[5]);
 
     this.squareFar[6] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[6].tint = 0xF37DAE;
     this.squareFar[6].anchor.set(0.5);
     this.squareFar[6].position.set(0, (this.initial_square_distance + this.square_distance * 6));
-    const coin6 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
-    coin6.proj.affine = PIXI.projection.AFFINE.AXIS_X;
-    coin6.scale.set(this.squareFar[0].width * 0.01);
-    coin6.anchor.set(0.5, 1);
-    this.squareFar[6].addChild(coin6);
+    this.coin[6] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
+    this.coin[6].proj.affine = PIXI.projection.AFFINE.AXIS_X;
+    this.coin[6].scale.set(this.squareFar[0].width * 0.01);
+    this.coin[6].anchor.set(0.5, 1);
+    this.squareFar[6].addChild(this.coin[6]);
 
     this.squareFar[7] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[7].tint = 0xF37DAE;
     this.squareFar[7].anchor.set(0.5);
     this.squareFar[7].position.set(0, (this.initial_square_distance + this.square_distance * 7));
-    const coin7 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
-    coin7.proj.affine = PIXI.projection.AFFINE.AXIS_X;
-    coin7.scale.set(this.squareFar[0].width * 0.01);
-    coin7.anchor.set(0.5, 1);
-    this.squareFar[7].addChild(coin7);
+    this.coin[7] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
+    this.coin[7].proj.affine = PIXI.projection.AFFINE.AXIS_X;
+    this.coin[7].scale.set(this.squareFar[0].width * 0.01);
+    this.coin[7].anchor.set(0.5, 1);
+    this.squareFar[7].addChild(this.coin[7]);
 
     this.squareY = new PIXI.Sprite(PIXI.Texture.WHITE);
     this.squareY.anchor.set(0.5);
@@ -339,24 +342,41 @@ console.log('square distance', this.initial_square_distance);
       let posY = this.container2d.toLocal(this.squareY.position, undefined, undefined, undefined, PIXI.projection.TRANSFORM_STEP.BEFORE_PROJ);
       this.container2d.proj.setAxisY(posY, 1);
 
-      if(this.GAME_RESET != true) {       
+      if(this.GAME_RESET != true) {  
+        // add square
         if(this.squareFar[0].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
-          this.squareFar[0].position.y = this.squareFar[7].position.y + this.square_distance; }
+          this.squareFar[0].position.y = this.squareFar[7].position.y + this.square_distance;
+          this.squareFar[0].addChild(this.coin[0]);
+          }
         if(this.squareFar[1].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
-          this.squareFar[1].position.y = this.squareFar[0].position.y + this.square_distance; }
+          this.squareFar[1].position.y = this.squareFar[0].position.y + this.square_distance; 
+          this.squareFar[1].addChild(this.coin[1]);
+        }
         if(this.squareFar[2].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
-          this.squareFar[2].position.y = this.squareFar[1].position.y + this.square_distance; }
+          this.squareFar[2].position.y = this.squareFar[1].position.y + this.square_distance; 
+          this.squareFar[2].addChild(this.coin[2]);
+        }
         if(this.squareFar[3].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
-          this.squareFar[3].position.y = this.squareFar[2].position.y + this.square_distance; }
+          this.squareFar[3].position.y = this.squareFar[2].position.y + this.square_distance; 
+          this.squareFar[3].addChild(this.coin[3]);
+        }
         if(this.squareFar[4].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
-          this.squareFar[4].position.y = this.squareFar[3].position.y + this.square_distance; }
+          this.squareFar[4].position.y = this.squareFar[3].position.y + this.square_distance;
+          this.squareFar[4].addChild(this.coin[4]);
+        }
         if(this.squareFar[5].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
-          this.squareFar[5].position.y = this.squareFar[4].position.y + this.square_distance; }
+          this.squareFar[5].position.y = this.squareFar[4].position.y + this.square_distance; 
+          this.squareFar[5].addChild(this.coin[5]);
+        }
         if(this.squareFar[6].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
-          this.squareFar[6].position.y = this.squareFar[5].position.y + this.square_distance; }
+          this.squareFar[6].position.y = this.squareFar[5].position.y + this.square_distance; 
+          this.squareFar[6].addChild(this.coin[6]);
+        }
         if(this.squareFar[7].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
-          this.squareFar[7].position.y = this.squareFar[6].position.y + this.square_distance; }
-
+          this.squareFar[7].position.y = this.squareFar[6].position.y + this.square_distance; 
+          this.squareFar[7].addChild(this.coin[7]);
+        }
+      
         this.squareFar[0].position.y -= this.INITIAL_VELOCITY;
         this.squareFar[1].position.y -= this.INITIAL_VELOCITY;
         this.squareFar[2].position.y -= this.INITIAL_VELOCITY;
@@ -382,6 +402,9 @@ console.log('square distance', this.initial_square_distance);
 
               if(this.isCoined(square, bouncePosition) && this.TOUCHEND == false){
                 this.scoreText.text = `${this.score+=1}`;
+
+                // remove coin
+                square.removeChildren();
 
                 // change stage
                 // point per stage
@@ -447,7 +470,7 @@ console.log('square distance', this.initial_square_distance);
     let square_end = (square.position.x/2.1) + (square.width/4);
 
     // coin width
-    let coinWidth = (square.width/2)*.50;
+    let coinWidth = (square.width/2)*.68;
 
     // center of square coordinates
     let centerSquare = square_start + (square.width/4);
