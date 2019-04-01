@@ -1,5 +1,5 @@
 import { Scene } from '@src/core/scene';
-import { Text, Container, Graphics, Texture, projection } from 'pixi.js';
+import { Text, Container, Graphics, Texture, projection, Sprite } from 'pixi.js';
 import 'pixi-projection';
 import { App } from '@src/app';
 import { SpriteActor } from '@src/core/sprite.actor';
@@ -27,9 +27,15 @@ export class GameScene extends Scene {
   fall_position: number = this.app.getScreenSize().h - this.circleYPosition;
 
   // bounce speed
+  // YVELOCITY: number;
+  // INITIAL_VELOCITY: number = this.app.getScreenSize().h * 0.02;
+  // GRAVITY: number = this.INITIAL_VELOCITY * .05;
+
+  // initial speed
+  FREE_FALL: number = 20;
+  INITIAL_VELOCITY: number = (this.app.getScreenSize().h * 0.02) * 2;
+  GRAVITY: number = this.INITIAL_VELOCITY / this.FREE_FALL;
   YVELOCITY: number;
-  INITIAL_VELOCITY: number = this.app.getScreenSize().h * 0.02;
-  GRAVITY: number = this.INITIAL_VELOCITY * .05;
 
   // squares position
   SQUARE_HOP_POSITION = this.app.getScreenSize().h * 0.15;
@@ -37,6 +43,9 @@ export class GameScene extends Scene {
   initial_square_y: number = this.app.getScreenSize().h * 0.18;
   initial_square_distance: number = this.app.getScreenSize().h * 0.960;
   square_distance: number = this.initial_square_distance - this.initial_square_y;
+
+  // square speed
+  SQUARE_VELOCITY: number = this.square_distance / (this.FREE_FALL * 2 - 1);
 
   // flag
   GAME_RESET: boolean = false;
@@ -82,18 +91,6 @@ console.log('initial velocity', this.INITIAL_VELOCITY);
 console.log('gravity', this.GRAVITY);
 console.log('square distance', this.initial_square_distance);
     
-    this.bg_img = new SpriteActor('splash-bg', this.app, 'lvl1', 'lv1_gamearea_bgsample.png');
-    this.bg_img.setScaleUpToScreenPercWidth(1.2);
-
-    this.bg_initial_x = -((this.bg_img.getSprite().width - this.app.getScreenSize().w) / 2);
-
-    this.bg_img.getSprite().position.x = this.bg_initial_x;
-    this.bg = new Graphics();
-    this.bg.beginFill(0xF2F2F2, 0);
-    this.bg.drawRect(0, 0, this.app.getScreenSize().w, this.app.getScreenSize().h);
-    this.bg.endFill();
-    this.addChild(this.bg_img);
-    this.container.addChild(this.bg);
 
    // stage
    this.stageText = new Text('',{fontFamily : 'Arial', fontSize: 100, fill : 0x000000, align : 'center'});
@@ -109,7 +106,6 @@ console.log('square distance', this.initial_square_distance);
     this.initial_square.anchor.set(0.5);
     this.initial_square.position.set(0, this.initial_square_y);
     
-
     this.squareFar[0] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[0].tint = 0xF37DAE;
     this.squareFar[0].anchor.set(0.5);
@@ -200,6 +196,7 @@ console.log('square distance', this.initial_square_distance);
     this.container2d = new PIXI.projection.Container2d();
     this.container2d.position.set(this.app.getScreenSize().w / 2, this.app.getScreenSize().h);
     this.container.addChild(this.container2d);
+    this.container.setChildIndex(this.container2d, 1)
 
     //illuminate the sprite from two points!
     var lightY = new PIXI.projection.Sprite2d(PIXI.Texture.WHITE);
@@ -209,11 +206,7 @@ console.log('square distance', this.initial_square_distance);
     lightY.alpha = 0;
     this.container2d.addChildAt(lightY, 0);
 
-  // Gradient Overlay --- > from top screen to make fading squares effect
-    this.gradient_bg = new SpriteActor('splash-bg', this.app, 'lvl1', 'lv1_mountainbg_gradientoverlay.png');
-    this.gradient_bg.getSprite().alpha = 1;
-    this.gradient_bg.setScaleUpToScreenPercWidth(1);
-    this.container.addChild(this.gradient_bg.getSprite());
+  
     
   /////  SCORE
 
@@ -337,7 +330,142 @@ console.log('square distance', this.initial_square_distance);
     }
   }
 
+  stage3(){
+    // SPEED
+     // initial speed
+     this.FREE_FALL = 12.5;
+     // this.INITIAL_VELOCITY = (this.app.getScreenSize().h * 0.02) * 2;
+     this.GRAVITY = this.INITIAL_VELOCITY / this.FREE_FALL;
+ 
+     // square speed
+     this.SQUARE_VELOCITY = this.square_distance / (this.FREE_FALL * 2 - 1);
+     // BACKGROUND
+
+    this.bg_img = new SpriteActor('stage3-bg', this.app, 'lvl3', 'lv3_spacebg_mountains.jpg');
+    this.bg_img.setScaleUpToScreenPercWidth(1.2);
+
+    this.bg_initial_x = -((this.bg_img.getSprite().width - this.app.getScreenSize().w) / 2);
+
+    this.bg_img.getSprite().position.x = this.bg_initial_x;
+    this.bg = new Graphics();
+    this.bg.beginFill(0xF2F2F2, 0);
+    this.bg.drawRect(0, 0, this.app.getScreenSize().w, this.app.getScreenSize().h);
+    this.bg.endFill();
+    this.bg_img.setScaleUpToScreenPercWidth(1);
+    this.bg_img.setScaleUpToScreenPercHeight(1);
+    this.addChild(this.bg_img);
+    
+    this.container.addChild(this.bg_img.getSprite());
+    this.container.setChildIndex(this.bg_img.getSprite(),0);
+
+    // Gradient Overlay --- > from top screen to make fading squares effect
+    this.gradient_bg = new SpriteActor('stage3-bg', this.app, 'lvl3', 'lv3_spacebg_gradientoverlay.png');
+    this.gradient_bg.getSprite().alpha = .4;
+    this.gradient_bg.setScaleUpToScreenPercWidth(1); 
+    this.gradient_bg.setScaleUpToScreenPercHeight(1);
+    this.container.addChild(this.gradient_bg.getSprite());
+    this.container.setChildIndex(this.gradient_bg.getSprite(),2)
+
+    this.container.setChildIndex(this.scoreText,3)
+  }
+
+  stage2(){
+
+    // SPEED
+     // initial speed
+    this.FREE_FALL = 15;
+    // this.INITIAL_VELOCITY = (this.app.getScreenSize().h * 0.02) * 2;
+    this.GRAVITY = this.INITIAL_VELOCITY / this.FREE_FALL;
+
+
+    // square speed
+    this.SQUARE_VELOCITY = this.square_distance / (this.FREE_FALL * 2 - 1);
+    // BACKGROUND
+    
+    this.bg_img = new SpriteActor('stage2-bg', this.app, 'lvl2', 'lv2_skybg_mountains.jpg');
+    this.bg_img.setScaleUpToScreenPercWidth(1.2);
+
+    this.bg_initial_x = -((this.bg_img.getSprite().width - this.app.getScreenSize().w) / 2);
+
+    this.bg_img.getSprite().position.x = this.bg_initial_x;
+    this.bg = new Graphics();
+    this.bg.beginFill(0xF2F2F2, 0);
+    this.bg.drawRect(0, 0, this.app.getScreenSize().w, this.app.getScreenSize().h);
+    this.bg.endFill();
+    this.bg_img.setScaleUpToScreenPercWidth(1);
+    this.bg_img.setScaleUpToScreenPercHeight(1);
+    this.addChild(this.bg_img);
+    
+    this.container.addChild(this.bg_img.getSprite());
+    this.container.setChildIndex(this.bg_img.getSprite(),0);
+    // Gradient Overlay --- > from top screen to make fading squares effect
+    this.gradient_bg = new SpriteActor('stage2-bg', this.app, 'lvl2', 'lv2_skybg_gradientoverlay.png');
+    this.gradient_bg.getSprite().alpha = .4;
+    this.gradient_bg.setScaleUpToScreenPercWidth(1); 
+    this.gradient_bg.setScaleUpToScreenPercHeight(1); 
+    this.container.addChild(this.gradient_bg.getSprite());
+    this.container.setChildIndex(this.gradient_bg.getSprite(),2)
+
+    this.container.setChildIndex(this.scoreText,3)
+  }
+
+  stage1(){
+    
+    // SPEED
+     // initial speed
+     this.FREE_FALL = 20;
+     // this.INITIAL_VELOCITY = (this.app.getScreenSize().h * 0.02) * 2;
+     this.GRAVITY = this.INITIAL_VELOCITY / this.FREE_FALL;
+ 
+ 
+     // square speed
+     this.SQUARE_VELOCITY = this.square_distance / (this.FREE_FALL * 2 - 1);
+     // BACKGROUND
+    // this.bg_img = new SpriteActor('stage2-bg', this.app, 'lvl1', 'lv1_gamearea_bgsample.png');
+    this.bg_img = new SpriteActor('splash-bg', this.app, 'common', 'startscreen_bg.jpg');
+    this.bg_img.setScaleUpToScreenPercWidth(1.2);
+
+    this.bg_initial_x = -((this.bg_img.getSprite().width - this.app.getScreenSize().w) / 2);
+
+    this.bg_img.getSprite().position.x = this.bg_initial_x;
+    this.bg = new Graphics();
+    this.bg.beginFill(0xF2F2F2, 0);
+    this.bg.drawRect(0, 0, this.app.getScreenSize().w, this.app.getScreenSize().h);
+    this.bg.endFill();
+    this.bg_img.setScaleUpToScreenPercWidth(1);
+    this.bg_img.setScaleUpToScreenPercHeight(1);
+    this.addChild(this.bg_img);
+    
+    this.container.addChild(this.bg_img.getSprite());
+    this.container.setChildIndex(this.bg_img.getSprite(),0);
+
+    // Gradient Overlay --- > from top screen to make fading squares effect
+    this.gradient_bg = new SpriteActor('splash-bg', this.app, 'lvl1', 'lv1_mountainbg_gradientoverlay.png');
+    this.gradient_bg.getSprite().alpha = 1;
+    this.gradient_bg.setScaleUpToScreenPercWidth(1); 
+    this.gradient_bg.setScaleUpToScreenPercHeight(1);
+    this.container.addChild(this.gradient_bg.getSprite());
+    this.container.setChildIndex(this.gradient_bg.getSprite(),2)
+
+  }
+
   renderStage(number: number){
+    // ///////// background
+    try{this.container.removeChild(this.bg_img.getSprite()); this.container.removeChild(this.gradient_bg.getSprite())}catch(e){}
+
+    switch (number) {
+      case 1:
+        this.stage1();
+        break;
+      case 2:
+        this.stage2();
+        break;
+      default:
+        this.stage3();
+        break;
+    }
+
+    // //////// speed
 
     // increase speed
     // change background
@@ -415,15 +543,15 @@ console.log('square distance', this.initial_square_distance);
           this.squareFar[7].addChild(this.coin[7]);
         }
       
-        this.squareFar[0].position.y -= this.INITIAL_VELOCITY;
-        this.squareFar[1].position.y -= this.INITIAL_VELOCITY;
-        this.squareFar[2].position.y -= this.INITIAL_VELOCITY;
-        this.squareFar[3].position.y -= this.INITIAL_VELOCITY;
-        this.squareFar[4].position.y -= this.INITIAL_VELOCITY;
-        this.squareFar[5].position.y -= this.INITIAL_VELOCITY;
-        this.squareFar[6].position.y -= this.INITIAL_VELOCITY;
-        this.squareFar[7].position.y -= this.INITIAL_VELOCITY;
-        this.initial_square.position.y -= this.INITIAL_VELOCITY;
+        this.squareFar[0].position.y -= this.SQUARE_VELOCITY;
+        this.squareFar[1].position.y -= this.SQUARE_VELOCITY;
+        this.squareFar[2].position.y -= this.SQUARE_VELOCITY;
+        this.squareFar[3].position.y -= this.SQUARE_VELOCITY;
+        this.squareFar[4].position.y -= this.SQUARE_VELOCITY;
+        this.squareFar[5].position.y -= this.SQUARE_VELOCITY;
+        this.squareFar[6].position.y -= this.SQUARE_VELOCITY;
+        this.squareFar[7].position.y -= this.SQUARE_VELOCITY;
+        this.initial_square.position.y -= this.SQUARE_VELOCITY;
         
         if (this.circle.position.y <= 0 && this.TOUCHEND == false) {
           
@@ -447,14 +575,13 @@ console.log('square distance', this.initial_square_distance);
                 // change stage
                 // point per stage
 
-                // if(this.stageProgress == this.stageLimit){
-                //   this.stage+=1;
-                //   this.stageProgress = 1;
-                //   this.renderStage(this.stage);
-                // }else{
-                //   console.log("Progress", this.stageProgress)
-                //   this.stageProgress+=1;
-                // }
+                if(this.stageProgress == this.stageLimit){
+                  this.stage+=1;
+                  this.stageProgress = 1;
+                  this.renderStage(this.stage);
+                }else{
+                  this.stageProgress+=1;
+                }
               }
               
               // console.log("in square");
@@ -496,10 +623,11 @@ console.log('square distance', this.initial_square_distance);
     this.stage = 1;
     this.stageProgress = 1;
 
-    this.stageText.text = `Stage ${this.stage}`;
+    this.generateStartSquares();
+    this.renderStage(1);
 
-    this.INITIAL_VELOCITY = this.app.getScreenSize().h * 0.02;
-    this.GRAVITY = this.INITIAL_VELOCITY * .05;
+    // this.INITIAL_VELOCITY = this.app.getScreenSize().h * 0.02;
+    // this.GRAVITY = this.INITIAL_VELOCITY * .05;
   }
 
   isCoined(square: projection.Sprite2d, bouncePosition: number){
@@ -539,7 +667,7 @@ console.log('square distance', this.initial_square_distance);
       this.scoreText.text = `${this.score = 0}`;
       this.bg_img.getSprite().position.x = this.bg_initial_x;
 
-      // this.resetStage();
+      this.resetStage();
       // this.initial_square.position.y = this.initial_square_y;
       // this.squareFar[0].position.y = this.initial_square_distance;
       // this.squareFar[1].position.y = this.initial_square_distance + this.square_distance;
@@ -551,7 +679,7 @@ console.log('square distance', this.initial_square_distance);
       // this.squareFar[7].position.y = this.initial_square_distance + this.square_distance * 7;
       // this.app.goToScene(2);
 
-      this.generateStartSquares();
+      
   }
 
   generateStartSquares(){
