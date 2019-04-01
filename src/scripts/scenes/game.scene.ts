@@ -310,16 +310,18 @@ console.log('touch move');
     // this.stage = number;
     // this.stageText.text = `Stage ${number}`;
 
-    // let velocity = 0.2 + parseInt(`0.${number}`);
-    // let gravity = parseInt(`${number}.05`);
+    let velocity = (number/2);
+    let gravity = (number*4);
 
     // console.log("velocity" , velocity, "gravity", gravity);
 
-    // this.INITIAL_VELOCITY = this.app.getScreenSize().h * velocity;
-    // this.GRAVITY = this.INITIAL_VELOCITY * gravity;
-
-    // this.INITIAL_VELOCITY = this.INITIAL_VELOCITY / number;
-    // this.GRAVITY = this.GRAVITY += (number-1);
+    // this.INITIAL_VELOCITY = this.INITIAL_VELOCITY * velocity;
+    // this.GRAVITY = (this.INITIAL_VELOCITY * .05)*number;
+    if (number > 1){
+    this.INITIAL_VELOCITY = this.INITIAL_VELOCITY * 2.1; //higher the faster
+    this.GRAVITY = this.GRAVITY * 4.15 //higher the faster
+    }
+    // this.GRAVITY = 2.8800000000000003
     // console.log()
 
     // velocity 57.6
@@ -437,6 +439,9 @@ console.log('touch move');
     this.stageProgress = 1;
 
     this.stageText.text = `Stage ${this.stage}`;
+
+    this.INITIAL_VELOCITY = this.app.getScreenSize().h * 0.02;
+    this.GRAVITY = this.INITIAL_VELOCITY * .05;
   }
 
   isCoined(square: projection.Sprite2d, bouncePosition: number){
@@ -445,7 +450,7 @@ console.log('touch move');
     let square_end = (square.position.x/2.1) + (square.width/4);
 
     // coin width
-    let coinWidth = (square.width/2)*.30;
+    let coinWidth = (square.width/2)*.50;
 
     // center of square coordinates
     let centerSquare = square_start + (square.width/4);
