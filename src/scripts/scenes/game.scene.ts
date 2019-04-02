@@ -20,6 +20,7 @@ export class GameScene extends Scene {
   finalPoint: any;
   
   bounce_count = 0;
+  air_time = 0;
 
   // Circle
   CIRCLEWIDTH = this.app.getScreenSize().w * .08;
@@ -38,7 +39,6 @@ export class GameScene extends Scene {
   YVELOCITY: number;
 
   // squares position
-  SQUARE_HOP_POSITION = this.app.getScreenSize().h * 0.15;
   last_square_position: number;
   initial_square_y: number = this.app.getScreenSize().h * 0.18;
   initial_square_distance: number = this.app.getScreenSize().h * 0.960;
@@ -67,7 +67,8 @@ export class GameScene extends Scene {
   animate: boolean = false;
   hit: string = 'left';
   squareFarPosition: any = [];
-  animatedSquares: any = [1,2,3];
+  squareFarToAnimate: any = [];
+  animatedSquares: any = [1,3,5];
 
   // coins
   coin: projection.Sprite2d [] = [];
@@ -80,7 +81,7 @@ export class GameScene extends Scene {
   stageText: Text;
   stage: number = 1;
   stageProgress: number = 1;
-  stageLimit: number = 5;
+  stageLimit: number = 20;
 
   init(): void {
     
@@ -88,7 +89,12 @@ export class GameScene extends Scene {
     this.bigWhiteTexture.orig.width = this.CIRCLEWIDTH * 6;
     this.bigWhiteTexture.orig.height = this.CIRCLEWIDTH * 4;
     this.last_square_position = this.initial_square_distance + (this.initial_square_distance - this.initial_square_y) * 8;
+    this.air_time = this.FREE_FALL * 2 - 1;
   
+  }
+
+  public getScore(){
+    return this.score;
   }
 
   start(): void {
@@ -96,8 +102,12 @@ export class GameScene extends Scene {
   ///// BACKGROUND IMAGE
 console.log('initial velocity', this.INITIAL_VELOCITY);
 console.log('gravity', this.GRAVITY);
-console.log('square distance', this.initial_square_distance);
-    
+console.log('initial square distance', this.initial_square_distance);
+console.log('square fall pos: ', this.initial_square_y);
+console.log('square distance: ', this.square_distance);
+console.log('--------');
+console.log('device height', this.app.getScreenSize().h);
+console.log('device width', this.app.getScreenSize().w);
 
    // stage
    this.stageText = new Text('',{fontFamily : 'Arial', fontSize: 100, fill : 0x000000, align : 'center'});
@@ -337,19 +347,392 @@ console.log('square distance', this.initial_square_distance);
     }
   }
 
-  stage3(){
+  renderStage(number: number){
+
+    try{
+      this.container.removeChild(this.bg_img.getSprite()); 
+      this.container.removeChild(this.gradient_bg.getSprite())
+    }catch(e){
+
+    }
+
+    // render stages
+    switch (number) {
+      case 1:
+        this.stage1();
+        break;
+      case 2:
+        this.stage2();
+        break;
+      case 3:
+        this.stage3();
+        break;
+      default:
+        this.stage4();
+        break;
+    }
+  }
+
+  isAnimating(){
+    let n = Math.floor(Math.random() * 2);
+    return (n == 1) ? true : false;
+  }
+
+  animateSquare(){
+    // do not animate if animation is turned off
+    if(this.animate == false) return false;
+
+    // square1
+  if(this.squareFarToAnimate[1] == true){
+    let maxPosition = this.squareFarPosition[1] + (this.app.getScreenSize().w * .50);
+
+    let moveRight = this.squareFar[1].x += 6;
+    let moveLeft = this.squareFar[1].x -= 6;
+    
+    if(this.squareFar[1].x <= maxPosition && this.hit == 'left'){
+      this.hit = 'left';
+      this.squareFar[1].x = moveRight;
+    }else{
+      if(this.squareFar[1].x >= this.squareFarPosition[1]){
+        this.hit = 'right';
+        this.squareFar[1].x -= 6;
+      }else{
+        this.hit = 'left';
+      }
+      
+    }
+  }
+
+  if(this.squareFarToAnimate[3] == true){
+    let maxPosition = this.squareFarPosition[3] + (this.app.getScreenSize().w * .40);
+
+    let moveRight = this.squareFar[3].x += 6;
+    let moveLeft = this.squareFar[3].x -= 6;
+    
+    if(this.squareFar[3].x <= maxPosition && this.hit == 'left'){
+      this.hit = 'left';
+      this.squareFar[3].x = moveRight;
+    }else{
+      if(this.squareFar[3].x >= this.squareFarPosition[3]){
+        this.hit = 'right';
+        this.squareFar[3].x -= 6;
+      }else{
+        this.hit = 'left';
+      }
+      
+    }
+  }
+
+  if(this.squareFarToAnimate[5] == true){
+    let maxPosition = this.squareFarPosition[1] + (this.app.getScreenSize().w * .40);
+
+    let moveRight = this.squareFar[5].x += 6;
+    let moveLeft = this.squareFar[5].x -= 6;
+    
+    if(this.squareFar[5].x <= maxPosition && this.hit == 'left'){
+      this.hit = 'left';
+      this.squareFar[5].x = moveRight;
+    }else{
+      if(this.squareFar[5].x >= this.squareFarPosition[5]){
+        this.hit = 'right';
+        this.squareFar[5].x -= 6;
+      }else{
+        this.hit = 'left';
+      }
+      
+    }
+  }
+
+
+  }
+
+  update(_delta: number): void {
+
+    // animate square
+    this.animate = true;
+    try{
+      this.animateSquare();
+    }catch(error){
+      // console.log("animate error", error);
+    }
+
+      // Project camera angle
+      let posY = this.container2d.toLocal(this.squareY.position, undefined, undefined, undefined, PIXI.projection.TRANSFORM_STEP.BEFORE_PROJ);
+      this.container2d.proj.setAxisY(posY, 1);
+
+      if(this.GAME_RESET != true) {  
+        // add square
+        if(this.squareFar[0].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
+          this.squareFar[0].position.y = this.squareFar[7].position.y + this.square_distance;
+          this.squareFar[0].position.x = this.randomPosition();
+          this.squareFar[0].addChild(this.coin[0]);
+          this.squareFarPosition[0] = this.squareFar[0].position.x;
+          this.squareFarToAnimate[0] = this.isAnimating();
+          }
+        if(this.squareFar[1].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
+          this.squareFar[1].position.y = this.squareFar[0].position.y + this.square_distance; 
+          this.squareFar[1].position.x = this.randomPosition();
+          this.squareFar[1].addChild(this.coin[1]);
+          this.squareFarPosition[1] = this.squareFar[1].position.x;
+          this.squareFarToAnimate[1] = this.isAnimating();
+
+        }
+        if(this.squareFar[2].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
+          this.squareFar[2].position.y = this.squareFar[1].position.y + this.square_distance; 
+          this.squareFar[2].position.x = this.randomPosition();
+          this.squareFar[2].addChild(this.coin[2]);
+          this.squareFarPosition[2] = this.squareFar[2].position.x;
+          this.squareFarToAnimate[2] = this.isAnimating();
+        }
+        if(this.squareFar[3].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
+          this.squareFar[3].position.y = this.squareFar[2].position.y + this.square_distance; 
+          this.squareFar[3].position.x = this.randomPosition();
+          this.squareFar[3].addChild(this.coin[3]);
+          this.squareFarPosition[3] = this.squareFar[3].position.x;
+          this.squareFarToAnimate[3] = this.isAnimating();
+        }
+        if(this.squareFar[4].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
+          this.squareFar[4].position.y = this.squareFar[3].position.y + this.square_distance;
+          this.squareFar[4].position.x = this.randomPosition();
+          this.squareFar[4].addChild(this.coin[4]);
+          this.squareFarPosition[4] = this.squareFar[4].position.x;
+          this.squareFarToAnimate[4] = this.isAnimating();
+        }
+        if(this.squareFar[5].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
+          this.squareFar[5].position.y = this.squareFar[4].position.y + this.square_distance;
+          this.squareFar[5].position.x = this.randomPosition();
+          this.squareFar[5].addChild(this.coin[5]);
+          this.squareFarPosition[5] = this.squareFar[5].position.x;
+          this.squareFarToAnimate[5] = this.isAnimating();
+        }
+        if(this.squareFar[6].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
+          this.squareFar[6].position.y = this.squareFar[5].position.y + this.square_distance;
+          this.squareFar[6].position.x = this.randomPosition();
+          this.squareFar[6].addChild(this.coin[6]);
+          this.squareFarPosition[6] = this.squareFar[6].position.x;
+          this.squareFarToAnimate[6] = this.isAnimating();
+        }
+        if(this.squareFar[7].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
+          this.squareFar[7].position.y = this.squareFar[6].position.y + this.square_distance; 
+          this.squareFar[7].position.x = this.randomPosition();
+          this.squareFar[7].addChild(this.coin[7]);
+          this.squareFarPosition[7] = this.squareFar[7].position.x;
+          this.squareFarToAnimate[7] = this.isAnimating();
+        }
+      
+        this.squareFar[0].position.y -= this.SQUARE_VELOCITY;
+        this.squareFar[1].position.y -= this.SQUARE_VELOCITY;
+        this.squareFar[2].position.y -= this.SQUARE_VELOCITY;
+        this.squareFar[3].position.y -= this.SQUARE_VELOCITY;
+        this.squareFar[4].position.y -= this.SQUARE_VELOCITY;
+        this.squareFar[5].position.y -= this.SQUARE_VELOCITY;
+        this.squareFar[6].position.y -= this.SQUARE_VELOCITY;
+        this.squareFar[7].position.y -= this.SQUARE_VELOCITY;
+        this.initial_square.position.y -= this.SQUARE_VELOCITY;
+        
+        if (this.circle.position.y <= 0 && this.TOUCHEND == false) {
+          
+          // IF BALL IS BOUNCING
+          this.YVELOCITY -= this.GRAVITY;
+          this.circle.position.y -= this.YVELOCITY;
+          this.air_time -= 1;
+        } else {
+            
+            
+            let square = this.squareFar[this.bounce_count];
+            let bouncePosition = this.circle.position.x;
+
+            if ( this.air_time <= -1 || this.air_time <= 1 ) {
+              // IF BALL FAILED TO BOUNCE ON SQUARE
+              if(this.isInSquare(square, bouncePosition) === true ) {
+                // IF BALL FALL ON COIN
+                if(this.isCoined(square, bouncePosition) && this.TOUCHEND == false){
+                  this.scoreText.text = `${this.score += 1}`;
+
+                  // remove coin
+                  square.removeChildren();
+
+                  // animate square
+                  if(this.score >= this.animateParam){
+                    this.animate = true;
+                  }
+
+                  if(this.stageProgress == this.stageLimit){
+                    this.stage += 1;
+                    this.stageProgress = 1;
+                    this.renderStage(this.stage);
+                  }else{
+                    this.stageProgress+=1;
+                  }
+                }
+                
+                this.bounce_count += 1;
+                this.air_time = this.FREE_FALL * 2 - 1;
+              } else {
+                this.TOUCHEND = true;
+                this.bounce_count = 0;
+                // console.log('uncatched', this.isInSquare(square,bouncePosition)); 
+              }
+            }
+
+            
+
+            
+            if(this.TOUCHEND == true) {
+              // console.log('falling');
+              if(this.fall_position < this.circle.position.y) {
+                // if ball out of screen
+                this.reset_game();
+              } else {
+                // continuous falling
+                this.YVELOCITY -= this.GRAVITY;
+                this.circle.position.y -= this.YVELOCITY;
+              }
+            } else {
+              this.YVELOCITY = this.INITIAL_VELOCITY;
+              this.YVELOCITY -= this.GRAVITY;
+              this.circle.position.y -= this.YVELOCITY;
+            }
+            
+          // // SCREEN STILL ON TOUCH
+          if (this.bounce_count > this.squareFar.length - 1) {
+            this.bounce_count = 0;
+          } 
+        
+      }
+  }
+}
+
+  resetStage(){
+    this.stage = 1;
+    this.stageProgress = 1;
+
+    this.generateStartSquares();
+    this.animate = false;
+    this.renderStage(1);
+  }
+
+  isCoined(square: projection.Sprite2d, bouncePosition: number){
+    
+    // square coordinates
+    let square_start = (square.position.x/2.1) - (square.width/4);
+    let square_end = (square.position.x/2.1) + (square.width/4);
+
+    // coin width
+    let coinWidth = (square.width/2)*.68;
+
+    // center of square coordinates
+    let centerSquare = square_start + (square.width/4);
+
+    // coin position
+    let coinStart = centerSquare - (coinWidth/2);
+    let coinEnd = centerSquare + (coinWidth/2);
+
+    if(bouncePosition > coinStart && bouncePosition < coinEnd){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  reset_game() {
+      
+    // goto gameover scene
+      this.app.goToScene(4, {score: this.score});
+
+    // IF BALL OUT OF SCREEN, RESET GAME
+      this.circle.position.y = 0; 
+      this.circle.position.x = 0;
+      this.container2d.position.x = this.deviceScreenSize;
+      this.YVELOCITY = this.INITIAL_VELOCITY;
+      this.GAME_RESET = true;
+      this.TOUCHEND = false;
+      this.bounce_count = 0;
+      setTimeout(()=>{ this.scoreText.text = `${this.score = 0}`;},100);
+      this.bg_img.getSprite().position.x = this.bg_initial_x;
+      this.resetStage();
+  }
+
+  generateStartSquares(){
+    this.initial_square.position.y = this.initial_square_y;
+    this.squareFar[0].position.set(this.randomPosition(), this.initial_square_distance);
+    this.squareFar[1].position.set(this.randomPosition(), this.initial_square_distance + this.square_distance);
+    this.squareFar[2].position.set(this.randomPosition(),this.initial_square_distance + this.square_distance * 2);
+    this.squareFar[3].position.set(this.randomPosition(),this.initial_square_distance + this.square_distance * 3);
+    this.squareFar[4].position.set(this.randomPosition(),this.initial_square_distance + this.square_distance * 4);
+    this.squareFar[5].position.set(this.randomPosition(),this.initial_square_distance + this.square_distance * 5);
+    this.squareFar[6].position.set(this.randomPosition(),this.initial_square_distance + this.square_distance * 6);
+    this.squareFar[7].position.set(this.randomPosition(),this.initial_square_distance + this.square_distance * 7);
+  }
+
+  isInSquare(square:projection.Sprite2d, ball_bounce: number){
+    // if ball bounce at the center and square is in the center
+    let square_position = square.position.x;
+    let ball_position = ball_bounce;
+
+    let square_start = (square.position.x/2.1) - (square.width/4);
+    let square_end = (square.position.x/2.1) + (square.width/4);
+    
+    if (ball_position > square_start && ball_position < square_end) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  remove(): void {
+    setTimeout(()=>{ this.container.removeChildren();},120);
+  }
+
+  ball_click(): void {
+    // bounce ball when tapped
+    if(this.GAME_RESET == false) {
+     this.TOUCHEND = false;
+    } else {
+      this.GAME_RESET = false;
+    }
+  }
+
+  // STAGES ---------------------------
+  stage4(){
+    
     // SPEED
-     // initial speed
-     this.FREE_FALL = 12.5;
-     this.INITIAL_VELOCITY = (this.app.getScreenSize().h * 0.02) * 2;
+     this.FREE_FALL = 10;
+     this.INITIAL_VELOCITY = (this.app.getScreenSize().h * 0.02) * 3;
      this.GRAVITY = this.INITIAL_VELOCITY / this.FREE_FALL;
- 
-     // square speed
      this.SQUARE_VELOCITY = this.square_distance / (this.FREE_FALL * 2 - 1);
      // BACKGROUND
+    this.bg_img = new SpriteActor('splash-bg', this.app, 'common', 'startscreen_bg.jpg');
+    this.bg = new Graphics();
+    this.bg.beginFill(0xF2F2F2, 0);
+    this.bg.drawRect(0, 0, this.app.getScreenSize().w, this.app.getScreenSize().h);
+    this.bg.endFill();
+    this.bg_img.setScaleUpToScreenPercWidth(1.2);
+    this.bg_img.setScaleUpToScreenPercHeight(1);
+    this.bg_initial_x = -( (this.bg_img.getSprite().width - this.app.getScreenSize().w) / 2);
+    this.bg_img.getSprite().position.x = this.bg_initial_x;
+    this.addChild(this.bg_img);
+    
+    this.container.addChild(this.bg_img.getSprite());
+    this.container.setChildIndex(this.bg_img.getSprite(),0);
+    // Gradient Overlay --- > from top screen to make fading squares effect
+    this.gradient_bg = new SpriteActor('splash-bg', this.app, 'lvl1', 'lv1_mountainbg_gradientoverlay.png');
+    this.gradient_bg.getSprite().alpha = 1;
+    this.gradient_bg.setScaleUpToScreenPercWidth(1); 
+    this.gradient_bg.setScaleUpToScreenPercHeight(1);
+    this.container.addChild(this.gradient_bg.getSprite());
+    this.container.setChildIndex(this.gradient_bg.getSprite(),2)
+  }
 
+  stage3(){
+
+    // SPEED
+     this.FREE_FALL = 12.5;
+     this.INITIAL_VELOCITY = (this.app.getScreenSize().h * 0.02) * 2.75;
+     this.GRAVITY = this.INITIAL_VELOCITY / this.FREE_FALL;
+     this.SQUARE_VELOCITY = this.square_distance / (this.FREE_FALL * 2 - 1);
+     // BACKGROUND
     this.bg_img = new SpriteActor('stage3-bg', this.app, 'lvl3', 'lv3_spacebg_mountains.jpg');
-
     this.bg = new Graphics();
     this.bg.beginFill(0xF2F2F2, 0);
     this.bg.drawRect(0, 0, this.app.getScreenSize().w, this.app.getScreenSize().h);
@@ -362,7 +745,6 @@ console.log('square distance', this.initial_square_distance);
     
     this.container.addChild(this.bg_img.getSprite());
     this.container.setChildIndex(this.bg_img.getSprite(),0);
-
     // Gradient Overlay --- > from top screen to make fading squares effect
     this.gradient_bg = new SpriteActor('stage3-bg', this.app, 'lvl3', 'lv3_spacebg_gradientoverlay.png');
     this.gradient_bg.getSprite().alpha = .4;
@@ -370,23 +752,18 @@ console.log('square distance', this.initial_square_distance);
     this.gradient_bg.setScaleUpToScreenPercHeight(1);
     this.container.addChild(this.gradient_bg.getSprite());
     this.container.setChildIndex(this.gradient_bg.getSprite(),2)
-
     this.container.setChildIndex(this.scoreText,3)
   }
 
   stage2(){
 
     // SPEED
-     // initial speed
     this.FREE_FALL = 15;
-    this.INITIAL_VELOCITY = (this.app.getScreenSize().h * 0.02) * 2;
+    this.INITIAL_VELOCITY = (this.app.getScreenSize().h * 0.02) * 2.5;
     this.GRAVITY = this.INITIAL_VELOCITY / this.FREE_FALL;
-
-    // square speed
     this.SQUARE_VELOCITY = this.square_distance / (this.FREE_FALL * 2 - 1);
     // BACKGROUND
     this.bg_img = new SpriteActor('stage2-bg', this.app, 'lvl2', 'lv2_skybg_mountains.jpg');
-
     this.bg = new Graphics();
     this.bg.beginFill(0xF2F2F2, 0);
     this.bg.drawRect(0, 0, this.app.getScreenSize().w, this.app.getScreenSize().h);
@@ -421,9 +798,11 @@ console.log('square distance', this.initial_square_distance);
      // square speed
      this.SQUARE_VELOCITY = this.square_distance / (this.FREE_FALL * 2 - 1);
 
-    // BACKGROUND
-    // this.bg_img = new SpriteActor('stage2-bg', this.app, 'lvl1', 'lv1_gamearea_bgsample.png');
-    this.bg_img = new SpriteActor('splash-bg', this.app, 'common', 'startscreen_bg.jpg');
+     // BACKGROUND
+    this.bg_img = new SpriteActor('stage2-bg', this.app, 'lvl1', 'lv1_gamearea_bgsample.png');
+    // this.bg_img = new SpriteActor('splash-bg', this.app, 'common', 'startscreen_bg.jpg');
+
+
     
     this.bg = new Graphics();
     this.bg.beginFill(0xF2F2F2, 0);
@@ -446,290 +825,6 @@ console.log('square distance', this.initial_square_distance);
     this.container.addChild(this.gradient_bg.getSprite());
     this.container.setChildIndex(this.gradient_bg.getSprite(),2)
 
-  }
-
-  renderStage(number: number){
-
-    this.stage1();
-    return; 
-    try{
-      this.container.removeChild(this.bg_img.getSprite()); 
-      this.container.removeChild(this.gradient_bg.getSprite())
-    }catch(e){
-
-    }
-
-    // render stages
-    switch (number) {
-      case 1:
-        this.stage1();
-        break;
-      case 2:
-        this.stage2();
-        break;
-      default:
-        this.stage3();
-        break;
-    }
-  }
-
-  animateSquare(){
-    console.log(this.animatedSquares);
-    // do not animate if animation is turned off
-    if(this.animate == false) return false;
-
-    this.animatedSquares.forEach(function(square:any){
-
-      console.log("animate", square)
-      let maxPosition = this.squareFarPosition[square] + 200;
-
-      let moveRight = this.squareFar[square].x += 6;
-      let moveLeft = this.squareFar[square].x -= 6;
-      
-      if(this.squareFar[square].x <= maxPosition && this.hit == 'left'){
-        this.hit = 'left';
-        this.squareFar[square].x = moveRight;
-      }else{
-        if(this.squareFar[square].x >= this.squareFarPosition[square]){
-          this.hit = 'right';
-          this.squareFar[square].x -= 6;
-        }else{
-          this.hit = 'left';
-        }
-        
-      }
-
-    });
-
-    
-
-  }
-
-  update(_delta: number): void {
-
-
-    // animate square
-    this.animate = true;
-    try{
-      this.animateSquare();
-    }catch(error){
-      console.log("animate error", error);
-    }
-
-      // Project camera angle
-      let posY = this.container2d.toLocal(this.squareY.position, undefined, undefined, undefined, PIXI.projection.TRANSFORM_STEP.BEFORE_PROJ);
-      this.container2d.proj.setAxisY(posY, 1);
-
-      if(this.GAME_RESET != true) {  
-        // add square
-        if(this.squareFar[0].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
-          this.squareFar[0].position.y = this.squareFar[7].position.y + this.square_distance;
-          this.squareFar[0].position.x = this.randomPosition();
-          this.squareFar[0].addChild(this.coin[0]);
-          this.squareFarPosition[0] = this.squareFar[0].position.x;
-          
-          }
-        if(this.squareFar[1].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
-          this.squareFar[1].position.y = this.squareFar[0].position.y + this.square_distance; 
-          this.squareFar[1].position.x = this.randomPosition();
-          this.squareFar[1].addChild(this.coin[1]);
-
-        }
-        if(this.squareFar[2].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
-          this.squareFar[2].position.y = this.squareFar[1].position.y + this.square_distance; 
-          this.squareFar[2].position.x = this.randomPosition();
-          this.squareFar[2].addChild(this.coin[2]);
-        }
-        if(this.squareFar[3].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
-          this.squareFar[3].position.y = this.squareFar[2].position.y + this.square_distance; 
-          this.squareFar[3].position.x = this.randomPosition();
-          this.squareFar[3].addChild(this.coin[3]);
-        }
-        if(this.squareFar[4].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
-          this.squareFar[4].position.y = this.squareFar[3].position.y + this.square_distance;
-          this.squareFar[4].position.x = this.randomPosition();
-          this.squareFar[4].addChild(this.coin[4]);
-        }
-        if(this.squareFar[5].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
-          this.squareFar[5].position.y = this.squareFar[4].position.y + this.square_distance;
-          this.squareFar[5].position.x = this.randomPosition();
-          this.squareFar[5].addChild(this.coin[5]);
-        }
-        if(this.squareFar[6].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
-          this.squareFar[6].position.y = this.squareFar[5].position.y + this.square_distance;
-          this.squareFar[6].position.x = this.randomPosition();
-          this.squareFar[6].addChild(this.coin[6]);
-        }
-        if(this.squareFar[7].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
-          this.squareFar[7].position.y = this.squareFar[6].position.y + this.square_distance; 
-          this.squareFar[7].position.x = this.randomPosition();
-          this.squareFar[7].addChild(this.coin[7]);
-        }
-      
-        this.squareFar[0].position.y -= this.SQUARE_VELOCITY;
-        this.squareFar[1].position.y -= this.SQUARE_VELOCITY;
-        this.squareFar[2].position.y -= this.SQUARE_VELOCITY;
-        this.squareFar[3].position.y -= this.SQUARE_VELOCITY;
-        this.squareFar[4].position.y -= this.SQUARE_VELOCITY;
-        this.squareFar[5].position.y -= this.SQUARE_VELOCITY;
-        this.squareFar[6].position.y -= this.SQUARE_VELOCITY;
-        this.squareFar[7].position.y -= this.SQUARE_VELOCITY;
-        this.initial_square.position.y -= this.SQUARE_VELOCITY;
-        
-        if (this.circle.position.y <= 0 && this.TOUCHEND == false) {
-          
-          // IF BALL IS BOUNCING
-          this.YVELOCITY -= this.GRAVITY;
-          this.circle.position.y -= this.YVELOCITY;
-          
-        } else {
-            // console.log("square", this.bounce_count)
-            // // SCREEN STILL ON TOUCH
-            let square = this.squareFar[this.bounce_count];
-            let bouncePosition = this.circle.position.x;
-            if(this.isInSquare(square,bouncePosition)) {
-
-              if(this.isCoined(square, bouncePosition) && this.TOUCHEND == false){
-                this.scoreText.text = `${this.score+=1}`;
-
-                // remove coin
-                square.removeChildren();
-
-                // animate square
-                if(this.score >= this.animateParam){
-                  this.animate = true;
-                }
-
-                // change stage
-                if(this.stageProgress == this.stageLimit){
-                  this.stage+=1;
-                  this.stageProgress = 1;
-                  this.renderStage(this.stage);
-                }else{
-                  this.stageProgress+=1;
-                }
-              }
-              
-              // console.log("in square");
-            } else {
-              this.TOUCHEND = true;
-            }
-
-            // detect current falling square
-            // count of bounce
-            this.bounce_count += 1;
-            if (this.bounce_count > this.squareFar.length - 1) {
-              this.bounce_count = 0;
-            }
-
-            if(this.TOUCHEND == true) {
-              if(this.fall_position < this.circle.position.y) {
-                // if ball out of screen
-                this.reset_game();
-              } else {
-                // continuous falling
-                this.YVELOCITY -= this.GRAVITY;
-                this.circle.position.y -= this.YVELOCITY;
-              }
-
-            } else {
-              this.YVELOCITY = this.INITIAL_VELOCITY;
-              this.YVELOCITY -= this.GRAVITY;
-              this.circle.position.y -= this.YVELOCITY;
-            }
-        
-      }
-  }
-}
-
-  resetStage(){
-    this.stage = 1;
-    this.stageProgress = 1;
-
-    this.generateStartSquares();
-    this.animate = false;
-    this.renderStage(1);
-
-    // this.INITIAL_VELOCITY = this.app.getScreenSize().h * 0.02;
-    // this.GRAVITY = this.INITIAL_VELOCITY * .05;
-  }
-
-  isCoined(square: projection.Sprite2d, bouncePosition: number){
-    // square coordinates
-    let square_start = (square.position.x/2.1) - (square.width/4);
-    let square_end = (square.position.x/2.1) + (square.width/4);
-
-    // coin width
-    let coinWidth = (square.width/2)*.68;
-
-    // center of square coordinates
-    let centerSquare = square_start + (square.width/4);
-
-    // coin position
-    let coinStart = centerSquare - (coinWidth/2);
-    let coinEnd = centerSquare + (coinWidth/2);
-
-    if(bouncePosition > coinStart && bouncePosition < coinEnd){
-      return true;
-    }else{
-      return false;
-    }
-  }
-
-  reset_game() {
-
-    // IF BALL OUT OF SCREEN, RESET GAME
-      console.log('reset game')
-      this.circle.position.y = 0; 
-      this.circle.position.x = 0;
-      this.container2d.position.x = this.deviceScreenSize;
-      this.YVELOCITY = this.INITIAL_VELOCITY;
-      this.GAME_RESET = true;
-      this.TOUCHEND = false;
-      this.bounce_count = 0;
-      this.scoreText.text = `${this.score = 0}`;
-      this.bg_img.getSprite().position.x = this.bg_initial_x;
-
-      this.resetStage();
-  }
-
-  generateStartSquares(){
-    this.initial_square.position.y = this.initial_square_y;
-    this.squareFar[0].position.set(this.randomPosition(), this.initial_square_distance);
-    this.squareFar[1].position.set(this.randomPosition(), this.initial_square_distance + this.square_distance);
-    this.squareFar[2].position.set(this.randomPosition(),this.initial_square_distance + this.square_distance * 2);
-    this.squareFar[3].position.set(this.randomPosition(),this.initial_square_distance + this.square_distance * 3);
-    this.squareFar[4].position.set(this.randomPosition(),this.initial_square_distance + this.square_distance * 4);
-    this.squareFar[5].position.set(this.randomPosition(),this.initial_square_distance + this.square_distance * 5);
-    this.squareFar[6].position.set(this.randomPosition(),this.initial_square_distance + this.square_distance * 6);
-    this.squareFar[7].position.set(this.randomPosition(),this.initial_square_distance + this.square_distance * 7);
-  }
-
-  isInSquare(square:projection.Sprite2d, ball_bounce: number){
-    // if ball bounce at the center and square is in the center
-    let square_position = square.position.x;
-    let ball_position = ball_bounce;
-
-    let square_start = (square.position.x/2.1) - (square.width/4);
-    let square_end = (square.position.x/2.1) + (square.width/4);
-    
-    if(ball_position > square_start && ball_position < square_end){
-      return true;
-    }else{
-      return false;
-    }
-  }
-
-  remove(): void {
-  }
-
-  ball_click(): void {
-    // bounce ball when tapped
-    if(this.GAME_RESET == false) {
-     this.TOUCHEND = false;
-    } else {
-      this.GAME_RESET = false;
-    }
   }
 
 }

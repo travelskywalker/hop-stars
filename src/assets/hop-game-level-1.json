@@ -1,8 +1,16 @@
 {"frames": {
 
+"exit_button.png":
+{
+	"frame": {"x":0,"y":0,"w":18,"h":18},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":18,"h":18},
+	"sourceSize": {"w":18,"h":18}
+},
 "lv1_gamearea_bgsample.png":
 {
-	"frame": {"x":0,"y":0,"w":360,"h":640},
+	"frame": {"x":20,"y":0,"w":360,"h":640},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":360,"h":640},
@@ -10,7 +18,7 @@
 },
 "lv1_mountainbg_gradientoverlay.png":
 {
-	"frame": {"x":0,"y":642,"w":360,"h":640},
+	"frame": {"x":382,"y":0,"w":360,"h":640},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":360,"h":640},
@@ -21,8 +29,8 @@
 	"version": "1.0",
 	"image": "hop-game-level-1.png",
 	"format": "RGBA8888",
-	"size": {"w":360,"h":1282},
+	"size": {"w":742,"h":640},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:23a34a8a2e7293a8d374088db7a962b2:935634ab56b65db6eb9ff21bcf99a6fb:384003f9ecd9bf6422822dfce641e4f7$"
+	"smartupdate": "$TexturePacker:SmartUpdate:e9cc6a1eb4d6340004e024c8891483ce:5dfcdbb5c40aa90d15d670609cf0d1aa:384003f9ecd9bf6422822dfce641e4f7$"
 }
 }

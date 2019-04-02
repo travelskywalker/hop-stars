@@ -4,6 +4,7 @@ import { SpriteActor } from '@src/core/sprite.actor';
 import { SpriteAnimatedActor } from '@src/core/sprite.animated.actor';
 import { Graphics } from 'pixi.js';
 import { LeaderboardModal } from './../components/leaderboard.modal';
+import { GameScene } from '@src/scripts/scenes/game.scene';
 
 export class GameOverScene extends Scene {
 
@@ -201,14 +202,15 @@ export class GameOverScene extends Scene {
   // dummy score data
   data = {
     best_score: 240,
-    current_score: 0
+    current_score: this.app.currentScore
   };
 
   init(): void {
-
+    
   }
 
   start(): void {
+    console.log("gameoverscene", this.app.currentScore);
     // initialize and set bg
     this.bg = new SpriteActor('gameover-bg', this.app, 'common', 'GAMEOVER_layover.png');
     this.bg.setAnchor(0, 0);
@@ -245,7 +247,7 @@ export class GameOverScene extends Scene {
 
     // SCORE
     const scoreText = new PIXI.Text(
-      `${this.data.current_score}`,
+      `${this.app.currentScore}`,
       {
         fontFamily: 'Chennai-Bold',
         fontSize: `${this.gameOverLogo.getSprite().height * .5}px`,
@@ -321,7 +323,7 @@ export class GameOverScene extends Scene {
   }
 
   remove(): void {
-
+    this.container.removeChildren();
   }
 
 }

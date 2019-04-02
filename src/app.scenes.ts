@@ -11,8 +11,8 @@ import { GameOverScene } from '@src/scripts/scenes/gameover.scene';
 export function scenesProvider(_app: App, _scenes: Scene[]): void {
 
     // register scenes, the first will be the one that's active on start
-    // _scenes.push(new SplashScene(_app));
-    // _scenes.push(new InstructionScene(_app));
+    _scenes.push(new SplashScene(_app));
+    _scenes.push(new InstructionScene(_app));
     _scenes.push(new GameScene(_app));
     _scenes.push(new HowtowinScene(_app));
     _scenes.push(new GameOverScene(_app));
