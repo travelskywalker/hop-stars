@@ -277,6 +277,7 @@ export class LeaderboardModal extends PIXI.Container {
       console.log('close modal');
       this.removeChild(this.leaderboard_bg);
       this.removeChild(this.bg_image.getSprite());
+      this.removeChildren();
     });
     this.leaderboard_bg.addChild(this.closeBtn);
     this.addChild(this.leaderboard_bg);
