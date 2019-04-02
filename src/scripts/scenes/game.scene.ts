@@ -467,33 +467,6 @@ console.log('square distance', this.initial_square_distance);
         break;
     }
 
-    // //////// speed
-
-    // increase speed
-    // change background
-    // update stage Text
-    // this.stage = number;
-    // this.stageText.text = `Stage ${number}`;
-
-    // let velocity = (number/2);
-    // let gravity = (number*4);
-
-    // console.log("velocity" , velocity, "gravity", gravity);
-
-    // this.INITIAL_VELOCITY = this.INITIAL_VELOCITY * velocity;
-    // this.GRAVITY = (this.INITIAL_VELOCITY * .05)*number;
-    // if (number > 1){
-    // this.INITIAL_VELOCITY = this.INITIAL_VELOCITY * 2.1; //higher the faster
-    // this.GRAVITY = this.GRAVITY * 4.15 //higher the faster
-    // }
-    // this.GRAVITY = 2.8800000000000003
-    // console.log()
-
-    // velocity 57.6
-    // gravity 2.8800000000000003
-
-    // console.log("initial velocity", this.INITIAL_VELOCITY, "gravity", this.GRAVITY);
-    // this.GRAVITY = 3.90;
   }
 
   update(_delta: number): void {
@@ -562,12 +535,16 @@ console.log('square distance', this.initial_square_distance);
           this.circle.position.y -= this.YVELOCITY;
           
         } else {
-            // console.log("square", this.bounce_count)
-            // // SCREEN STILL ON TOUCH
+            
+            
             let square = this.squareFar[this.bounce_count];
+            console.log('square count: ', this.bounce_count);
             let bouncePosition = this.circle.position.x;
-            if(this.isInSquare(square,bouncePosition)) {
 
+            // IF BALL FAILED TO BOUNCE ON SQUARE
+            if(this.isInSquare(square, bouncePosition) === true ) {
+              console.log('catched, bounce count: ', this.bounce_count);
+              // IF BALL FALL ON COIN
               if(this.isCoined(square, bouncePosition) && this.TOUCHEND == false){
                 this.scoreText.text = `${this.score+=1}`;
 
@@ -586,19 +563,18 @@ console.log('square distance', this.initial_square_distance);
                 }
               }
               
-              // console.log("in square");
+              this.bounce_count += 1;
+              console.log('bounced');
+
             } else {
               this.TOUCHEND = true;
-            }
-
-            // detect current falling square
-            // count of bounce
-            this.bounce_count += 1;
-            if (this.bounce_count > this.squareFar.length - 1) {
               this.bounce_count = 0;
+              console.log('uncatched', this.isInSquare(square,bouncePosition)); 
             }
 
+            
             if(this.TOUCHEND == true) {
+              console.log('falling');
               if(this.fall_position < this.circle.position.y) {
                 // if ball out of screen
                 this.reset_game();
@@ -608,14 +584,16 @@ console.log('square distance', this.initial_square_distance);
                 this.circle.position.y -= this.YVELOCITY;
               }
               
-
             } else {
               this.YVELOCITY = this.INITIAL_VELOCITY;
               this.YVELOCITY -= this.GRAVITY;
               this.circle.position.y -= this.YVELOCITY;
             }
             
-          // }
+          // // SCREEN STILL ON TOUCH
+          if (this.bounce_count > this.squareFar.length - 1) {
+            this.bounce_count = 0;
+          } 
         
       }
   }
@@ -688,12 +666,12 @@ console.log('square distance', this.initial_square_distance);
     this.initial_square.position.y = this.initial_square_y;
       this.squareFar[0].position.set(this.randomPosition(), this.initial_square_distance);
       this.squareFar[1].position.set(this.randomPosition(), this.initial_square_distance + this.square_distance);
-      this.squareFar[2].position.set(this.randomPosition(),this.initial_square_distance + this.square_distance * 2);
-      this.squareFar[3].position.set(this.randomPosition(),this.initial_square_distance + this.square_distance * 3);
-      this.squareFar[4].position.set(this.randomPosition(),this.initial_square_distance + this.square_distance * 4);
-      this.squareFar[5].position.set(this.randomPosition(),this.initial_square_distance + this.square_distance * 5);
-      this.squareFar[6].position.set(this.randomPosition(),this.initial_square_distance + this.square_distance * 6);
-      this.squareFar[7].position.set(this.randomPosition(),this.initial_square_distance + this.square_distance * 7);
+      this.squareFar[2].position.set(this.randomPosition(), this.initial_square_distance + this.square_distance * 2);
+      this.squareFar[3].position.set(this.randomPosition(), this.initial_square_distance + this.square_distance * 3);
+      this.squareFar[4].position.set(this.randomPosition(), this.initial_square_distance + this.square_distance * 4);
+      this.squareFar[5].position.set(this.randomPosition(), this.initial_square_distance + this.square_distance * 5);
+      this.squareFar[6].position.set(this.randomPosition(), this.initial_square_distance + this.square_distance * 6);
+      this.squareFar[7].position.set(this.randomPosition(), this.initial_square_distance + this.square_distance * 7);
   }
 
   isInSquare(square:projection.Sprite2d, ball_bounce: number){
@@ -704,9 +682,11 @@ console.log('square distance', this.initial_square_distance);
     let square_start = (square.position.x/2.1) - (square.width/4);
     let square_end = (square.position.x/2.1) + (square.width/4);
     
-    if(ball_position > square_start && ball_position < square_end){
+    console.log('bounce_count', this.bounce_count);
+    
+    if (ball_position > square_start && ball_position < square_end) {
       return true;
-    }else{
+    } else {
       return false;
     }
   }
