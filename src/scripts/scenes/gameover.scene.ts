@@ -298,7 +298,7 @@ export class GameOverScene extends Scene {
      this.play_again_btn.getSprite().interactive = true;
      this.play_again_btn.getSprite().on('pointerup', () => { 
        console.log('go to instruction screen scene ');
-       setTimeout(() => { this.app.goToScene(0); }, 200);
+       setTimeout(() => { this.app.goToScene(2); }, 200);
      });
      this.addChild(this.play_again_btn);   
 
