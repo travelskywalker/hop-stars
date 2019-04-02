@@ -10,7 +10,7 @@ import { scenesProvider } from '@src/app.scenes';
 import { resourcesProvider } from '@src/app.resources';
 
 export class App {
-
+  public currentScore: number = 0;
   // pixijs engine reference
   public _app: PIXI.Application;
 
@@ -160,7 +160,7 @@ export class App {
     this._timeSinceStart += this._app.ticker.elapsedMS;
   }
 
-  public goToScene(sceneIndex: number) {
+  public goToScene(sceneIndex: number, data = {score: 0}) {
 
     // get target scene from scene list
     const entryScene = this._scenes[sceneIndex];
@@ -175,6 +175,8 @@ export class App {
     this._app.stage.removeChild(this._currentScene.container);
     this._app.stage.addChild(entryScene.container);
     this._currentScene = entryScene;
+    this.currentScore = data.score;
+
   }
 
   public getPixiApplication(): PIXI.Application {

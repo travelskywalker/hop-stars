@@ -84,6 +84,10 @@ export class GameScene extends Scene {
   
   }
 
+  public getScore(){
+    return this.score;
+  }
+
   start(): void {
 
   ///// BACKGROUND IMAGE
@@ -418,8 +422,8 @@ console.log('square distance', this.initial_square_distance);
      this.SQUARE_VELOCITY = this.square_distance / (this.FREE_FALL * 2 - 1);
 
      // BACKGROUND
-    // this.bg_img = new SpriteActor('stage2-bg', this.app, 'lvl1', 'lv1_gamearea_bgsample.png');
-    this.bg_img = new SpriteActor('splash-bg', this.app, 'common', 'startscreen_bg.jpg');
+    this.bg_img = new SpriteActor('stage2-bg', this.app, 'lvl1', 'lv1_gamearea_bgsample.png');
+    // this.bg_img = new SpriteActor('splash-bg', this.app, 'common', 'startscreen_bg.jpg');
 
 
     
@@ -633,7 +637,8 @@ console.log('square distance', this.initial_square_distance);
   }
 
   reset_game() {
-
+      // goto gameover scene
+      this.app.goToScene(2, {score: this.score});
     // IF BALL OUT OF SCREEN, RESET GAME
       console.log('reset game')
       // this.circle.position.y = 0;
@@ -644,7 +649,7 @@ console.log('square distance', this.initial_square_distance);
       this.GAME_RESET = true;
       this.TOUCHEND = false;
       this.bounce_count = 0;
-      this.scoreText.text = `${this.score = 0}`;
+      setTimeout(()=>{ this.scoreText.text = `${this.score = 0}`;},100);
       this.bg_img.getSprite().position.x = this.bg_initial_x;
 
       this.resetStage();
@@ -657,8 +662,6 @@ console.log('square distance', this.initial_square_distance);
       // this.squareFar[5].position.y = this.initial_square_distance + this.square_distance * 5;
       // this.squareFar[6].position.y = this.initial_square_distance + this.square_distance * 6;
       // this.squareFar[7].position.y = this.initial_square_distance + this.square_distance * 7;
-      // this.app.goToScene(2);
-
       
   }
 
@@ -692,6 +695,7 @@ console.log('square distance', this.initial_square_distance);
   }
 
   remove(): void {
+    setTimeout(()=>{ this.container.removeChildren();},120);
   }
 
   ball_click(): void {
