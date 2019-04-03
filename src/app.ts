@@ -8,6 +8,7 @@ import { AppState } from '@src/app.state';
 import { Scene } from '@src/core/scene';
 import { scenesProvider } from '@src/app.scenes';
 import { resourcesProvider } from '@src/app.resources';
+import { AppSound } from './app.sound';
 
 export class App {
   public currentScore: number = 0;
@@ -24,6 +25,9 @@ export class App {
   // state management
   private _state: AppState;
 
+  // sound management
+  private _sound: AppSound;
+
   // app lifecycle
   private _timeSinceStart: number = 0;
 
@@ -32,7 +36,7 @@ export class App {
   private _loaderText: PIXI.Text;
 
   constructor() {
-
+  
     // setup game framework
     this.setup();
 
@@ -122,6 +126,9 @@ export class App {
     // create state
     this._state = new AppState();
 
+    // create sound manager
+    this._sound = new AppSound(this);
+
     // register scenes
     scenesProvider(this, this._scenes);
 
@@ -197,6 +204,11 @@ export class App {
 
     // time is updated in app update function
     return this._timeSinceStart;
+  }
+
+  public getSoundPlayer(): AppSound {
+
+    return this._sound;
   }
 
   public getResource(key: string): any {
