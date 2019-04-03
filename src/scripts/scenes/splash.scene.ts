@@ -191,6 +191,7 @@ export class SplashScene extends Scene {
   sound_btn: SpriteAnimatedActor;
   leaderboard_btn: SpriteActor;
   howtowin_btn: SpriteActor;
+  closeBtn: SpriteActor;
 
   // Texts
   copyText1: PIXI.Text;
@@ -198,7 +199,7 @@ export class SplashScene extends Scene {
 
   // dummy score data
   data = {
-    best_score: 240,
+    best_score: this.app.getState().getBestScore(),
     current_score: 0
   };  
 
@@ -207,6 +208,7 @@ export class SplashScene extends Scene {
   }
 
   start(): void {
+    
     // initialize and set bg
     this.bg = new SpriteActor('splash-bg', this.app, 'common', 'startscreen_bg.jpg');
     this.bg.setAnchor(0, 0);
@@ -214,6 +216,22 @@ export class SplashScene extends Scene {
     this.bg.setScaleUpToScreenPercWidth(1);
     this.bg.setScaleUpToScreenPercHeight(1);
     this.addChild(this.bg);
+
+    this.closeBtn =  new SpriteActor('exit_button', this.app, 'lvl1', 'exit_button.png');
+    this.closeBtn.setAnchor(0, 0);
+    this.closeBtn.setPosition(this.app.getScreenSize().w * .92, this.app.getScreenSize().h * .02);
+    this.closeBtn.setScaleUpToScreenPercWidth(.05);
+    this.closeBtn.getSprite().interactive = true;
+    this.closeBtn.getSprite().on('pointerup', () => {
+      this.app.getSoundPlayer().play('button'); 
+      try {
+        // Android.gameCancelled();
+         console.log('call: Android.gameCancelled(); to return to mobile');
+      } catch (err) {
+        console.error("Android gameCancelled is not defined.", err);
+      }
+    });
+    this.addChild(this.closeBtn);
 
     // initialize and set logo
     this.logo = new SpriteActor('logo', this.app, 'common', 'hophop_logo.png');
@@ -253,6 +271,7 @@ export class SplashScene extends Scene {
     this.play_btn.getSprite().interactive = true;
     this.play_btn.getSprite().on('pointerup', () => { 
       console.log('go to instruction screen scene ');
+      this.app.getSoundPlayer().play('button');
       setTimeout(() => { this.app.goToScene(2); }, 200);
     });
     this.addChild(this.play_btn);

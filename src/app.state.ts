@@ -24,4 +24,26 @@ export class AppState extends Subject<IAppState> {
     this.next(this.state);
   }
 
+  public submitScore(score: number){
+    console.log("submit score", score);
+    if(this.getBestScore() < score){
+      this.saveBestScore(score);
+    }
+  }
+
+  public saveBestScore(score: number){
+    let data = {"bestScore": score}
+    localStorage.setItem('hopGameData', JSON.stringify(data));
+  }
+
+  public getBestScore(){
+    let gamedata = JSON.parse(localStorage.getItem("hopGameData"));
+
+    if(localStorage.getItem("hopGameData") == null || localStorage.getItem("hopGameData") == undefined){
+      return 0;
+    }else{
+      return gamedata.bestScore;
+    }
+  }
+
 }

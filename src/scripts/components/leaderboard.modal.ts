@@ -27,7 +27,7 @@ export class LeaderboardModal extends PIXI.Container {
   weekly: PIXI.Text;
   alltime: PIXI.Text;
   // x btn
-  closeBtn: PIXI.Text;
+  closeBtn: SpriteActor;
 
   constructor(data: leaderboardData) {
     super();
@@ -263,23 +263,18 @@ export class LeaderboardModal extends PIXI.Container {
       this.navBtnActive(is_weekly_active);
     });
 
-    this.closeBtn = new PIXI.Text(`X`, {
-      fontFamily: this.fontFamily,
-      fontSize: `${data.app.getScreenSize().w * 0.08}px`,
-      fill: 0X744395,
-      align: 'center',
-    });
-    this.closeBtn.anchor.set(0, 0);
-    this.closeBtn.position.x = data.app.getScreenSize().w * 0.04;
-    this.closeBtn.position.y = data.app.getScreenSize().h * 0.005;
-    this.closeBtn.interactive = true;
-    this.closeBtn.on('pointerup', () => { 
+    this.closeBtn =  new SpriteActor('exit_button', data.app, 'lvl1', 'exit_button.png');
+    this.closeBtn.setAnchor(0, 0);
+    this.closeBtn.setPosition(data.app.getScreenSize().w * .92, Title.position.y);
+    this.closeBtn.setScaleUpToScreenPercWidth(.05);
+    this.closeBtn.getSprite().interactive = true;
+    this.closeBtn.getSprite().on('pointerup', () => { 
       console.log('close modal');
       this.removeChild(this.leaderboard_bg);
       this.removeChild(this.bg_image.getSprite());
       this.removeChildren();
     });
-    this.leaderboard_bg.addChild(this.closeBtn);
+    this.leaderboard_bg.addChild(this.closeBtn.getSprite());
     this.addChild(this.leaderboard_bg);
   }
 }
