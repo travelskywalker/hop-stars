@@ -62,6 +62,14 @@ export class GameScene extends Scene {
   initial_square: projection.Sprite2d;
   squareFar: projection.Sprite2d [] = [];
 
+  // animate squares
+  animateParam: number = 7; //points needed to animate tiles
+  animate: boolean = false;
+  hit: string = 'left';
+  squareFarPosition: any = [];
+  squareFarToAnimate: any = [];
+  animatedSquares: any = [1,3,5];
+
   // coins
   coin: projection.Sprite2d [] = [];
 
@@ -73,7 +81,7 @@ export class GameScene extends Scene {
   stageText: Text;
   stage: number = 1;
   stageProgress: number = 1;
-  stageLimit: number = 15;
+  stageLimit: number = 20;
 
   init(): void {
     
@@ -107,7 +115,6 @@ console.log('device width', this.app.getScreenSize().w);
 
    this.renderStage(1);
      
-
   /////////// SQUARES
 
     this.initial_square = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
@@ -319,6 +326,7 @@ console.log('device width', this.app.getScreenSize().w);
     const leftMid = -(this.app.getScreenSize().w * 0.25);
     const leftMost = -(this.app.getScreenSize().w * 0.5);
 
+
     let n = Math.floor(Math.random() * 5 +1);
     switch (n) {
       case 1:
@@ -340,14 +348,15 @@ console.log('device width', this.app.getScreenSize().w);
   }
 
   renderStage(number: number){
-    // // ///////// background
+
     try{
       this.container.removeChild(this.bg_img.getSprite()); 
       this.container.removeChild(this.gradient_bg.getSprite())
     }catch(e){
 
-      }
+    }
 
+    // render stages
     switch (number) {
       case 1:
         this.stage1();
@@ -362,11 +371,91 @@ console.log('device width', this.app.getScreenSize().w);
         this.stage4();
         break;
     }
+  }
+
+  isAnimating(){
+    let n = Math.floor(Math.random() * 2);
+    return (n == 1) ? true : false;
+  }
+
+  animateSquare(){
+    // do not animate if animation is turned off
+    if(this.animate == false) return false;
+
+    // square1
+  if(this.squareFarToAnimate[1] == true){
+    let maxPosition = this.squareFarPosition[1] + (this.app.getScreenSize().w * .50);
+
+    let moveRight = this.squareFar[1].x += 6;
+    let moveLeft = this.squareFar[1].x -= 6;
+    
+    if(this.squareFar[1].x <= maxPosition && this.hit == 'left'){
+      this.hit = 'left';
+      this.squareFar[1].x = moveRight;
+    }else{
+      if(this.squareFar[1].x >= this.squareFarPosition[1]){
+        this.hit = 'right';
+        this.squareFar[1].x -= 6;
+      }else{
+        this.hit = 'left';
+      }
+      
+    }
+  }
+
+  if(this.squareFarToAnimate[3] == true){
+    let maxPosition = this.squareFarPosition[3] + (this.app.getScreenSize().w * .40);
+
+    let moveRight = this.squareFar[3].x += 6;
+    let moveLeft = this.squareFar[3].x -= 6;
+    
+    if(this.squareFar[3].x <= maxPosition && this.hit == 'left'){
+      this.hit = 'left';
+      this.squareFar[3].x = moveRight;
+    }else{
+      if(this.squareFar[3].x >= this.squareFarPosition[3]){
+        this.hit = 'right';
+        this.squareFar[3].x -= 6;
+      }else{
+        this.hit = 'left';
+      }
+      
+    }
+  }
+
+  if(this.squareFarToAnimate[5] == true){
+    let maxPosition = this.squareFarPosition[1] + (this.app.getScreenSize().w * .40);
+
+    let moveRight = this.squareFar[5].x += 6;
+    let moveLeft = this.squareFar[5].x -= 6;
+    
+    if(this.squareFar[5].x <= maxPosition && this.hit == 'left'){
+      this.hit = 'left';
+      this.squareFar[5].x = moveRight;
+    }else{
+      if(this.squareFar[5].x >= this.squareFarPosition[5]){
+        this.hit = 'right';
+        this.squareFar[5].x -= 6;
+      }else{
+        this.hit = 'left';
+      }
+      
+    }
+  }
+
 
   }
 
   update(_delta: number): void {
-    
+
+    // animate square
+    this.animate = true;
+    try{
+      this.animateSquare();
+    }catch(error){
+      // console.log("animate error", error);
+    }
+
       // Project camera angle
       let posY = this.container2d.toLocal(this.squareY.position, undefined, undefined, undefined, PIXI.projection.TRANSFORM_STEP.BEFORE_PROJ);
       this.container2d.proj.setAxisY(posY, 1);
@@ -377,41 +466,58 @@ console.log('device width', this.app.getScreenSize().w);
           this.squareFar[0].position.y = this.squareFar[7].position.y + this.square_distance;
           this.squareFar[0].position.x = this.randomPosition();
           this.squareFar[0].addChild(this.coin[0]);
+          this.squareFarPosition[0] = this.squareFar[0].position.x;
+          this.squareFarToAnimate[0] = this.isAnimating();
           }
         if(this.squareFar[1].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
           this.squareFar[1].position.y = this.squareFar[0].position.y + this.square_distance; 
           this.squareFar[1].position.x = this.randomPosition();
           this.squareFar[1].addChild(this.coin[1]);
+          this.squareFarPosition[1] = this.squareFar[1].position.x;
+          this.squareFarToAnimate[1] = this.isAnimating();
+
         }
         if(this.squareFar[2].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
           this.squareFar[2].position.y = this.squareFar[1].position.y + this.square_distance; 
           this.squareFar[2].position.x = this.randomPosition();
           this.squareFar[2].addChild(this.coin[2]);
+          this.squareFarPosition[2] = this.squareFar[2].position.x;
+          this.squareFarToAnimate[2] = this.isAnimating();
         }
         if(this.squareFar[3].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
           this.squareFar[3].position.y = this.squareFar[2].position.y + this.square_distance; 
           this.squareFar[3].position.x = this.randomPosition();
           this.squareFar[3].addChild(this.coin[3]);
+          this.squareFarPosition[3] = this.squareFar[3].position.x;
+          this.squareFarToAnimate[3] = this.isAnimating();
         }
         if(this.squareFar[4].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
           this.squareFar[4].position.y = this.squareFar[3].position.y + this.square_distance;
           this.squareFar[4].position.x = this.randomPosition();
           this.squareFar[4].addChild(this.coin[4]);
+          this.squareFarPosition[4] = this.squareFar[4].position.x;
+          this.squareFarToAnimate[4] = this.isAnimating();
         }
         if(this.squareFar[5].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
           this.squareFar[5].position.y = this.squareFar[4].position.y + this.square_distance;
           this.squareFar[5].position.x = this.randomPosition();
           this.squareFar[5].addChild(this.coin[5]);
+          this.squareFarPosition[5] = this.squareFar[5].position.x;
+          this.squareFarToAnimate[5] = this.isAnimating();
         }
         if(this.squareFar[6].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
           this.squareFar[6].position.y = this.squareFar[5].position.y + this.square_distance;
           this.squareFar[6].position.x = this.randomPosition();
           this.squareFar[6].addChild(this.coin[6]);
+          this.squareFarPosition[6] = this.squareFar[6].position.x;
+          this.squareFarToAnimate[6] = this.isAnimating();
         }
         if(this.squareFar[7].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
           this.squareFar[7].position.y = this.squareFar[6].position.y + this.square_distance; 
           this.squareFar[7].position.x = this.randomPosition();
           this.squareFar[7].addChild(this.coin[7]);
+          this.squareFarPosition[7] = this.squareFar[7].position.x;
+          this.squareFarToAnimate[7] = this.isAnimating();
         }
       
         this.squareFar[0].position.y -= this.SQUARE_VELOCITY;
@@ -446,8 +552,10 @@ console.log('device width', this.app.getScreenSize().w);
                   // remove coin
                   square.removeChildren();
 
-                  // change stage
-                  // point per stage
+                  // animate square
+                  if(this.score >= this.animateParam){
+                    this.animate = true;
+                  }
 
                   if(this.stageProgress == this.stageLimit){
                     this.stage += 1;
@@ -480,7 +588,6 @@ console.log('device width', this.app.getScreenSize().w);
                 this.YVELOCITY -= this.GRAVITY;
                 this.circle.position.y -= this.YVELOCITY;
               }
-              
             } else {
               this.YVELOCITY = this.INITIAL_VELOCITY;
               this.YVELOCITY -= this.GRAVITY;
@@ -501,6 +608,7 @@ console.log('device width', this.app.getScreenSize().w);
     this.stageProgress = 1;
 
     this.generateStartSquares();
+    this.animate = false;
     this.renderStage(1);
   }
 
@@ -547,14 +655,14 @@ console.log('device width', this.app.getScreenSize().w);
 
   generateStartSquares(){
     this.initial_square.position.y = this.initial_square_y;
-      this.squareFar[0].position.set(this.randomPosition(), this.initial_square_distance);
-      this.squareFar[1].position.set(this.randomPosition(), this.initial_square_distance + this.square_distance);
-      this.squareFar[2].position.set(this.randomPosition(), this.initial_square_distance + this.square_distance * 2);
-      this.squareFar[3].position.set(this.randomPosition(), this.initial_square_distance + this.square_distance * 3);
-      this.squareFar[4].position.set(this.randomPosition(), this.initial_square_distance + this.square_distance * 4);
-      this.squareFar[5].position.set(this.randomPosition(), this.initial_square_distance + this.square_distance * 5);
-      this.squareFar[6].position.set(this.randomPosition(), this.initial_square_distance + this.square_distance * 6);
-      this.squareFar[7].position.set(this.randomPosition(), this.initial_square_distance + this.square_distance * 7);
+    this.squareFar[0].position.set(this.randomPosition(), this.initial_square_distance);
+    this.squareFar[1].position.set(this.randomPosition(), this.initial_square_distance + this.square_distance);
+    this.squareFar[2].position.set(this.randomPosition(),this.initial_square_distance + this.square_distance * 2);
+    this.squareFar[3].position.set(this.randomPosition(),this.initial_square_distance + this.square_distance * 3);
+    this.squareFar[4].position.set(this.randomPosition(),this.initial_square_distance + this.square_distance * 4);
+    this.squareFar[5].position.set(this.randomPosition(),this.initial_square_distance + this.square_distance * 5);
+    this.squareFar[6].position.set(this.randomPosition(),this.initial_square_distance + this.square_distance * 6);
+    this.squareFar[7].position.set(this.randomPosition(),this.initial_square_distance + this.square_distance * 7);
   }
 
   isInSquare(square:projection.Sprite2d, ball_bounce: number){
