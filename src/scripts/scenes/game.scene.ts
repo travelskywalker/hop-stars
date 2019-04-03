@@ -14,6 +14,10 @@ export class GameScene extends Scene {
   circle: Graphics;
   square_bg: Graphics;
   circle_bg: Graphics;
+
+  swipe_hand: SpriteActor;
+  swipe: SpriteActor;
+  swipe_hand_direction = 'right';
   
   // scrollable points
   initialPoint: any;
@@ -87,11 +91,6 @@ export class GameScene extends Scene {
   stage: number = 1;
   stageProgress: number = 1;
   stageLimit: number = 5;
-
-  // how to win
-  instructionContainer: Graphics;
-  swipe: SpriteActor;
-  taptostart: SpriteActor;
 
   init(): void {
     
@@ -393,32 +392,41 @@ export class GameScene extends Scene {
 
     this.GAME_RESET = true;
 
-      // how to win
-    this.instructionContainer = new Graphics();
-    this.instructionContainer.beginFill(0x000).drawRoundedRect(0, 0, this.app.getScreenSize().w, this.app.getScreenSize().h, 0);
-    this.instructionContainer.position.x = 0;
-    this.instructionContainer.position.y = 0;
-    this.instructionContainer.alpha = .4;
-    this.container.addChild(this.instructionContainer);
-    this.instructionContainer.interactive = true;
-    this.instructionContainer.on('pointerup', () => {
-      this.removeInstruction();
-    })
+    // INSTRUCITON
+    const instructionContainer = new Graphics();
+    instructionContainer.beginFill(0x000).drawRoundedRect(0, 0, this.app.getScreenSize().w, this.app.getScreenSize().h, 0);
+    instructionContainer.position.x = 0;
+    instructionContainer.position.y = 0;
+    instructionContainer.alpha = .4;
+    instructionContainer.interactive = true;
     
-    this.swipe = new SpriteActor('int-bg', this.app, 'common', 'Instruction-group.png');
+    const taptostart = new SpriteActor('tap-bg', this.app, 'common', 'TAP TO START.png');
+    taptostart.setAnchor(.5, .5);
+    taptostart.setPosition(this.app.getScreenSize().w * .5, this.app.getScreenSize().h * .4);
+    taptostart.setScaleUpToScreenPercWidth(.7);
+
+    this.swipe = new SpriteActor('swipe-bg', this.app, 'lvl1', 'swipe-arrow.png');
     this.swipe.setAnchor(.5, .5);
     this.swipe.setPosition(this.app.getScreenSize().w * .5, this.app.getScreenSize().h * .85);
     this.swipe.setScaleUpToScreenPercWidth(.9);
-    
+
+    this.swipe_hand = new SpriteActor('swipe-hand', this.app, 'lvl1', 'hand.png');
+    this.swipe_hand.setAnchor(.5, .5);
+    this.swipe_hand.setPosition(this.app.getScreenSize().w * .5, this.swipe.getSprite().position.y + this.swipe.getSprite().height );
+    this.swipe_hand.setScaleUpToScreenPercHeight(0.1);
+
+    this.container.addChild(instructionContainer);
     this.container.addChild(this.swipe.getSprite());
+    this.container.addChild(this.swipe_hand.getSprite());
+    this.container.addChild(taptostart.getSprite());
 
-    this.taptostart = new SpriteActor('tap-bg', this.app, 'common', 'TAP TO START.png');
-    this.taptostart.setAnchor(.5, .5);
-    this.taptostart.setPosition(this.app.getScreenSize().w * .5, this.app.getScreenSize().h * .4);
-    this.taptostart.setScaleUpToScreenPercWidth(.7);
-    this.container.addChild(this.taptostart.getSprite());
-    // end of how to win
-
+    instructionContainer.on('pointerup', () => { 
+      this.container.removeChild(instructionContainer);
+      this.container.removeChild(this.swipe.getSprite());
+      this.container.removeChild(this.swipe_hand.getSprite());
+      this.container.removeChild(taptostart.getSprite());
+    })
+    // END OF INSTRUCTION
 
 }
 
@@ -449,12 +457,6 @@ export class GameScene extends Scene {
         return mid
         break;
     }
-  }
-
-  removeInstruction(){
-    this.container.removeChild(this.instructionContainer);
-    this.container.removeChild(this.swipe.getSprite());
-    this.container.removeChild(this.taptostart.getSprite());
   }
 
   renderStage(number: number){
@@ -591,6 +593,25 @@ export class GameScene extends Scene {
 
   update(_delta: number): void {
 
+    // Project camera angle
+    let posY = this.container2d.toLocal(this.squareY.position, undefined, undefined, undefined, PIXI.projection.TRANSFORM_STEP.BEFORE_PROJ);
+    this.container2d.proj.setAxisY(posY, 1);
+
+    // Tap to Start ---- swipe hand moving
+    // SWIPE HAND MOVING
+    if (this.swipe_hand.getSprite().position.x <= this.swipe.getSprite().position.x + (this.swipe.getSprite().width/4) * 1.5 && this.swipe_hand_direction === 'right') {
+      this.swipe_hand_direction = 'right';
+      this.swipe_hand.getSprite().position.x += 10;
+    } else {
+      this.swipe_hand_direction = 'left';
+      if( this.swipe_hand.getSprite().position.x <= this.swipe.getSprite().width / 4 ) {
+        this.swipe_hand_direction = 'right';
+        this.swipe_hand.getSprite().position.x += 10;
+      } else {
+        this.swipe_hand.getSprite().position.x -= 10;
+      }
+    }
+
     // animate square
     this.animate = true;
     try{
@@ -600,10 +621,6 @@ export class GameScene extends Scene {
     }
 
     this.coinAnimation();
-
-      // Project camera angle
-      let posY = this.container2d.toLocal(this.squareY.position, undefined, undefined, undefined, PIXI.projection.TRANSFORM_STEP.BEFORE_PROJ);
-      this.container2d.proj.setAxisY(posY, 1);
 
       if(this.GAME_RESET != true) {  
         // add square
