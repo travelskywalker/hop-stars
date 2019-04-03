@@ -8,9 +8,17 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":18,"h":18},
 	"sourceSize": {"w":18,"h":18}
 },
+"hand.png":
+{
+	"frame": {"x":20,"y":0,"w":37,"h":55},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":37,"h":55},
+	"sourceSize": {"w":37,"h":55}
+},
 "lv1_gamearea_bgsample.png":
 {
-	"frame": {"x":20,"y":0,"w":360,"h":640},
+	"frame": {"x":0,"y":735,"w":360,"h":640},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":360,"h":640},
@@ -18,19 +26,35 @@
 },
 "lv1_mountainbg_gradientoverlay.png":
 {
-	"frame": {"x":382,"y":0,"w":360,"h":640},
+	"frame": {"x":0,"y":57,"w":360,"h":640},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":360,"h":640},
 	"sourceSize": {"w":360,"h":640}
+},
+"swipe-arrow.png":
+{
+	"frame": {"x":0,"y":699,"w":360,"h":34},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":360,"h":34},
+	"sourceSize": {"w":360,"h":34}
+},
+"swipe-text.png":
+{
+	"frame": {"x":59,"y":0,"w":262,"h":27},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":262,"h":27},
+	"sourceSize": {"w":262,"h":27}
 }},
 "meta": {
 	"app": "https://www.codeandweb.com/texturepacker",
 	"version": "1.0",
 	"image": "hop-game-level-1.png",
 	"format": "RGBA8888",
-	"size": {"w":742,"h":640},
+	"size": {"w":360,"h":1375},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:e9cc6a1eb4d6340004e024c8891483ce:5dfcdbb5c40aa90d15d670609cf0d1aa:384003f9ecd9bf6422822dfce641e4f7$"
+	"smartupdate": "$TexturePacker:SmartUpdate:5afc057cad9b60b199cc4f17af41744a:5abe277b1916db7995edbafa4efb1dab:384003f9ecd9bf6422822dfce641e4f7$"
 }
 }

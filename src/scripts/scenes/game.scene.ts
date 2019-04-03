@@ -85,6 +85,11 @@ export class GameScene extends Scene {
   stageProgress: number = 1;
   stageLimit: number = 5;
 
+  // how to win
+  instructionContainer: Graphics;
+  swipe: SpriteActor;
+  taptostart: SpriteActor;
+
   init(): void {
     
     this.bigWhiteTexture = new PIXI.Texture(PIXI.Texture.EMPTY.baseTexture);
@@ -100,6 +105,8 @@ export class GameScene extends Scene {
   }
 
   start(): void {
+
+  this.coinAnimate = false;
 
   ///// BACKGROUND IMAGE
   console.log('initial velocity', this.INITIAL_VELOCITY);
@@ -256,6 +263,12 @@ export class GameScene extends Scene {
     this.coin[7].anchor.set(0.5, 1);
     this.squareFar[7].addChild(this.coin[7]);
 
+    // animating coin --------------
+    this.coin[100] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
+    this.coin[100].proj.affine = PIXI.projection.AFFINE.AXIS_X;
+    this.coin[100].scale.set(this.squareFar[0].width * 0.01);
+    this.coin[100].anchor.set(0.5, 1);
+
     const s_img_7 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/platform.png'));
     s_img_7.scale.set(-this.initial_square.width * 0.0062, -this.initial_square.height * 0.011);
     s_img_7.anchor.set(0.5, 0.5);
@@ -282,8 +295,6 @@ export class GameScene extends Scene {
     lightY.scale.set(this.app.getScreenSize().w * 0.2, this.app.getScreenSize().h);
     lightY.alpha = 0;
     this.container2d.addChildAt(lightY, 0);
-
-  
     
   /////  SCORE
 
@@ -378,7 +389,42 @@ export class GameScene extends Scene {
     this.container2d.addChild(this.squareFar[7]);
 
     this.GAME_RESET = true;
-  }
+
+    // // // set zindex of instruction screen
+    // this.container.setChildIndex(this.instructionContainer, 9);
+    // this.container.setChildIndex(this.taptostart.getSprite(), 10);
+
+
+
+      // how to win
+    this.instructionContainer = new Graphics();
+    this.instructionContainer.beginFill(0xFFFFFF).drawRoundedRect(0, 0, this.app.getScreenSize().w, this.app.getScreenSize().h, 0);
+    this.instructionContainer.position.x = 0;
+    this.instructionContainer.position.y = 0;
+    this.instructionContainer.alpha = .5;
+    this.container.addChild(this.instructionContainer);
+    this.instructionContainer.interactive = true;
+    this.instructionContainer.on('pointerup', () => {
+      console.log('remove how to win');
+      this.removeInstruction();
+    })
+    
+    this.swipe = new SpriteActor('int-bg', this.app, 'common', 'Instruction-group.png');
+    this.swipe.setAnchor(.5, .5);
+    this.swipe.setPosition(this.app.getScreenSize().w * .5, this.app.getScreenSize().h * .85);
+    this.swipe.setScaleUpToScreenPercWidth(.9);
+    
+    this.container.addChild(this.swipe.getSprite());
+
+    this.taptostart = new SpriteActor('tap-bg', this.app, 'common', 'TAP TO START.png');
+    this.taptostart.setAnchor(.5, .5);
+    this.taptostart.setPosition(this.app.getScreenSize().w * .5, this.app.getScreenSize().h * .4);
+    this.taptostart.setScaleUpToScreenPercWidth(.7);
+    this.container.addChild(this.taptostart.getSprite());
+    // end of how to win
+
+
+}
 
   randomPosition(){
 
@@ -407,6 +453,12 @@ export class GameScene extends Scene {
         return mid
         break;
     }
+  }
+
+  removeInstruction(){
+    this.container.removeChild(this.instructionContainer);
+    this.container.removeChild(this.swipe.getSprite());
+    this.container.removeChild(this.taptostart.getSprite());
   }
 
   renderStage(number: number){
@@ -511,10 +563,15 @@ export class GameScene extends Scene {
   }
 
   coinAnimation(){
-    if(this.coinAnimate == false) return;
+    if(this.coinAnimate == false) {
+      this.container2d.removeChild(this.coin[100]);
+      return;
+    }
 
-    this.coin[100].y += 500;
-    this.coin[100].x += 90;
+    this.coin[100].y += 600;
+    this.coin[100].x += 100;
+
+    console.log(this.coin[100].x);
   }
 
   update(_delta: number): void {
@@ -686,19 +743,10 @@ animateCoin(square: projection.Sprite2d){
   let sqx = square.x;
   let sqy = square.y;
 
-  this.coin[100] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
-  this.coin[100].proj.affine = PIXI.projection.AFFINE.AXIS_X;
-  this.coin[100].scale.set(this.squareFar[0].width * 0.01);
-  this.coin[100].anchor.set(0.5, 1);
   this.coin[100].position.set(sqx,sqy);
   this.container2d.addChild(this.coin[100]);
 
   this.coinAnimate = true;
-  
-  setTimeout(() => {
-    this.container2d.removeChild(this.coin[100]);
-    this.coinAnimate = false;
-  }, this.FREE_FALL*40);
 }
 
   resetStage(){
