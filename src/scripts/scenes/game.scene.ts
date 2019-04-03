@@ -779,7 +779,9 @@ animateCoin(square: projection.Sprite2d){
   }
 
   remove(): void {
-    setTimeout(()=>{ this.container.removeChildren();},120);
+    setTimeout(()=>{ 
+      this.container.removeChildren();
+    },120);
   }
 
   ball_click(): void {
@@ -796,7 +798,7 @@ animateCoin(square: projection.Sprite2d){
     
     // SPEED
      this.FREE_FALL = 10;
-     this.INITIAL_VELOCITY = (this.app.getScreenSize().h * 0.02) * 3;
+     this.INITIAL_VELOCITY = (this.app.getScreenSize().h * 0.02) * 3.25;
      this.GRAVITY = this.INITIAL_VELOCITY / this.FREE_FALL;
      this.SQUARE_VELOCITY = this.square_distance / (this.FREE_FALL * 2 - 1);
     
