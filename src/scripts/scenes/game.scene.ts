@@ -65,7 +65,10 @@ export class GameScene extends Scene {
   // animate squares
   animateParam: number = 7; //points needed to animate tiles
   animate: boolean = false;
-  hit: string = 'left';
+  hit1: string = 'left';
+  hit3: string = 'left';
+  hit5: string = 'left';
+  hit7: string = 'left';
   squareFarPosition: any = [];
   squareFarToAnimate: any = [];
   animatedSquares: any = [1,3,5];
@@ -500,22 +503,24 @@ export class GameScene extends Scene {
     // do not animate if animation is turned off
     if(this.animate == false) return false;
 
+  let moveSpeed = 8;
+
     // square1
   if(this.squareFarToAnimate[1] == true){
     let maxPosition1 = this.squareFarPosition[1] + (this.app.getScreenSize().w * .50);
 
-    let moveRight1 = this.squareFar[1].x += 6;
-    let moveLeft = this.squareFar[1].x -= 6;
+    let moveRight1 = this.squareFar[1].x += moveSpeed;
+    let moveLeft = this.squareFar[1].x -= moveSpeed;
     
-    if(this.squareFar[1].x <= maxPosition1 && this.hit == 'left'){
-      this.hit = 'left';
+    if(this.squareFar[1].x <= maxPosition1 && this.hit1 == 'left'){
+      this.hit1 = 'left';
       this.squareFar[1].x = moveRight1;
     }else{
       if(this.squareFar[1].x >= this.squareFarPosition[1]){
-        this.hit = 'right';
-        this.squareFar[1].x -= 6;
+        this.hit1 = 'right';
+        this.squareFar[1].x -= moveSpeed;
       }else{
-        this.hit = 'left';
+        this.hit1 = 'left';
       }
       
     }
@@ -524,18 +529,18 @@ export class GameScene extends Scene {
   if(this.squareFarToAnimate[3] == true){
     let maxPosition3 = this.squareFarPosition[3] + (this.app.getScreenSize().w * .40);
 
-    let moveRight3 = this.squareFar[3].x += 6;
-    let moveLeft = this.squareFar[3].x -= 6;
+    let moveRight3 = this.squareFar[3].x += moveSpeed;
+    let moveLeft = this.squareFar[3].x -= moveSpeed;
     
-    if(this.squareFar[3].x <= maxPosition3 && this.hit == 'left'){
-      this.hit = 'left';
+    if(this.squareFar[3].x <= maxPosition3 && this.hit3 == 'left'){
+      this.hit3 = 'left';
       this.squareFar[3].x = moveRight3;
     }else{
       if(this.squareFar[3].x >= this.squareFarPosition[3]){
-        this.hit = 'right';
-        this.squareFar[3].x -= 6;
+        this.hit3 = 'right';
+        this.squareFar[3].x -= moveSpeed;
       }else{
-        this.hit = 'left';
+        this.hit3 = 'left';
       }
       
     }
@@ -544,17 +549,36 @@ export class GameScene extends Scene {
   if(this.squareFarToAnimate[5] == true){
       let maxPosition5 = this.squareFarPosition[1] + (this.app.getScreenSize().w * .40);
 
-      let moveRight5 = this.squareFar[5].x += 6;
+      let moveRight5 = this.squareFar[5].x += moveSpeed;
       
-      if(this.squareFar[5].x <= maxPosition5 && this.hit == 'left'){
-        this.hit = 'left';
+      if(this.squareFar[5].x <= maxPosition5 && this.hit5 == 'left'){
+        this.hit5 = 'left';
         this.squareFar[5].x = moveRight5;
       }else{
         if(this.squareFar[5].x >= this.squareFarPosition[5]){
-          this.hit = 'right';
-          this.squareFar[5].x -= 6;
+          this.hit5 = 'right';
+          this.squareFar[5].x -= moveSpeed;
         }else{
-          this.hit = 'left';
+          this.hit5 = 'left';
+        }
+        
+      }
+    }
+
+    if(this.squareFarToAnimate[7] == true){
+      let maxPosition7 = this.squareFarPosition[1] + (this.app.getScreenSize().w * .40);
+
+      let moveRight7 = this.squareFar[7].x += moveSpeed;
+      
+      if(this.squareFar[7].x <= maxPosition7 && this.hit7 == 'left'){
+        this.hit7 = 'left';
+        this.squareFar[7].x = moveRight7;
+      }else{
+        if(this.squareFar[7].x >= this.squareFarPosition[7]){
+          this.hit7 = 'right';
+          this.squareFar[7].x -= moveSpeed;
+        }else{
+          this.hit7 = 'left';
         }
         
       }
