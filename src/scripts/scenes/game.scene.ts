@@ -72,6 +72,8 @@ export class GameScene extends Scene {
 
   // coins
   coin: projection.Sprite2d [] = [];
+  score_coin: SpriteActor;
+  coinAnimate: boolean = false;
 
   // score
   scoreText: Text;
@@ -81,7 +83,7 @@ export class GameScene extends Scene {
   stageText: Text;
   stage: number = 1;
   stageProgress: number = 1;
-  stageLimit: number = 20;
+  stageLimit: number = 5;
 
   init(): void {
     
@@ -285,10 +287,10 @@ export class GameScene extends Scene {
     
   /////  SCORE
 
-  const score_coin = new SpriteActor('ball', this.app, 'common', 'coin.png');
-  score_coin.setPosition(this.app.getScreenSize().w * 0.85, this.app.getScreenSize().h * 0.02);
-  score_coin.setScaleUpToScreenPercWidth(0.1);
-  this.container.addChild(score_coin.getSprite());
+  this.score_coin = new SpriteActor('ball', this.app, 'common', 'coin.png');
+  this.score_coin.setPosition(this.app.getScreenSize().w * 0.85, this.app.getScreenSize().h * 0.02);
+  this.score_coin.setScaleUpToScreenPercWidth(0.1);
+  this.container.addChild(this.score_coin.getSprite());
 
   this.scoreText = new Text(
     `${this.score}`,
@@ -305,7 +307,7 @@ export class GameScene extends Scene {
       dropShadowDistance: 0
     });
   this.scoreText.anchor.set(1 , 0);
-  this.scoreText.position.x = score_coin.getSprite().position.x - 20;
+  this.scoreText.position.x = this.score_coin.getSprite().position.x - 20;
   this.scoreText.position.y = this.app.getScreenSize().h * 0.02;
   this.container.addChild(this.scoreText);
 
@@ -410,8 +412,12 @@ export class GameScene extends Scene {
   renderStage(number: number){
 
     try{
-      this.container.removeChild(this.bg_img.getSprite()); 
-      this.container.removeChild(this.gradient_bg.getSprite())
+
+      if( number <= 3) {
+        this.container.removeChild(this.bg_img.getSprite()); 
+        this.container.removeChild(this.gradient_bg.getSprite());
+      }
+      
     }catch(e){
 
     }
@@ -484,23 +490,31 @@ export class GameScene extends Scene {
   }
 
   if(this.squareFarToAnimate[5] == true){
-    let maxPosition = this.squareFarPosition[1] + (this.app.getScreenSize().w * .40);
-    
-    if(this.squareFar[5].x <= maxPosition && this.hit == 'left'){
-      this.hit = 'left';
-      this.squareFar[5].x += 1;
-    }else{
-      if(this.squareFar[5].x >= this.squareFarPosition[5]){
-        this.hit = 'right';
-        this.squareFar[5].x -= 1;
-      }else{
-        this.hit = 'left';
-      }
+      let maxPosition = this.squareFarPosition[1] + (this.app.getScreenSize().w * .40);
+
+      let moveRight = this.squareFar[5].x += 6;
+      let moveLeft = this.squareFar[5].x -= 6;
       
+      if(this.squareFar[5].x <= maxPosition && this.hit == 'left'){
+        this.hit = 'left';
+        this.squareFar[5].x = moveRight;
+      }else{
+        if(this.squareFar[5].x >= this.squareFarPosition[5]){
+          this.hit = 'right';
+          this.squareFar[5].x -= 6;
+        }else{
+          this.hit = 'left';
+        }
+        
+      }
     }
   }
 
+  coinAnimation(){
+    if(this.coinAnimate == false) return;
 
+    this.coin[100].y += 500;
+    this.coin[100].x += 90;
   }
 
   update(_delta: number): void {
@@ -512,6 +526,8 @@ export class GameScene extends Scene {
     }catch(error){
       // console.log("animate error", error);
     }
+
+    this.coinAnimation();
 
       // Project camera angle
       let posY = this.container2d.toLocal(this.squareY.position, undefined, undefined, undefined, PIXI.projection.TRANSFORM_STEP.BEFORE_PROJ);
@@ -608,8 +624,13 @@ export class GameScene extends Scene {
                 if(this.isCoined(square, bouncePosition) && this.TOUCHEND == false){
                   this.scoreText.text = `${this.score += 1}`;
 
+                  // console.log("coin position: x", this.coin[this.bounce_count].x, "y", this.coin[this.bounce_count].y);
+                  // console.log("score coin y", this.score_coin.getSprite().y)
+                  
                   // remove coin
                   square.removeChildAt(1);
+                  this.animateCoin(this.squareFar[this.bounce_count]);
+
                   // animate square
                   if(this.score >= this.animateParam){
                     this.animate = true;
@@ -655,6 +676,26 @@ export class GameScene extends Scene {
         
       }
   }
+}
+
+animateCoin(square: projection.Sprite2d){
+
+  let sqx = square.x;
+  let sqy = square.y;
+
+  this.coin[100] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
+  this.coin[100].proj.affine = PIXI.projection.AFFINE.AXIS_X;
+  this.coin[100].scale.set(this.squareFar[0].width * 0.01);
+  this.coin[100].anchor.set(0.5, 1);
+  this.coin[100].position.set(sqx,sqy);
+  this.container2d.addChild(this.coin[100]);
+
+  this.coinAnimate = true;
+  
+  setTimeout(() => {
+    this.container2d.removeChild(this.coin[100]);
+    this.coinAnimate = false;
+  }, this.FREE_FALL*40);
 }
 
   resetStage(){
