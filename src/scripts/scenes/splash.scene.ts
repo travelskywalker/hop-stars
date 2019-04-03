@@ -198,7 +198,7 @@ export class SplashScene extends Scene {
 
   // dummy score data
   data = {
-    best_score: 240,
+    best_score: this.app.getState().getBestScore(),
     current_score: 0
   };  
 
@@ -207,6 +207,7 @@ export class SplashScene extends Scene {
   }
 
   start(): void {
+    
     // initialize and set bg
     this.bg = new SpriteActor('splash-bg', this.app, 'common', 'startscreen_bg.jpg');
     this.bg.setAnchor(0, 0);

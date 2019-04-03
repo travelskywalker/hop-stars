@@ -201,7 +201,7 @@ export class GameOverScene extends Scene {
 
   // dummy score data
   data = {
-    best_score: 240,
+    best_score: 0,
     current_score: this.app.currentScore
   };
 
@@ -210,7 +210,9 @@ export class GameOverScene extends Scene {
   }
 
   start(): void {
-    console.log("gameoverscene", this.app.currentScore);
+    // submit score data
+    this.app.getState().submitScore(this.app.currentScore);
+
     // initialize and set bg
     this.bg = new SpriteActor('gameover-bg', this.app, 'common', 'GAMEOVER_layover.png');
     this.bg.setAnchor(0, 0);
@@ -238,7 +240,7 @@ export class GameOverScene extends Scene {
       wordWrap: false
     });
    
-    this.copyText1 = new PIXI.Text(`BEST SCORE: ${this.data.best_score}`, this.copyText1Style);
+    this.copyText1 = new PIXI.Text(`BEST SCORE: ${this.app.getState().getBestScore()}`, this.copyText1Style);
     this.copyText1.anchor.x = .5;
     this.copyText1.anchor.y = .5;
     this.copyText1.position.x = this.app.getScreenSize().w * 0.5;
