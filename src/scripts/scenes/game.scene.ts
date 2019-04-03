@@ -145,7 +145,6 @@ export class GameScene extends Scene {
     s_img_i.position.y = 0;
     this.initial_square.addChild(s_img_i);
     
-    
     // square 0 ------------------
     this.squareFar[0] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[0].tint = 0;
@@ -444,7 +443,6 @@ export class GameScene extends Scene {
     const leftMid = -(this.app.getScreenSize().w * 0.25);
     const leftMost = -(this.app.getScreenSize().w * 0.5);
 
-
     let n = Math.floor(Math.random() * 5 +1);
     switch (n) {
       case 1:
@@ -502,120 +500,40 @@ export class GameScene extends Scene {
 
   animateSquare(){
     
-  // do not animate if animation is turned off
-  if(this.animate == false) return false;
-  console.log("animate squares");
+    // do not animate if animation is turned off
+    if(this.animate == false) return false;
+    console.log("animate squares");
 
-  let squares = this.animatedSquares;
+    let squares = this.animatedSquares;
 
-  let moveSpeed = 8;
-  let moveLength = this.app.getScreenSize().w * .40;
+    let moveSpeed = 8;
+    let moveLength = this.app.getScreenSize().w * .40;
 
-  for(let x = 0; x <= squares.length-1; x++){
-    
-    if(this.squareFarToAnimate[squares[x]] == true){
+    for(let x = 0; x <= squares.length-1; x++){
+      
+      if(this.squareFarToAnimate[squares[x]] == true){
 
-      if(this.squareFar[squares[x]].x <= this.squareFarPosition[squares[x]] + moveLength && this.hit[squares[x]] == 'left'){
+        if(this.squareFar[squares[x]].x <= this.squareFarPosition[squares[x]] + moveLength && this.hit[squares[x]] == 'left'){
 
-        this.hit[squares[x]] = 'left';
-        this.squareFar[squares[x]].x += moveSpeed;
-
-      }else{
-
-        if(this.squareFar[squares[x]].x >= this.squareFarPosition[squares[x]]){
-
-          this.hit[squares[x]] = 'right';
-          this.squareFar[squares[x]].x -= moveSpeed;
+          this.hit[squares[x]] = 'left';
+          this.squareFar[squares[x]].x += moveSpeed;
 
         }else{
 
-          this.hit[squares[x]]= 'left';
+          if(this.squareFar[squares[x]].x >= this.squareFarPosition[squares[x]]){
 
+            this.hit[squares[x]] = 'right';
+            this.squareFar[squares[x]].x -= moveSpeed;
+
+          }else{
+
+            this.hit[squares[x]]= 'left';
+
+          }
+          
         }
-        
       }
-    }
-  };
-    
-  // return;
-  //   // square1
-  // if(this.squareFarToAnimate[1] == true){
-  //   let maxPosition1 = this.squareFarPosition[1] + moveLength;
-
-  //   let moveRight1 = this.squareFar[1].x += moveSpeed;
-  //   let moveLeft = this.squareFar[1].x -= moveSpeed;
-    
-  //   if(this.squareFar[1].x <= maxPosition1 && this.hit1 == 'left'){
-  //     this.hit1 = 'left';
-  //     this.squareFar[1].x = moveRight1;
-  //   }else{
-  //     if(this.squareFar[1].x >= this.squareFarPosition[1]){
-  //       this.hit1 = 'right';
-  //       this.squareFar[1].x -= moveSpeed;
-  //     }else{
-  //       this.hit1 = 'left';
-  //     }
-      
-  //   }
-  // }
-
-  // if(this.squareFarToAnimate[3] == true){
-  //   let maxPosition3 = this.squareFarPosition[3] + moveLength;
-
-  //   let moveRight3 = this.squareFar[3].x += moveSpeed;
-  //   let moveLeft = this.squareFar[3].x -= moveSpeed;
-    
-  //   if(this.squareFar[3].x <= maxPosition3 && this.hit3 == 'left'){
-  //     this.hit3 = 'left';
-  //     this.squareFar[3].x = moveRight3;
-  //   }else{
-  //     if(this.squareFar[3].x >= this.squareFarPosition[3]){
-  //       this.hit3 = 'right';
-  //       this.squareFar[3].x -= moveSpeed;
-  //     }else{
-  //       this.hit3 = 'left';
-  //     }
-      
-  //   }
-  // }
-
-  // if(this.squareFarToAnimate[5] == true){
-  //     let maxPosition5 = this.squareFarPosition[1] + moveLength;
-
-  //     let moveRight5 = this.squareFar[5].x += moveSpeed;
-      
-  //     if(this.squareFar[5].x <= maxPosition5 && this.hit5 == 'left'){
-  //       this.hit5 = 'left';
-  //       this.squareFar[5].x = moveRight5;
-  //     }else{
-  //       if(this.squareFar[5].x >= this.squareFarPosition[5]){
-  //         this.hit5 = 'right';
-  //         this.squareFar[5].x -= moveSpeed;
-  //       }else{
-  //         this.hit5 = 'left';
-  //       }
-        
-  //     }
-  //   }
-
-  //   if(this.squareFarToAnimate[7] == true){
-  //     let maxPosition7 = this.squareFarPosition[1] + moveLength;
-
-  //     let moveRight7 = this.squareFar[7].x += moveSpeed;
-      
-  //     if(this.squareFar[7].x <= maxPosition7 && this.hit7 == 'left'){
-  //       this.hit7 = 'left';
-  //       this.squareFar[7].x = moveRight7;
-  //     }else{
-  //       if(this.squareFar[7].x >= this.squareFarPosition[7]){
-  //         this.hit7 = 'right';
-  //         this.squareFar[7].x -= moveSpeed;
-  //       }else{
-  //         this.hit7 = 'left';
-  //       }
-        
-  //     }
-  //   }
+    };
   }
 
   coinAnimation(){
@@ -719,14 +637,11 @@ export class GameScene extends Scene {
           this.squareFarToAnimate[7] = this.isAnimating();
         }
       
-        this.squareFar[0].position.y -= this.SQUARE_VELOCITY;
-        this.squareFar[1].position.y -= this.SQUARE_VELOCITY;
-        this.squareFar[2].position.y -= this.SQUARE_VELOCITY;
-        this.squareFar[3].position.y -= this.SQUARE_VELOCITY;
-        this.squareFar[4].position.y -= this.SQUARE_VELOCITY;
-        this.squareFar[5].position.y -= this.SQUARE_VELOCITY;
-        this.squareFar[6].position.y -= this.SQUARE_VELOCITY;
-        this.squareFar[7].position.y -= this.SQUARE_VELOCITY;
+        // move squares towards user
+        for(let s=0; s <= 7; s++){
+          this.squareFar[s].position.y -= this.SQUARE_VELOCITY;
+         }
+
         this.initial_square.position.y -= this.SQUARE_VELOCITY;
         
         if (this.circle.position.y <= 0 && this.TOUCHEND == false) {
@@ -749,9 +664,6 @@ export class GameScene extends Scene {
                 if(this.isCoined(square, bouncePosition) && this.TOUCHEND == false){
                   this.app.getSoundPlayer().play('coin');
                   this.scoreText.text = `${this.score += 1}`;
-
-                  // console.log("coin position: x", this.coin[this.bounce_count].x, "y", this.coin[this.bounce_count].y);
-                  // console.log("score coin y", this.score_coin.getSprite().y)
                   
                   // remove coin
                   square.removeChildAt(1);
