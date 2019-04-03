@@ -106,6 +106,8 @@ export class GameScene extends Scene {
 
   start(): void {
 
+  this.coinAnimate = false;
+
   ///// BACKGROUND IMAGE
   console.log('initial velocity', this.INITIAL_VELOCITY);
   console.log('gravity', this.GRAVITY);
@@ -260,6 +262,12 @@ export class GameScene extends Scene {
     this.coin[7].scale.set(this.squareFar[0].width * 0.01);
     this.coin[7].anchor.set(0.5, 1);
     this.squareFar[7].addChild(this.coin[7]);
+
+    // animating coin --------------
+    this.coin[100] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
+    this.coin[100].proj.affine = PIXI.projection.AFFINE.AXIS_X;
+    this.coin[100].scale.set(this.squareFar[0].width * 0.01);
+    this.coin[100].anchor.set(0.5, 1);
 
     const s_img_7 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/platform.png'));
     s_img_7.scale.set(-this.initial_square.width * 0.0062, -this.initial_square.height * 0.011);
@@ -555,10 +563,15 @@ export class GameScene extends Scene {
   }
 
   coinAnimation(){
-    if(this.coinAnimate == false) return;
+    if(this.coinAnimate == false) {
+      this.container2d.removeChild(this.coin[100]);
+      return;
+    }
 
-    this.coin[100].y += 500;
-    this.coin[100].x += 90;
+    this.coin[100].y += 600;
+    this.coin[100].x += 100;
+
+    console.log(this.coin[100].x);
   }
 
   update(_delta: number): void {
@@ -730,19 +743,10 @@ animateCoin(square: projection.Sprite2d){
   let sqx = square.x;
   let sqy = square.y;
 
-  this.coin[100] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
-  this.coin[100].proj.affine = PIXI.projection.AFFINE.AXIS_X;
-  this.coin[100].scale.set(this.squareFar[0].width * 0.01);
-  this.coin[100].anchor.set(0.5, 1);
   this.coin[100].position.set(sqx,sqy);
   this.container2d.addChild(this.coin[100]);
 
   this.coinAnimate = true;
-  
-  setTimeout(() => {
-    this.container2d.removeChild(this.coin[100]);
-    this.coinAnimate = false;
-  }, this.FREE_FALL*40);
 }
 
   resetStage(){
