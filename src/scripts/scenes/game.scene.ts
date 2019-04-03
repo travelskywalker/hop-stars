@@ -548,8 +548,7 @@ console.log('device width', this.app.getScreenSize().w);
           this.circle.position.y -= this.YVELOCITY;
           this.air_time -= 1;
         } else {
-            
-            
+
             let square = this.squareFar[this.bounce_count];
             let bouncePosition = this.circle.position.x;
 
@@ -560,6 +559,7 @@ console.log('device width', this.app.getScreenSize().w);
               if(this.isInSquare(square, bouncePosition) === true ) {
                 // IF BALL FALL ON COIN
                 if(this.isCoined(square, bouncePosition) && this.TOUCHEND == false){
+                  this.app.getSoundPlayer().play('coin');
                   this.scoreText.text = `${this.score += 1}`;
 
                   // console.log("coin position: x", this.coin[this.bounce_count].x, "y", this.coin[this.bounce_count].y);
@@ -600,6 +600,9 @@ console.log('device width', this.app.getScreenSize().w);
                 // continuous falling __until out of screen
                 this.YVELOCITY -= this.GRAVITY;
                 this.circle.position.y -= this.YVELOCITY;
+
+                // dropping ball sound
+                this.app.getSoundPlayer().play('ball_bounce');
               }
             } else {
               this.YVELOCITY = this.INITIAL_VELOCITY;
