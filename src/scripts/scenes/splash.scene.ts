@@ -1,10 +1,13 @@
 import { Scene } from '@src/core/scene';
 import { IAppState } from '@src/app.state';
+import { Subscription } from 'rxjs/Subscription';
 import { SpriteActor } from '@src/core/sprite.actor';
 import { SpriteAnimatedActor } from '@src/core/sprite.animated.actor';
 import { LeaderboardModal } from './../components/leaderboard.modal';
 
 export class SplashScene extends Scene {
+
+  state_subscription: Subscription;
 
   lmodal: LeaderboardModal;
   // Dummy data for testing
@@ -264,9 +267,11 @@ export class SplashScene extends Scene {
     this.sound_btn.getAnimatedSprite().interactive = true;
     // toggle image on and off
     this.sound_btn.getAnimatedSprite().on('pointerup', () => { 
+      this.app.getSoundPlayer().play('button');
       this.app.getState().toggle_volume();  
       this.sound_btn.getAnimatedSprite().gotoAndStop(this.app.getState().state.volume);
       console.log("sound on/off");
+      
     });
     this.addChild(this.sound_btn);
 
@@ -278,9 +283,11 @@ export class SplashScene extends Scene {
     this.leaderboard_btn.getSprite().interactive = true;
     this.leaderboard_btn.getSprite().on('pointerup', () => { 
       console.log('show leaderboard scene');
+      this.app.getSoundPlayer().play('button');
       // for modal
       this.lmodal = new LeaderboardModal({app: this.app, var: this.dummy_data});
       this.container.addChild(this.lmodal);
+      
     });
     this.addChild(this.leaderboard_btn);
 
@@ -292,9 +299,16 @@ export class SplashScene extends Scene {
     this.howtowin_btn.getSprite().interactive = true;
     this.howtowin_btn.getSprite().on('pointerup', () => { 
       console.log('show howtowin scene');
+      this.app.getSoundPlayer().play('button');
       this.app.goToScene(3);
+      
     });
     this.addChild(this.howtowin_btn);
+
+
+    this.state_subscription = this.app.getState().subscribe((state: IAppState) => {
+      this.sound_btn.getAnimatedSprite().gotoAndStop(state.volume);
+    });
   }
 
   update(_delta: number): void {

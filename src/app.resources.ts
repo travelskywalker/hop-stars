@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js';
 import { App } from '@src/app';
 import * as WebFont from 'webfontloader';
+import 'pixi-sound';
 
 export function resourcesProvider(_app: App, loaded: (resources: any) => void, progress?: (percent: number) => void): void {
 
@@ -15,6 +16,10 @@ export function resourcesProvider(_app: App, loaded: (resources: any) => void, p
   loader.add('lvl1', `./assets/hop-game-level-1.json`);
   loader.add('lvl2', `./assets/hop-game-level-2.json`);
   loader.add('lvl3', `./assets/hop-game-level-3.json`);
+  loader.add('ball_bounce', './assets/ball_bounce.{ogg,mp3}');
+  loader.add('BGM', './assets/BGM.{ogg,mp3}');
+  loader.add('button', './assets/button.{ogg,mp3}');
+  loader.add('coin', './assets/coin.{ogg,mp3}');
 
   // start loading resources
   loader.load((_loader: any, resources: any) => {
