@@ -73,9 +73,10 @@ export class GameScene extends Scene {
   hit3: string = 'left';
   hit5: string = 'left';
   hit7: string = 'left';
+  hit: any = [];
   squareFarPosition: any = [];
   squareFarToAnimate: any = [];
-  animatedSquares: any = [1,3,5];
+  animatedSquares: any = [1,3,5,7];
 
   // coins
   coin: projection.Sprite2d [] = [];
@@ -109,6 +110,11 @@ export class GameScene extends Scene {
   start(): void {
 
   this.coinAnimate = false;
+
+  // hit
+  for(let x=1; x<=7; x++){
+    this.hit[x] = 'left';
+  }
 
   ///// BACKGROUND IMAGE
   console.log('initial velocity', this.INITIAL_VELOCITY);
@@ -495,90 +501,121 @@ export class GameScene extends Scene {
   }
 
   animateSquare(){
-    // do not animate if animation is turned off
-    if(this.animate == false) return false;
+    
+  // do not animate if animation is turned off
+  if(this.animate == false) return false;
+  console.log("animate squares");
+
+  let squares = this.animatedSquares;
 
   let moveSpeed = 8;
   let moveLength = this.app.getScreenSize().w * .40;
 
-    // square1
-  if(this.squareFarToAnimate[1] == true){
-    let maxPosition1 = this.squareFarPosition[1] + moveLength;
-
-    let moveRight1 = this.squareFar[1].x += moveSpeed;
-    let moveLeft = this.squareFar[1].x -= moveSpeed;
+  for(let x = 0; x <= squares.length-1; x++){
     
-    if(this.squareFar[1].x <= maxPosition1 && this.hit1 == 'left'){
-      this.hit1 = 'left';
-      this.squareFar[1].x = moveRight1;
-    }else{
-      if(this.squareFar[1].x >= this.squareFarPosition[1]){
-        this.hit1 = 'right';
-        this.squareFar[1].x -= moveSpeed;
+    if(this.squareFarToAnimate[squares[x]] == true){
+
+      if(this.squareFar[squares[x]].x <= this.squareFarPosition[squares[x]] + moveLength && this.hit[squares[x]] == 'left'){
+
+        this.hit[squares[x]] = 'left';
+        this.squareFar[squares[x]].x += moveSpeed;
+
       }else{
-        this.hit1 = 'left';
-      }
-      
-    }
-  }
 
-  if(this.squareFarToAnimate[3] == true){
-    let maxPosition3 = this.squareFarPosition[3] + moveLength;
+        if(this.squareFar[squares[x]].x >= this.squareFarPosition[squares[x]]){
 
-    let moveRight3 = this.squareFar[3].x += moveSpeed;
-    let moveLeft = this.squareFar[3].x -= moveSpeed;
-    
-    if(this.squareFar[3].x <= maxPosition3 && this.hit3 == 'left'){
-      this.hit3 = 'left';
-      this.squareFar[3].x = moveRight3;
-    }else{
-      if(this.squareFar[3].x >= this.squareFarPosition[3]){
-        this.hit3 = 'right';
-        this.squareFar[3].x -= moveSpeed;
-      }else{
-        this.hit3 = 'left';
-      }
-      
-    }
-  }
+          this.hit[squares[x]] = 'right';
+          this.squareFar[squares[x]].x -= moveSpeed;
 
-  if(this.squareFarToAnimate[5] == true){
-      let maxPosition5 = this.squareFarPosition[1] + moveLength;
-
-      let moveRight5 = this.squareFar[5].x += moveSpeed;
-      
-      if(this.squareFar[5].x <= maxPosition5 && this.hit5 == 'left'){
-        this.hit5 = 'left';
-        this.squareFar[5].x = moveRight5;
-      }else{
-        if(this.squareFar[5].x >= this.squareFarPosition[5]){
-          this.hit5 = 'right';
-          this.squareFar[5].x -= moveSpeed;
         }else{
-          this.hit5 = 'left';
+
+          this.hit[squares[x]]= 'left';
+
         }
         
       }
     }
+  };
+    
+  // return;
+  //   // square1
+  // if(this.squareFarToAnimate[1] == true){
+  //   let maxPosition1 = this.squareFarPosition[1] + moveLength;
 
-    if(this.squareFarToAnimate[7] == true){
-      let maxPosition7 = this.squareFarPosition[1] + moveLength;
-
-      let moveRight7 = this.squareFar[7].x += moveSpeed;
+  //   let moveRight1 = this.squareFar[1].x += moveSpeed;
+  //   let moveLeft = this.squareFar[1].x -= moveSpeed;
+    
+  //   if(this.squareFar[1].x <= maxPosition1 && this.hit1 == 'left'){
+  //     this.hit1 = 'left';
+  //     this.squareFar[1].x = moveRight1;
+  //   }else{
+  //     if(this.squareFar[1].x >= this.squareFarPosition[1]){
+  //       this.hit1 = 'right';
+  //       this.squareFar[1].x -= moveSpeed;
+  //     }else{
+  //       this.hit1 = 'left';
+  //     }
       
-      if(this.squareFar[7].x <= maxPosition7 && this.hit7 == 'left'){
-        this.hit7 = 'left';
-        this.squareFar[7].x = moveRight7;
-      }else{
-        if(this.squareFar[7].x >= this.squareFarPosition[7]){
-          this.hit7 = 'right';
-          this.squareFar[7].x -= moveSpeed;
-        }else{
-          this.hit7 = 'left';
-        }
+  //   }
+  // }
+
+  // if(this.squareFarToAnimate[3] == true){
+  //   let maxPosition3 = this.squareFarPosition[3] + moveLength;
+
+  //   let moveRight3 = this.squareFar[3].x += moveSpeed;
+  //   let moveLeft = this.squareFar[3].x -= moveSpeed;
+    
+  //   if(this.squareFar[3].x <= maxPosition3 && this.hit3 == 'left'){
+  //     this.hit3 = 'left';
+  //     this.squareFar[3].x = moveRight3;
+  //   }else{
+  //     if(this.squareFar[3].x >= this.squareFarPosition[3]){
+  //       this.hit3 = 'right';
+  //       this.squareFar[3].x -= moveSpeed;
+  //     }else{
+  //       this.hit3 = 'left';
+  //     }
+      
+  //   }
+  // }
+
+  // if(this.squareFarToAnimate[5] == true){
+  //     let maxPosition5 = this.squareFarPosition[1] + moveLength;
+
+  //     let moveRight5 = this.squareFar[5].x += moveSpeed;
+      
+  //     if(this.squareFar[5].x <= maxPosition5 && this.hit5 == 'left'){
+  //       this.hit5 = 'left';
+  //       this.squareFar[5].x = moveRight5;
+  //     }else{
+  //       if(this.squareFar[5].x >= this.squareFarPosition[5]){
+  //         this.hit5 = 'right';
+  //         this.squareFar[5].x -= moveSpeed;
+  //       }else{
+  //         this.hit5 = 'left';
+  //       }
         
-      }
-    }
+  //     }
+  //   }
+
+  //   if(this.squareFarToAnimate[7] == true){
+  //     let maxPosition7 = this.squareFarPosition[1] + moveLength;
+
+  //     let moveRight7 = this.squareFar[7].x += moveSpeed;
+      
+  //     if(this.squareFar[7].x <= maxPosition7 && this.hit7 == 'left'){
+  //       this.hit7 = 'left';
+  //       this.squareFar[7].x = moveRight7;
+  //     }else{
+  //       if(this.squareFar[7].x >= this.squareFarPosition[7]){
+  //         this.hit7 = 'right';
+  //         this.squareFar[7].x -= moveSpeed;
+  //       }else{
+  //         this.hit7 = 'left';
+  //       }
+        
+  //     }
+  //   }
   }
 
   coinAnimation(){
@@ -613,7 +650,7 @@ export class GameScene extends Scene {
     }
 
     // animate square
-    this.animate = true;
+    // this.animate = true;
     try{
       this.animateSquare();
     }catch(error){
