@@ -13,12 +13,15 @@ export class AppSound {
     PIXI.sound.volumeAll = 0;
     PIXI.sound.play('BGM', { loop: true });
     this.state_subscription = this.app.getState().subscribe((_state: IAppState) => {
-      PIXI.sound.volumeAll = [0, 1.0][_state.volume];
+      PIXI.sound.volumeAll = [0, 1][_state.volume];
     });
   }
 
   play(name: SoundName) {
     PIXI.sound.play(name);
+    if(name == 'coin'){
+      PIXI.sound.volume('coin', .3);
+    }
   }
 
   stop(name: SoundName) {

@@ -253,7 +253,7 @@ export class SplashScene extends Scene {
     this.play_btn.getSprite().interactive = true;
     this.play_btn.getSprite().on('pointerup', () => { 
       console.log('go to instruction screen scene ');
-      setTimeout(() => { this.app.goToScene(1); }, 200);
+      setTimeout(() => { this.app.goToScene(2); }, 200);
     });
     this.addChild(this.play_btn);
 

@@ -85,6 +85,11 @@ export class GameScene extends Scene {
   stageProgress: number = 1;
   stageLimit: number = 5;
 
+  // how to win
+  instructionContainer: Graphics;
+  swipe: SpriteActor;
+  taptostart: SpriteActor;
+
   init(): void {
     
     this.bigWhiteTexture = new PIXI.Texture(PIXI.Texture.EMPTY.baseTexture);
@@ -282,8 +287,6 @@ export class GameScene extends Scene {
     lightY.scale.set(this.app.getScreenSize().w * 0.2, this.app.getScreenSize().h);
     lightY.alpha = 0;
     this.container2d.addChildAt(lightY, 0);
-
-  
     
   /////  SCORE
 
@@ -378,7 +381,42 @@ export class GameScene extends Scene {
     this.container2d.addChild(this.squareFar[7]);
 
     this.GAME_RESET = true;
-  }
+
+    // // // set zindex of instruction screen
+    // this.container.setChildIndex(this.instructionContainer, 9);
+    // this.container.setChildIndex(this.taptostart.getSprite(), 10);
+
+
+
+      // how to win
+    this.instructionContainer = new Graphics();
+    this.instructionContainer.beginFill(0xFFFFFF).drawRoundedRect(0, 0, this.app.getScreenSize().w, this.app.getScreenSize().h, 0);
+    this.instructionContainer.position.x = 0;
+    this.instructionContainer.position.y = 0;
+    this.instructionContainer.alpha = .5;
+    this.container.addChild(this.instructionContainer);
+    this.instructionContainer.interactive = true;
+    this.instructionContainer.on('pointerup', () => {
+      console.log('remove how to win');
+      this.removeInstruction();
+    })
+    
+    this.swipe = new SpriteActor('int-bg', this.app, 'common', 'Instruction-group.png');
+    this.swipe.setAnchor(.5, .5);
+    this.swipe.setPosition(this.app.getScreenSize().w * .5, this.app.getScreenSize().h * .85);
+    this.swipe.setScaleUpToScreenPercWidth(.9);
+    
+    this.container.addChild(this.swipe.getSprite());
+
+    this.taptostart = new SpriteActor('tap-bg', this.app, 'common', 'TAP TO START.png');
+    this.taptostart.setAnchor(.5, .5);
+    this.taptostart.setPosition(this.app.getScreenSize().w * .5, this.app.getScreenSize().h * .4);
+    this.taptostart.setScaleUpToScreenPercWidth(.7);
+    this.container.addChild(this.taptostart.getSprite());
+    // end of how to win
+
+
+}
 
   randomPosition(){
 
@@ -407,6 +445,12 @@ export class GameScene extends Scene {
         return mid
         break;
     }
+  }
+
+  removeInstruction(){
+    this.container.removeChild(this.instructionContainer);
+    this.container.removeChild(this.swipe.getSprite());
+    this.container.removeChild(this.taptostart.getSprite());
   }
 
   renderStage(number: number){
@@ -610,8 +654,7 @@ export class GameScene extends Scene {
           this.circle.position.y -= this.YVELOCITY;
           this.air_time -= 1;
         } else {
-            
-            
+
             let square = this.squareFar[this.bounce_count];
             let bouncePosition = this.circle.position.x;
 
@@ -622,6 +665,7 @@ export class GameScene extends Scene {
               if(this.isInSquare(square, bouncePosition) === true ) {
                 // IF BALL FALL ON COIN
                 if(this.isCoined(square, bouncePosition) && this.TOUCHEND == false){
+                  this.app.getSoundPlayer().play('coin');
                   this.scoreText.text = `${this.score += 1}`;
 
                   // console.log("coin position: x", this.coin[this.bounce_count].x, "y", this.coin[this.bounce_count].y);
@@ -662,6 +706,9 @@ export class GameScene extends Scene {
                 // continuous falling __until out of screen
                 this.YVELOCITY -= this.GRAVITY;
                 this.circle.position.y -= this.YVELOCITY;
+
+                // dropping ball sound
+                this.app.getSoundPlayer().play('ball_bounce');
               }
             } else {
               this.YVELOCITY = this.INITIAL_VELOCITY;
