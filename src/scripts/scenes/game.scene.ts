@@ -85,7 +85,7 @@ export class GameScene extends Scene {
 
   init(): void {
     
-    this.bigWhiteTexture = new PIXI.Texture(PIXI.Texture.WHITE.baseTexture);
+    this.bigWhiteTexture = new PIXI.Texture(PIXI.Texture.EMPTY.baseTexture);
     this.bigWhiteTexture.orig.width = this.CIRCLEWIDTH * 6;
     this.bigWhiteTexture.orig.height = this.CIRCLEWIDTH * 4;
     this.last_square_position = this.initial_square_distance + (this.initial_square_distance - this.initial_square_y) * 8;
@@ -100,14 +100,14 @@ export class GameScene extends Scene {
   start(): void {
 
   ///// BACKGROUND IMAGE
-console.log('initial velocity', this.INITIAL_VELOCITY);
-console.log('gravity', this.GRAVITY);
-console.log('initial square distance', this.initial_square_distance);
-console.log('square fall pos: ', this.initial_square_y);
-console.log('square distance: ', this.square_distance);
-console.log('--------');
-console.log('device height', this.app.getScreenSize().h);
-console.log('device width', this.app.getScreenSize().w);
+  console.log('initial velocity', this.INITIAL_VELOCITY);
+  console.log('gravity', this.GRAVITY);
+  console.log('initial square distance', this.initial_square_distance);
+  console.log('square fall pos: ', this.initial_square_y);
+  console.log('square distance: ', this.square_distance);
+  console.log('--------');
+  console.log('device height', this.app.getScreenSize().h);
+  console.log('device width', this.app.getScreenSize().w);
 
    // stage
    this.stageText = new Text('',{fontFamily : 'Arial', fontSize: 100, fill : 0x000000, align : 'center'});
@@ -119,19 +119,32 @@ console.log('device width', this.app.getScreenSize().w);
 
   // GUIDE SQUARE ------------------
     this.initial_square = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
-    this.initial_square.tint = 0xF37DAE;
     this.initial_square.anchor.set(0.5);
     this.initial_square.position.set(0, this.initial_square_y);
+
+    const s_img_i = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/platform.png'));
+    s_img_i.scale.set(-this.initial_square.width * 0.0062, -this.initial_square.height * 0.011);
+    s_img_i.anchor.set(0.5, 0.5);
+    s_img_i.position.y = 0;
+    this.initial_square.addChild(s_img_i);
+    
     
     // square 0 ------------------
     this.squareFar[0] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
-    this.squareFar[0].tint = 0xF37DAE;
+    this.squareFar[0].tint = 0;
     this.squareFar[0].anchor.set(0.5);
     this.coin[0] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
     this.coin[0].proj.affine = PIXI.projection.AFFINE.AXIS_X;
     this.coin[0].scale.set(this.squareFar[0].width * 0.01);
     this.coin[0].anchor.set(0.5, 1);
+    
+    const s_img_0 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/platform.png'));
+    s_img_0.scale.set(-this.initial_square.width * 0.0062, -this.initial_square.height * 0.011);
+    s_img_0.anchor.set(0.5, 0.5);
+    s_img_0.position.y = 0;
+    this.squareFar[0].addChild(s_img_0);
     this.squareFar[0].addChild(this.coin[0]);
+    
     
     // square 1 ------------------
     this.squareFar[1] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
@@ -141,7 +154,14 @@ console.log('device width', this.app.getScreenSize().w);
     this.coin[1].proj.affine = PIXI.projection.AFFINE.AXIS_X;
     this.coin[1].scale.set(this.squareFar[0].width * 0.01);
     this.coin[1].anchor.set(0.5, 1);
+    
+    const s_img_1 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/platform.png'));
+    s_img_1.scale.set(-this.initial_square.width * 0.0062, -this.initial_square.height * 0.011);
+    s_img_1.anchor.set(0.5, 0.5);
+    s_img_1.position.y = 0;
+    this.squareFar[1].addChild(s_img_1);
     this.squareFar[1].addChild(this.coin[1]);
+    
 
     // square 2 ------------------
     this.squareFar[2] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
@@ -151,6 +171,12 @@ console.log('device width', this.app.getScreenSize().w);
     this.coin[2].proj.affine = PIXI.projection.AFFINE.AXIS_X;
     this.coin[2].scale.set(this.squareFar[0].width * 0.01);
     this.coin[2].anchor.set(0.5, 1);
+    
+    const s_img_2 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/platform.png'));
+    s_img_2.scale.set(-this.initial_square.width * 0.0062, -this.initial_square.height * 0.011);
+    s_img_2.anchor.set(0.5, 0.5);
+    s_img_2.position.y = 0;
+    this.squareFar[2].addChild(s_img_2);
     this.squareFar[2].addChild(this.coin[2]);
 
     // square 3 ------------------
@@ -161,6 +187,12 @@ console.log('device width', this.app.getScreenSize().w);
     this.coin[3].proj.affine = PIXI.projection.AFFINE.AXIS_X;
     this.coin[3].scale.set(this.squareFar[0].width * 0.01);
     this.coin[3].anchor.set(0.5, 1);
+    
+    const s_img_3 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/platform.png'));
+    s_img_3.scale.set(-this.initial_square.width * 0.0062, -this.initial_square.height * 0.011);
+    s_img_3.anchor.set(0.5, 0.5);
+    s_img_3.position.y = 0;
+    this.squareFar[3].addChild(s_img_3);
     this.squareFar[3].addChild(this.coin[3]);
 
     // square 4 ------------------
@@ -171,6 +203,12 @@ console.log('device width', this.app.getScreenSize().w);
     this.coin[4].proj.affine = PIXI.projection.AFFINE.AXIS_X;
     this.coin[4].scale.set(this.squareFar[0].width * 0.01);
     this.coin[4].anchor.set(0.5, 1);
+    
+    const s_img_4 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/platform.png'));
+    s_img_4.scale.set(-this.initial_square.width * 0.0062, -this.initial_square.height * 0.011);
+    s_img_4.anchor.set(0.5, 0.5);
+    s_img_4.position.y = 0;
+    this.squareFar[4].addChild(s_img_4);
     this.squareFar[4].addChild(this.coin[4]);
 
     // square 5 ------------------
@@ -181,6 +219,12 @@ console.log('device width', this.app.getScreenSize().w);
     this.coin[5].proj.affine = PIXI.projection.AFFINE.AXIS_X;
     this.coin[5].scale.set(this.squareFar[0].width * 0.01);
     this.coin[5].anchor.set(0.5, 1);
+
+    const s_img_5 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/platform.png'));
+    s_img_5.scale.set(-this.initial_square.width * 0.0062, -this.initial_square.height * 0.011);
+    s_img_5.anchor.set(0.5, 0.5);
+    s_img_5.position.y = 0;
+    this.squareFar[5].addChild(s_img_5);
     this.squareFar[5].addChild(this.coin[5]);
     
     // square 6 ------------------
@@ -193,6 +237,13 @@ console.log('device width', this.app.getScreenSize().w);
     this.coin[6].anchor.set(0.5, 1);
     this.squareFar[6].addChild(this.coin[6]);
 
+    const s_img_6 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/platform.png'));
+    s_img_6.scale.set(-this.initial_square.width * 0.0062, -this.initial_square.height * 0.011);
+    s_img_6.anchor.set(0.5, 0.5);
+    s_img_6.position.y = 0;
+    this.squareFar[6].addChild(s_img_6);
+    this.squareFar[6].addChild(this.coin[6]);
+
     // square 7 ------------------
     this.squareFar[7] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[7].tint = 0xF37DAE;
@@ -201,6 +252,13 @@ console.log('device width', this.app.getScreenSize().w);
     this.coin[7].proj.affine = PIXI.projection.AFFINE.AXIS_X;
     this.coin[7].scale.set(this.squareFar[0].width * 0.01);
     this.coin[7].anchor.set(0.5, 1);
+    this.squareFar[7].addChild(this.coin[7]);
+
+    const s_img_7 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/platform.png'));
+    s_img_7.scale.set(-this.initial_square.width * 0.0062, -this.initial_square.height * 0.011);
+    s_img_7.anchor.set(0.5, 0.5);
+    s_img_7.position.y = 0;
+    this.squareFar[7].addChild(s_img_7);
     this.squareFar[7].addChild(this.coin[7]);
 
     this.generateStartSquares();
@@ -551,7 +609,7 @@ console.log('device width', this.app.getScreenSize().w);
                   this.scoreText.text = `${this.score += 1}`;
 
                   // remove coin
-                  square.removeChildren();
+                  square.removeChildAt(1);
                   // animate square
                   if(this.score >= this.animateParam){
                     this.animate = true;
@@ -697,26 +755,7 @@ console.log('device width', this.app.getScreenSize().w);
      this.INITIAL_VELOCITY = (this.app.getScreenSize().h * 0.02) * 3;
      this.GRAVITY = this.INITIAL_VELOCITY / this.FREE_FALL;
      this.SQUARE_VELOCITY = this.square_distance / (this.FREE_FALL * 2 - 1);
-     // BACKGROUND
-    this.bg_img = new SpriteActor('splash-bg', this.app, 'common', 'startscreen_bg.jpg');
-    this.bg = new Graphics();
-    this.bg.beginFill(0xF2F2F2, 0);
-    this.bg.drawRect(0, 0, this.app.getScreenSize().w, this.app.getScreenSize().h);
-    this.bg.endFill();
-    this.bg_img.setScaleUpToScreenPercWidth(1.2);
-    this.bg_img.setScaleUpToScreenPercHeight(1);
-    this.bg_initial_x = -( (this.bg_img.getSprite().width - this.app.getScreenSize().w) / 2);
-    this.bg_img.getSprite().position.x = this.bg_initial_x;
-    this.addChild(this.bg_img);
-    // Gradient Overlay --- > from top screen to make fading squares effect
-    this.gradient_bg = new SpriteActor('splash-bg', this.app, 'lvl1', 'lv1_mountainbg_gradientoverlay.png');
-    this.gradient_bg.getSprite().alpha = 1;
-    this.gradient_bg.setScaleUpToScreenPercWidth(1); 
-    this.gradient_bg.setScaleUpToScreenPercHeight(1);
-    this.container.addChild(this.bg_img.getSprite());
-    this.container.setChildIndex(this.bg_img.getSprite(),0);
-    this.container.addChild(this.gradient_bg.getSprite());
-    this.container.setChildIndex(this.gradient_bg.getSprite(),2)
+    
   }
 
   stage3(){
