@@ -72,6 +72,8 @@ export class GameScene extends Scene {
 
   // coins
   coin: projection.Sprite2d [] = [];
+  score_coin: SpriteActor;
+  coinAnimate: boolean = false;
 
   // score
   scoreText: Text;
@@ -125,7 +127,6 @@ console.log('device width', this.app.getScreenSize().w);
     this.squareFar[0] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[0].tint = 0xF37DAE;
     this.squareFar[0].anchor.set(0.5);
-    // this.squareFar[0].position.set(this.randomPosition(), this.initial_square_distance);
     this.coin[0] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
     this.coin[0].proj.affine = PIXI.projection.AFFINE.AXIS_X;
     this.coin[0].scale.set(this.squareFar[0].width * 0.01);
@@ -135,7 +136,6 @@ console.log('device width', this.app.getScreenSize().w);
     this.squareFar[1] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[1].tint = 0xF37DAE;
     this.squareFar[1].anchor.set(0.5);
-    // this.squareFar[1].position.set(this.randomPosition(), (this.initial_square_distance + this.square_distance));
     this.coin[1] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
     this.coin[1].proj.affine = PIXI.projection.AFFINE.AXIS_X;
     this.coin[1].scale.set(this.squareFar[0].width * 0.01);
@@ -145,7 +145,6 @@ console.log('device width', this.app.getScreenSize().w);
     this.squareFar[2] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[2].tint = 0xF37DAE;
     this.squareFar[2].anchor.set(0.5);
-    // this.squareFar[2].position.set(this.randomPosition(), (this.initial_square_distance + this.square_distance * 2));
     this.coin[2] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
     this.coin[2].proj.affine = PIXI.projection.AFFINE.AXIS_X;
     this.coin[2].scale.set(this.squareFar[0].width * 0.01);
@@ -155,7 +154,6 @@ console.log('device width', this.app.getScreenSize().w);
     this.squareFar[3] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[3].tint = 0xF37DAE;
     this.squareFar[3].anchor.set(0.5);
-    // this.squareFar[3].position.set(this.randomPosition(), (this.initial_square_distance + this.square_distance * 3));
     this.coin[3] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
     this.coin[3].proj.affine = PIXI.projection.AFFINE.AXIS_X;
     this.coin[3].scale.set(this.squareFar[0].width * 0.01);
@@ -165,7 +163,6 @@ console.log('device width', this.app.getScreenSize().w);
     this.squareFar[4] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[4].tint = 0xF37DAE;
     this.squareFar[4].anchor.set(0.5);
-    // this.squareFar[4].position.set(this.randomPosition(), (this.initial_square_distance + this.square_distance * 4));
     this.coin[4] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
     this.coin[4].proj.affine = PIXI.projection.AFFINE.AXIS_X;
     this.coin[4].scale.set(this.squareFar[0].width * 0.01);
@@ -175,7 +172,6 @@ console.log('device width', this.app.getScreenSize().w);
     this.squareFar[5] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[5].tint = 0xF37DAE;
     this.squareFar[5].anchor.set(0.5);
-    // this.squareFar[5].position.set(this.randomPosition(), (this.initial_square_distance + this.square_distance * 5));
     this.coin[5] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
     this.coin[5].proj.affine = PIXI.projection.AFFINE.AXIS_X;
     this.coin[5].scale.set(this.squareFar[0].width * 0.01);
@@ -185,7 +181,6 @@ console.log('device width', this.app.getScreenSize().w);
     this.squareFar[6] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[6].tint = 0xF37DAE;
     this.squareFar[6].anchor.set(0.5);
-    // this.squareFar[6].position.set(this.randomPosition(), (this.initial_square_distance + this.square_distance * 6));
     this.coin[6] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
     this.coin[6].proj.affine = PIXI.projection.AFFINE.AXIS_X;
     this.coin[6].scale.set(this.squareFar[0].width * 0.01);
@@ -195,7 +190,6 @@ console.log('device width', this.app.getScreenSize().w);
     this.squareFar[7] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[7].tint = 0xF37DAE;
     this.squareFar[7].anchor.set(0.5);
-    // this.squareFar[7].position.set(this.randomPosition(), (this.initial_square_distance + this.square_distance * 7));
     this.coin[7] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
     this.coin[7].proj.affine = PIXI.projection.AFFINE.AXIS_X;
     this.coin[7].scale.set(this.squareFar[0].width * 0.01);
@@ -226,11 +220,11 @@ console.log('device width', this.app.getScreenSize().w);
     
   /////  SCORE
 
-  const score_coin = new SpriteActor('ball', this.app, 'common', 'coin.png');
-  // circle1.setAnchor(this.circle.position.x, 0);
-  score_coin.setPosition(this.app.getScreenSize().w * 0.85, this.app.getScreenSize().h * 0.02);
-  score_coin.setScaleUpToScreenPercWidth(0.1);
-  this.container.addChild(score_coin.getSprite());
+  this.score_coin = new SpriteActor('ball', this.app, 'common', 'coin.png');
+  this.score_coin.setPosition(this.app.getScreenSize().w * 0.85, this.app.getScreenSize().h * 0.02);
+  this.score_coin.setScaleUpToScreenPercWidth(0.1);
+  this.container.addChild(this.score_coin.getSprite());
+  console.log("score coin: x",this.score_coin.getSprite().x, "y", this.score_coin.getSprite().y);
 
   this.scoreText = new Text(
     `${this.score}`,
@@ -247,7 +241,7 @@ console.log('device width', this.app.getScreenSize().w);
       dropShadowDistance: 0
     });
   this.scoreText.anchor.set(1 , 0);
-  this.scoreText.position.x = score_coin.getSprite().position.x - 20;
+  this.scoreText.position.x = this.score_coin.getSprite().position.x - 20;
   this.scoreText.position.y = this.app.getScreenSize().h * 0.02;
   this.container.addChild(this.scoreText);
 
@@ -424,26 +418,31 @@ console.log('device width', this.app.getScreenSize().w);
   }
 
   if(this.squareFarToAnimate[5] == true){
-    let maxPosition = this.squareFarPosition[1] + (this.app.getScreenSize().w * .40);
+      let maxPosition = this.squareFarPosition[1] + (this.app.getScreenSize().w * .40);
 
-    let moveRight = this.squareFar[5].x += 6;
-    let moveLeft = this.squareFar[5].x -= 6;
-    
-    if(this.squareFar[5].x <= maxPosition && this.hit == 'left'){
-      this.hit = 'left';
-      this.squareFar[5].x = moveRight;
-    }else{
-      if(this.squareFar[5].x >= this.squareFarPosition[5]){
-        this.hit = 'right';
-        this.squareFar[5].x -= 6;
-      }else{
-        this.hit = 'left';
-      }
+      let moveRight = this.squareFar[5].x += 6;
+      let moveLeft = this.squareFar[5].x -= 6;
       
+      if(this.squareFar[5].x <= maxPosition && this.hit == 'left'){
+        this.hit = 'left';
+        this.squareFar[5].x = moveRight;
+      }else{
+        if(this.squareFar[5].x >= this.squareFarPosition[5]){
+          this.hit = 'right';
+          this.squareFar[5].x -= 6;
+        }else{
+          this.hit = 'left';
+        }
+        
+      }
     }
   }
 
+  coinAnimation(){
+    if(this.coinAnimate == false) return;
 
+    this.coin[100].y += 500;
+    this.coin[100].x += 90;
   }
 
   update(_delta: number): void {
@@ -455,6 +454,8 @@ console.log('device width', this.app.getScreenSize().w);
     }catch(error){
       // console.log("animate error", error);
     }
+
+    this.coinAnimation();
 
       // Project camera angle
       let posY = this.container2d.toLocal(this.squareY.position, undefined, undefined, undefined, PIXI.projection.TRANSFORM_STEP.BEFORE_PROJ);
@@ -549,8 +550,12 @@ console.log('device width', this.app.getScreenSize().w);
                 if(this.isCoined(square, bouncePosition) && this.TOUCHEND == false){
                   this.scoreText.text = `${this.score += 1}`;
 
+                  // console.log("coin position: x", this.coin[this.bounce_count].x, "y", this.coin[this.bounce_count].y);
+                  // console.log("score coin y", this.score_coin.getSprite().y)
+                  
                   // remove coin
                   square.removeChildren();
+                  this.animateCoin(this.squareFar[this.bounce_count]);
 
                   // animate square
                   if(this.score >= this.animateParam){
@@ -574,9 +579,6 @@ console.log('device width', this.app.getScreenSize().w);
                 // console.log('uncatched', this.isInSquare(square,bouncePosition)); 
               }
             }
-
-            
-
             
             if(this.TOUCHEND == true) {
               // console.log('falling');
@@ -601,6 +603,26 @@ console.log('device width', this.app.getScreenSize().w);
         
       }
   }
+}
+
+animateCoin(square: projection.Sprite2d){
+
+  let sqx = square.x;
+  let sqy = square.y;
+
+  this.coin[100] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
+  this.coin[100].proj.affine = PIXI.projection.AFFINE.AXIS_X;
+  this.coin[100].scale.set(this.squareFar[0].width * 0.01);
+  this.coin[100].anchor.set(0.5, 1);
+  this.coin[100].position.set(sqx,sqy);
+  this.container2d.addChild(this.coin[100]);
+
+  this.coinAnimate = true;
+  
+  setTimeout(() => {
+    this.container2d.removeChild(this.coin[100]);
+    this.coinAnimate = false;
+  }, this.FREE_FALL*40);
 }
 
   resetStage(){
