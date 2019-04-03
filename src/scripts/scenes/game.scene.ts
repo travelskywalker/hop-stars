@@ -144,7 +144,7 @@ export class GameScene extends Scene {
     this.squareFar[0].anchor.set(0.5);
     this.coin[0] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
     this.coin[0].proj.affine = PIXI.projection.AFFINE.AXIS_X;
-    this.coin[0].scale.set(this.squareFar[0].width * 0.01);
+    this.coin[0].scale.set(this.squareFar[0].width * 0.008);
     this.coin[0].anchor.set(0.5, 1);
     
     const s_img_0 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/platform.png'));
@@ -161,7 +161,7 @@ export class GameScene extends Scene {
     this.squareFar[1].anchor.set(0.5);
     this.coin[1] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
     this.coin[1].proj.affine = PIXI.projection.AFFINE.AXIS_X;
-    this.coin[1].scale.set(this.squareFar[0].width * 0.01);
+    this.coin[1].scale.set(this.squareFar[0].width * 0.008);
     this.coin[1].anchor.set(0.5, 1);
     
     const s_img_1 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/platform.png'));
@@ -178,7 +178,7 @@ export class GameScene extends Scene {
     this.squareFar[2].anchor.set(0.5);
     this.coin[2] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
     this.coin[2].proj.affine = PIXI.projection.AFFINE.AXIS_X;
-    this.coin[2].scale.set(this.squareFar[0].width * 0.01);
+    this.coin[2].scale.set(this.squareFar[0].width * 0.008);
     this.coin[2].anchor.set(0.5, 1);
     
     const s_img_2 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/platform.png'));
@@ -194,7 +194,7 @@ export class GameScene extends Scene {
     this.squareFar[3].anchor.set(0.5);
     this.coin[3] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
     this.coin[3].proj.affine = PIXI.projection.AFFINE.AXIS_X;
-    this.coin[3].scale.set(this.squareFar[0].width * 0.01);
+    this.coin[3].scale.set(this.squareFar[0].width * 0.008);
     this.coin[3].anchor.set(0.5, 1);
     
     const s_img_3 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/platform.png'));
@@ -210,7 +210,7 @@ export class GameScene extends Scene {
     this.squareFar[4].anchor.set(0.5);
     this.coin[4] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
     this.coin[4].proj.affine = PIXI.projection.AFFINE.AXIS_X;
-    this.coin[4].scale.set(this.squareFar[0].width * 0.01);
+    this.coin[4].scale.set(this.squareFar[0].width * 0.008);
     this.coin[4].anchor.set(0.5, 1);
     
     const s_img_4 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/platform.png'));
@@ -226,7 +226,7 @@ export class GameScene extends Scene {
     this.squareFar[5].anchor.set(0.5);
     this.coin[5] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
     this.coin[5].proj.affine = PIXI.projection.AFFINE.AXIS_X;
-    this.coin[5].scale.set(this.squareFar[0].width * 0.01);
+    this.coin[5].scale.set(this.squareFar[0].width * 0.008);
     this.coin[5].anchor.set(0.5, 1);
 
     const s_img_5 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/platform.png'));
@@ -242,7 +242,7 @@ export class GameScene extends Scene {
     this.squareFar[6].anchor.set(0.5);
     this.coin[6] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
     this.coin[6].proj.affine = PIXI.projection.AFFINE.AXIS_X;
-    this.coin[6].scale.set(this.squareFar[0].width * 0.01);
+    this.coin[6].scale.set(this.squareFar[0].width * 0.008);
     this.coin[6].anchor.set(0.5, 1);
     this.squareFar[6].addChild(this.coin[6]);
 
@@ -259,7 +259,7 @@ export class GameScene extends Scene {
     this.squareFar[7].anchor.set(0.5);
     this.coin[7] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
     this.coin[7].proj.affine = PIXI.projection.AFFINE.AXIS_X;
-    this.coin[7].scale.set(this.squareFar[0].width * 0.01);
+    this.coin[7].scale.set(this.squareFar[0].width * 0.008);
     this.coin[7].anchor.set(0.5, 1);
     this.squareFar[7].addChild(this.coin[7]);
 
@@ -390,22 +390,15 @@ export class GameScene extends Scene {
 
     this.GAME_RESET = true;
 
-    // // // set zindex of instruction screen
-    // this.container.setChildIndex(this.instructionContainer, 9);
-    // this.container.setChildIndex(this.taptostart.getSprite(), 10);
-
-
-
       // how to win
     this.instructionContainer = new Graphics();
-    this.instructionContainer.beginFill(0xFFFFFF).drawRoundedRect(0, 0, this.app.getScreenSize().w, this.app.getScreenSize().h, 0);
+    this.instructionContainer.beginFill(0x000).drawRoundedRect(0, 0, this.app.getScreenSize().w, this.app.getScreenSize().h, 0);
     this.instructionContainer.position.x = 0;
     this.instructionContainer.position.y = 0;
-    this.instructionContainer.alpha = .5;
+    this.instructionContainer.alpha = .4;
     this.container.addChild(this.instructionContainer);
     this.instructionContainer.interactive = true;
     this.instructionContainer.on('pointerup', () => {
-      console.log('remove how to win');
       this.removeInstruction();
     })
     
@@ -568,10 +561,8 @@ export class GameScene extends Scene {
       return;
     }
 
-    this.coin[100].y += 600;
-    this.coin[100].x += 100;
-
-    console.log(this.coin[100].x);
+    // this.coin[100].y += 300;
+    // this.coin[100].x += 50;
   }
 
   update(_delta: number): void {
@@ -686,7 +677,7 @@ export class GameScene extends Scene {
                   
                   // remove coin
                   square.removeChildAt(1);
-                  this.animateCoin(this.squareFar[this.bounce_count]);
+                  // this.animateCoin(this.squareFar[this.bounce_count]);
 
                   // animate square
                   if(this.score >= this.animateParam){
@@ -747,6 +738,10 @@ animateCoin(square: projection.Sprite2d){
   this.container2d.addChild(this.coin[100]);
 
   this.coinAnimate = true;
+
+  setTimeout(() => {
+    this.container2d.removeChild(this.coin[100]);
+  }, this.FREE_FALL*5);
 }
 
   resetStage(){
@@ -765,7 +760,7 @@ animateCoin(square: projection.Sprite2d){
     let square_end = (square.position.x/2.1) + (square.width/4);
 
     // coin width
-    let coinWidth = (square.width/2)*.68;
+    let coinWidth = (square.width/2)*.64;
 
     // center of square coordinates
     let centerSquare = square_start + (square.width/4);
@@ -872,7 +867,7 @@ animateCoin(square: projection.Sprite2d){
     this.addChild(this.bg_img);
     // Gradient Overlay --- > from top screen to make fading squares effect
     this.gradient_bg = new SpriteActor('stage3-bg', this.app, 'lvl3', 'lv3_spacebg_gradientoverlay.png');
-    this.gradient_bg.getSprite().alpha = .4;
+    this.gradient_bg.getSprite().alpha = .45;
     this.gradient_bg.setScaleUpToScreenPercWidth(1); 
     this.gradient_bg.setScaleUpToScreenPercHeight(1);
     this.container.addChild(this.bg_img.getSprite());
@@ -902,7 +897,7 @@ animateCoin(square: projection.Sprite2d){
     this.addChild(this.bg_img);
     // Gradient Overlay --- > from top screen to make fading squares effect
     this.gradient_bg = new SpriteActor('stage2-bg', this.app, 'lvl2', 'lv2_skybg_gradientoverlay.png');
-    this.gradient_bg.getSprite().alpha = .4;
+    this.gradient_bg.getSprite().alpha = .65;
     this.gradient_bg.setScaleUpToScreenPercWidth(1.2); 
     this.gradient_bg.setScaleUpToScreenPercHeight(1);
     this.container.addChild(this.bg_img.getSprite());
