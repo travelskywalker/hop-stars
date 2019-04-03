@@ -497,10 +497,11 @@ export class GameScene extends Scene {
     if(this.animate == false) return false;
 
   let moveSpeed = 8;
+  let moveLength = this.app.getScreenSize().w * .40;
 
     // square1
   if(this.squareFarToAnimate[1] == true){
-    let maxPosition1 = this.squareFarPosition[1] + (this.app.getScreenSize().w * .50);
+    let maxPosition1 = this.squareFarPosition[1] + moveLength;
 
     let moveRight1 = this.squareFar[1].x += moveSpeed;
     let moveLeft = this.squareFar[1].x -= moveSpeed;
@@ -520,7 +521,7 @@ export class GameScene extends Scene {
   }
 
   if(this.squareFarToAnimate[3] == true){
-    let maxPosition3 = this.squareFarPosition[3] + (this.app.getScreenSize().w * .40);
+    let maxPosition3 = this.squareFarPosition[3] + moveLength;
 
     let moveRight3 = this.squareFar[3].x += moveSpeed;
     let moveLeft = this.squareFar[3].x -= moveSpeed;
@@ -540,7 +541,7 @@ export class GameScene extends Scene {
   }
 
   if(this.squareFarToAnimate[5] == true){
-      let maxPosition5 = this.squareFarPosition[1] + (this.app.getScreenSize().w * .40);
+      let maxPosition5 = this.squareFarPosition[1] + moveLength;
 
       let moveRight5 = this.squareFar[5].x += moveSpeed;
       
@@ -559,7 +560,7 @@ export class GameScene extends Scene {
     }
 
     if(this.squareFarToAnimate[7] == true){
-      let maxPosition7 = this.squareFarPosition[1] + (this.app.getScreenSize().w * .40);
+      let maxPosition7 = this.squareFarPosition[1] + moveLength;
 
       let moveRight7 = this.squareFar[7].x += moveSpeed;
       
