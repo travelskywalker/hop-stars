@@ -73,7 +73,7 @@ export class GameScene extends Scene {
   stageText: Text;
   stage: number = 1;
   stageProgress: number = 1;
-  stageLimit: number = 5;
+  stageLimit: number = 15;
 
   init(): void {
     
@@ -289,7 +289,7 @@ console.log('device width', this.app.getScreenSize().w);
         this.container2d.position.x = -((this.circle.position.x + (point.x - this.initialPoint.x)) - this.deviceScreenSize);
         const bg_img_x = this.bg_img.getSprite().position.x + (point.x - this.initialPoint.x) / 8;
         this.bg_img.getSprite().position.x = Math.min(0, bg_img_x);
-        // this.bg_img.getSprite().position.x = Math.max(this.circle.position.x + (point.x - this.initialPoint.x), -bg_img_x);
+        this.bg_img.getSprite().position.x = Math.max(this.bg_img.getSprite().position.x, - (this.bg_img.getSprite().width - this.app.getScreenSize().w));
       }
 
     });
