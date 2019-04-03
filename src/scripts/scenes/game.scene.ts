@@ -495,14 +495,14 @@ export class GameScene extends Scene {
 
     // square1
   if(this.squareFarToAnimate[1] == true){
-    let maxPosition = this.squareFarPosition[1] + (this.app.getScreenSize().w * .50);
+    let maxPosition1 = this.squareFarPosition[1] + (this.app.getScreenSize().w * .50);
 
-    let moveRight = this.squareFar[1].x += 6;
+    let moveRight1 = this.squareFar[1].x += 6;
     let moveLeft = this.squareFar[1].x -= 6;
     
-    if(this.squareFar[1].x <= maxPosition && this.hit == 'left'){
+    if(this.squareFar[1].x <= maxPosition1 && this.hit == 'left'){
       this.hit = 'left';
-      this.squareFar[1].x = moveRight;
+      this.squareFar[1].x = moveRight1;
     }else{
       if(this.squareFar[1].x >= this.squareFarPosition[1]){
         this.hit = 'right';
@@ -515,14 +515,14 @@ export class GameScene extends Scene {
   }
 
   if(this.squareFarToAnimate[3] == true){
-    let maxPosition = this.squareFarPosition[3] + (this.app.getScreenSize().w * .40);
+    let maxPosition3 = this.squareFarPosition[3] + (this.app.getScreenSize().w * .40);
 
-    let moveRight = this.squareFar[3].x += 6;
+    let moveRight3 = this.squareFar[3].x += 6;
     let moveLeft = this.squareFar[3].x -= 6;
     
-    if(this.squareFar[3].x <= maxPosition && this.hit == 'left'){
+    if(this.squareFar[3].x <= maxPosition3 && this.hit == 'left'){
       this.hit = 'left';
-      this.squareFar[3].x = moveRight;
+      this.squareFar[3].x = moveRight3;
     }else{
       if(this.squareFar[3].x >= this.squareFarPosition[3]){
         this.hit = 'right';
@@ -535,14 +535,13 @@ export class GameScene extends Scene {
   }
 
   if(this.squareFarToAnimate[5] == true){
-      let maxPosition = this.squareFarPosition[1] + (this.app.getScreenSize().w * .40);
+      let maxPosition5 = this.squareFarPosition[1] + (this.app.getScreenSize().w * .40);
 
-      let moveRight = this.squareFar[5].x += 6;
-      let moveLeft = this.squareFar[5].x -= 6;
+      let moveRight5 = this.squareFar[5].x += 6;
       
-      if(this.squareFar[5].x <= maxPosition && this.hit == 'left'){
+      if(this.squareFar[5].x <= maxPosition5 && this.hit == 'left'){
         this.hit = 'left';
-        this.squareFar[5].x = moveRight;
+        this.squareFar[5].x = moveRight5;
       }else{
         if(this.squareFar[5].x >= this.squareFarPosition[5]){
           this.hit = 'right';
