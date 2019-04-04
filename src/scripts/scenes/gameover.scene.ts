@@ -1,7 +1,7 @@
 import { Scene } from '@src/core/scene';
 import { IAppState } from '@src/app.state';
 import { SpriteActor } from '@src/core/sprite.actor';
-import { Graphics } from 'pixi.js';
+import { Graphics, Container } from 'pixi.js';
 import { LeaderboardModal } from './../components/leaderboard.modal';
 import { GameScene } from '@src/scripts/scenes/game.scene';
 
@@ -178,6 +178,10 @@ export class GameOverScene extends Scene {
       ]
   };
 
+  // container
+  bottomContainer: Container;
+  score_container: Graphics;
+
   // bg
   bg: SpriteActor;
 
@@ -198,6 +202,12 @@ export class GameOverScene extends Scene {
   copyText2: PIXI.Text;
   copyText2Style: PIXI.TextStyle;
 
+  // animation
+  animatingTop: boolean = false;
+  animatingBottom: boolean = false;
+  topAnimationStart: number = -(this.app.getScreenSize().h * 0.25);
+  bottomAnimationStart: number = this.app.getScreenSize().h/2;
+
   // dummy score data
   data = {
     best_score: 0,
@@ -208,7 +218,42 @@ export class GameOverScene extends Scene {
     
   }
 
+  animateTop(){
+    if(this.animatingTop == true) return;
+    
+    if(this.topAnimationStart <= this.app.getScreenSize().h * 0.25){
+
+      this.container.addChild(this.gameOverLogo.getSprite());
+      this.container.addChild(this.copyText1);
+      this.container.addChild(this.score_container);
+
+      this.gameOverLogo.getSprite().y = this.topAnimationStart += 35;
+      this.copyText1.y = this.gameOverLogo.getSprite().position.y + ((this.gameOverLogo.getSprite().height / 2) + this.copyText1.height);
+      this.score_container.y = this.copyText1.position.y + this.copyText1.height;
+    }else{
+
+      this.animatingTop = true;
+      this.topAnimationStart = -(this.app.getScreenSize().h * 0.25);
+    }
+  }
+
+  animateBottom(){
+    if(this.animatingBottom == true) return;
+    
+    if(this.bottomAnimationStart >= 0){
+
+      this.container.addChild(this.bottomContainer);
+      this.bottomContainer.y = this.bottomAnimationStart -= 35;
+    }else{
+
+      this.animatingBottom = true;
+      this.bottomAnimationStart = this.app.getScreenSize().h/2;
+    }
+  }
+
   start(): void {
+    this.animatingTop = false;
+    this.animatingBottom = false;
     // submit score data
     this.app.getState().submitScore(this.app.currentScore);
 
@@ -225,8 +270,7 @@ export class GameOverScene extends Scene {
     this.gameOverLogo.setAnchor(0.5, 0.5);
     this.gameOverLogo.setPosition(this.app.getScreenSize().w * 0.5, this.app.getScreenSize().h * 0.25);
     this.gameOverLogo.setScaleUpToScreenPercWidth(0.675);
-    this.addChild(this.gameOverLogo);
-
+    // this.addChild(this.gameOverLogo);
     
     // TEXTS 
     // initialize and set text copy 1
@@ -244,7 +288,6 @@ export class GameOverScene extends Scene {
     this.copyText1.anchor.y = .5;
     this.copyText1.position.x = this.app.getScreenSize().w * 0.5;
     this.copyText1.position.y = this.gameOverLogo.getSprite().position.y + ((this.gameOverLogo.getSprite().height / 2) + this.copyText1.height);
-    this.container.addChild(this.copyText1);
 
     // SCORE
     const scoreText = new PIXI.Text(
@@ -264,16 +307,16 @@ export class GameOverScene extends Scene {
     score_coin.getSprite().position.y = scoreText.position.y + scoreText.height / 3;
     score_coin.setScaleUpToScreenPercWidth(0.115);
 
-    const score_container = new Graphics();
-    score_container.beginFill(0xF2F2F2, 0);
-    score_container.drawRect(0, 0, scoreText.width + score_coin.getSprite().width * 1.2, this.app.getScreenSize().h * 0.175);
-    score_container.endFill();
-    score_container.position.x = this.app.getScreenSize().w / 2 - score_container.width / 2;
-    score_container.position.y = this.copyText1.position.y + this.copyText1.height;
-    this.container.addChild(score_container);
+    this.score_container = new Graphics();
+    this.score_container.beginFill(0xF2F2F2, 0);
+    this.score_container.drawRect(0, 0, scoreText.width + score_coin.getSprite().width * 1.2, this.app.getScreenSize().h * 0.175);
+    this.score_container.endFill();
+    this.score_container.position.x = this.app.getScreenSize().w / 2 - this.score_container.width / 2;
 
-    score_container.addChild(scoreText);
-    score_container.addChild(score_coin.getSprite());
+    this.score_container.addChild(scoreText);
+    this.score_container.addChild(score_coin.getSprite());
+
+    this.bottomContainer = new Container();
 
     // sound button
     this.home_btn = new SpriteActor('home', this.app, 'lvl1', 'home.png');
@@ -288,7 +331,7 @@ export class GameOverScene extends Scene {
       console.log("go home");
       this.app.goToScene(0);
     });
-    setTimeout( () => this.addChild(this.home_btn), 1000);
+    this.bottomContainer.addChild(this.home_btn.getSprite());
      // initialize and set play button
      this.play_again_btn = new SpriteActor('play-again', this.app, 'common', 'restart_btn.png');
      this.play_again_btn.setAnchor(0.5, 0.5);
@@ -299,7 +342,7 @@ export class GameOverScene extends Scene {
        console.log('go to instruction screen scene ');
        setTimeout(() => { this.app.goToScene(2); }, 200);
      });
-     setTimeout( () => this.addChild(this.play_again_btn), 1000);
+    this.bottomContainer.addChild(this.play_again_btn.getSprite());
 
     // initialize and set leaderboard_btn button
     this.leaderboard_btn = new SpriteActor('leaderboard_btn', this.app, 'common', 'leaderboard_btn.png');
@@ -313,12 +356,13 @@ export class GameOverScene extends Scene {
           this.lmodal = new LeaderboardModal({app: this.app, var: this.dummy_data});
           this.container.addChild(this.lmodal);
     });
-    setTimeout( () => this.addChild(this.leaderboard_btn), 1000);
+    this.bottomContainer.addChild(this.leaderboard_btn.getSprite());
 
   }
 
   update(_delta: number): void {
-
+    this.animateTop();
+    this.animateBottom();
   }
 
   remove(): void {
