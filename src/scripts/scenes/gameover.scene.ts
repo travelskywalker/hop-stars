@@ -1,7 +1,6 @@
 import { Scene } from '@src/core/scene';
 import { IAppState } from '@src/app.state';
 import { SpriteActor } from '@src/core/sprite.actor';
-import { SpriteAnimatedActor } from '@src/core/sprite.animated.actor';
 import { Graphics } from 'pixi.js';
 import { LeaderboardModal } from './../components/leaderboard.modal';
 import { GameScene } from '@src/scripts/scenes/game.scene';
@@ -190,7 +189,7 @@ export class GameOverScene extends Scene {
  
   // buttons
   play_again_btn: SpriteActor;
-  sound_btn: SpriteAnimatedActor;
+  home_btn: SpriteActor;
   leaderboard_btn: SpriteActor;
 
   // Texts
@@ -277,25 +276,23 @@ export class GameOverScene extends Scene {
     score_container.addChild(score_coin.getSprite());
 
     // sound button
-    this.sound_btn = new SpriteAnimatedActor('volume', this.app);
-    this.sound_btn.addAnimation('common', 'volume');
-    this.sound_btn.getAnimatedSprite().gotoAndStop(this.app.getState().state.volume);
-    this.sound_btn.setAnchor(0.5, 0.5);
-    this.sound_btn.setPosition(this.app.getScreenSize().w * 0.25, this.app.getScreenSize().h * .875);
-    this.sound_btn.setScaleUpToScreenPercWidth(0.25);
-    setTimeout( () => this.sound_btn.getAnimatedSprite().interactive = true, 500);
+    this.home_btn = new SpriteActor('home', this.app, 'lvl1', 'home.png');
+    this.home_btn.setAnchor(0.5, 0.5);
+    this.home_btn.setPosition(this.app.getScreenSize().w * 0.25, this.app.getScreenSize().h * .875);
+    this.home_btn.setScaleUpToScreenPercWidth(0.25);
+    setTimeout( () => this.home_btn.getSprite().interactive = true, 500);
     // toggle image on and off
-    this.sound_btn.getAnimatedSprite().on('pointerup', () => { 
+    this.home_btn.getSprite().on('pointerup', () => { 
     //   this.app.getState().toggle_volume();  
-    //   this.sound_btn.getAnimatedSprite().gotoAndStop(this.app.getState().state.volume);
+    //   this.home_btn.getAnimatedSprite().gotoAndStop(this.app.getState().state.volume);
       console.log("go home");
       this.app.goToScene(0);
     });
-    setTimeout( () => this.addChild(this.sound_btn), 1000);
+    setTimeout( () => this.addChild(this.home_btn), 1000);
      // initialize and set play button
      this.play_again_btn = new SpriteActor('play-again', this.app, 'common', 'restart_btn.png');
      this.play_again_btn.setAnchor(0.5, 0.5);
-     this.play_again_btn.setPosition(this.sound_btn.getAnimatedSprite().position.x + (this.sound_btn.getAnimatedSprite().width * 1.1), this.sound_btn.getAnimatedSprite().position.y - (this.play_again_btn.getSprite().height * .7));
+     this.play_again_btn.setPosition(this.home_btn.getSprite().position.x + (this.home_btn.getSprite().width * 1.1), this.home_btn.getSprite().position.y - (this.play_again_btn.getSprite().height * .7));
      this.play_again_btn.setScaleUpToScreenPercWidth(.275);
      setTimeout( () => this.play_again_btn.getSprite().interactive = true, 500);
      this.play_again_btn.getSprite().on('pointerup', () => { 
@@ -307,7 +304,7 @@ export class GameOverScene extends Scene {
     // initialize and set leaderboard_btn button
     this.leaderboard_btn = new SpriteActor('leaderboard_btn', this.app, 'common', 'leaderboard_btn.png');
     this.leaderboard_btn.setAnchor(0.5, 0.5);
-    this.leaderboard_btn.setPosition(this.play_again_btn.getSprite().position.x + (this.play_again_btn.getSprite().width * 1), this.sound_btn.getAnimatedSprite().position.y);
+    this.leaderboard_btn.setPosition(this.play_again_btn.getSprite().position.x + (this.play_again_btn.getSprite().width * 1), this.home_btn.getSprite().position.y);
     this.leaderboard_btn.setScaleUpToScreenPercWidth(.25);
     setTimeout( () => this.leaderboard_btn.getSprite().interactive = true, 500);
     this.leaderboard_btn.getSprite().on('pointerup', () => { 
