@@ -136,7 +136,7 @@ export class GameScene extends Scene {
     this.initial_square.anchor.set(0.5);
     this.initial_square.position.set(0, this.initial_square_y);
 
-    const s_img_i = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/platform.png'));
+    const s_img_i = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('./assets/platform.png'));
     s_img_i.scale.set(-this.initial_square.width * 0.0062, -this.initial_square.height * 0.011);
     s_img_i.anchor.set(0.5, 0.5);
     s_img_i.position.y = 0;
@@ -146,12 +146,12 @@ export class GameScene extends Scene {
     this.squareFar[0] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[0].tint = 0;
     this.squareFar[0].anchor.set(0.5);
-    this.coin[0] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
+    this.coin[0] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('./assets/coin.png'));
     this.coin[0].proj.affine = PIXI.projection.AFFINE.AXIS_X;
     this.coin[0].scale.set(this.squareFar[0].width * 0.008);
     this.coin[0].anchor.set(0.5, 1);
     
-    const s_img_0 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/platform.png'));
+    const s_img_0 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('./assets/platform.png'));
     s_img_0.scale.set(-this.initial_square.width * 0.0062, -this.initial_square.height * 0.011);
     s_img_0.anchor.set(0.5, 0.5);
     s_img_0.position.y = 0;
@@ -161,12 +161,12 @@ export class GameScene extends Scene {
     this.squareFar[1] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[1].tint = 0xF37DAE;
     this.squareFar[1].anchor.set(0.5);
-    this.coin[1] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
+    this.coin[1] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('./assets/coin.png'));
     this.coin[1].proj.affine = PIXI.projection.AFFINE.AXIS_X;
     this.coin[1].scale.set(this.squareFar[0].width * 0.008);
     this.coin[1].anchor.set(0.5, 1);
     
-    const s_img_1 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/platform.png'));
+    const s_img_1 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('./assets/platform.png'));
     s_img_1.scale.set(-this.initial_square.width * 0.0062, -this.initial_square.height * 0.011);
     s_img_1.anchor.set(0.5, 0.5);
     s_img_1.position.y = 0;
@@ -176,12 +176,12 @@ export class GameScene extends Scene {
     this.squareFar[2] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[2].tint = 0xF37DAE;
     this.squareFar[2].anchor.set(0.5);
-    this.coin[2] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
+    this.coin[2] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('./assets/coin.png'));
     this.coin[2].proj.affine = PIXI.projection.AFFINE.AXIS_X;
     this.coin[2].scale.set(this.squareFar[0].width * 0.008);
     this.coin[2].anchor.set(0.5, 1);
     
-    const s_img_2 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/platform.png'));
+    const s_img_2 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('./assets/platform.png'));
     s_img_2.scale.set(-this.initial_square.width * 0.0062, -this.initial_square.height * 0.011);
     s_img_2.anchor.set(0.5, 0.5);
     s_img_2.position.y = 0;
@@ -191,12 +191,12 @@ export class GameScene extends Scene {
     this.squareFar[3] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[3].tint = 0xF37DAE;
     this.squareFar[3].anchor.set(0.5);
-    this.coin[3] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
+    this.coin[3] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('./assets/coin.png'));
     this.coin[3].proj.affine = PIXI.projection.AFFINE.AXIS_X;
     this.coin[3].scale.set(this.squareFar[0].width * 0.008);
     this.coin[3].anchor.set(0.5, 1);
     
-    const s_img_3 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/platform.png'));
+    const s_img_3 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('./assets/platform.png'));
     s_img_3.scale.set(-this.initial_square.width * 0.0062, -this.initial_square.height * 0.011);
     s_img_3.anchor.set(0.5, 0.5);
     s_img_3.position.y = 0;
@@ -206,12 +206,12 @@ export class GameScene extends Scene {
     this.squareFar[4] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[4].tint = 0xF37DAE;
     this.squareFar[4].anchor.set(0.5);
-    this.coin[4] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
+    this.coin[4] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('./assets/coin.png'));
     this.coin[4].proj.affine = PIXI.projection.AFFINE.AXIS_X;
     this.coin[4].scale.set(this.squareFar[0].width * 0.008);
     this.coin[4].anchor.set(0.5, 1);
     
-    const s_img_4 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/platform.png'));
+    const s_img_4 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('./assets/platform.png'));
     s_img_4.scale.set(-this.initial_square.width * 0.0062, -this.initial_square.height * 0.011);
     s_img_4.anchor.set(0.5, 0.5);
     s_img_4.position.y = 0;
@@ -221,12 +221,12 @@ export class GameScene extends Scene {
     this.squareFar[5] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[5].tint = 0xF37DAE;
     this.squareFar[5].anchor.set(0.5);
-    this.coin[5] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
+    this.coin[5] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('./assets/coin.png'));
     this.coin[5].proj.affine = PIXI.projection.AFFINE.AXIS_X;
     this.coin[5].scale.set(this.squareFar[0].width * 0.008);
     this.coin[5].anchor.set(0.5, 1);
 
-    const s_img_5 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/platform.png'));
+    const s_img_5 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('./assets/platform.png'));
     s_img_5.scale.set(-this.initial_square.width * 0.0062, -this.initial_square.height * 0.011);
     s_img_5.anchor.set(0.5, 0.5);
     s_img_5.position.y = 0;
@@ -236,12 +236,12 @@ export class GameScene extends Scene {
     this.squareFar[6] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[6].tint = 0xF37DAE;
     this.squareFar[6].anchor.set(0.5);
-    this.coin[6] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
+    this.coin[6] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('./assets/coin.png'));
     this.coin[6].proj.affine = PIXI.projection.AFFINE.AXIS_X;
     this.coin[6].scale.set(this.squareFar[0].width * 0.008);
     this.coin[6].anchor.set(0.5, 1);
 
-    const s_img_6 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/platform.png'));
+    const s_img_6 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('./assets/platform.png'));
     s_img_6.scale.set(-this.initial_square.width * 0.0062, -this.initial_square.height * 0.011);
     s_img_6.anchor.set(0.5, 0.5);
     s_img_6.position.y = 0;
@@ -251,18 +251,18 @@ export class GameScene extends Scene {
     this.squareFar[7] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
     this.squareFar[7].tint = 0xF37DAE;
     this.squareFar[7].anchor.set(0.5);
-    this.coin[7] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
+    this.coin[7] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('./assets/coin.png'));
     this.coin[7].proj.affine = PIXI.projection.AFFINE.AXIS_X;
     this.coin[7].scale.set(this.squareFar[0].width * 0.008);
     this.coin[7].anchor.set(0.5, 1);
 
     // animating coin --------------
-    this.coin[100] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
+    this.coin[100] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('./assets/coin.png'));
     this.coin[100].proj.affine = PIXI.projection.AFFINE.AXIS_X;
     this.coin[100].scale.set(this.squareFar[0].width * 0.01);
     this.coin[100].anchor.set(0.5, 1);
 
-    const s_img_7 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/platform.png'));
+    const s_img_7 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('./assets/platform.png'));
     s_img_7.scale.set(-this.initial_square.width * 0.0062, -this.initial_square.height * 0.011);
     s_img_7.anchor.set(0.5, 0.5);
     s_img_7.position.y = 0;
