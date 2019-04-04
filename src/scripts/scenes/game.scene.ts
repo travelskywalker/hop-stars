@@ -78,7 +78,7 @@ export class GameScene extends Scene {
   coin: projection.Sprite2d [] = [];
   score_coin: SpriteActor;
   coinAnimate: boolean = false; //config
-  randomCoin: boolean = false; //config
+  randomCoin: boolean = true; //config
 
   // score
   scoreText: Text;
