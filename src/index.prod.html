@@ -9,6 +9,34 @@
                 background-color: white;
             }
         </style>
+        <style>
+            @font-face {
+                font-family: 'Chennai';
+                font-style: normal;
+                font-weight: normal;
+                src: local('Chennai'), local('Chennai'), url(/assets/chennai.woff2) format('woff2');
+            }
+            @font-face {
+                font-family: 'Chennai-Bold';
+                font-style: normal;
+                font-weight: 700;
+                src: local('Chennai-Bold'), local('Chennai-Bold'), url(/assets/chennaibold.woff2) format('woff2');
+            }            
+            * {
+                padding: 0;
+                margin: 0;
+                background-color: white;
+            }
+            #code_input{
+                padding: 1rem;
+                border: 1px solid orange;
+                position: absolute;
+                text-align: center;
+            }
+            #code_input:focus{
+                outline: none;
+            }
+        </style>   
     </head>
     <body></body>
 </html>
