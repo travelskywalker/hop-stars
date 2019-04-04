@@ -91,7 +91,7 @@ export class GameScene extends Scene {
   stageText: Text;
   stage: number = 1;
   stageProgress: number = 1;
-  stageLimit: number = 5;
+  stageLimit: number = 50;
 
   init(): void {
     
@@ -690,11 +690,12 @@ export class GameScene extends Scene {
                 this.bounce_count = 0;
               }
             }
-            
+
+            // IF BALL IS BACK ON ITS ORIGINAL POSITION 
             if(this.TOUCHEND == true) {
-              // console.log('falling');
+              
               if(this.fall_position < this.circle.position.y) {
-                // if ball out of screen
+                // BALL IS OUT OF SCREEN
                 this.reset_game();
               } else {
                 // continuous falling __until out of screen
