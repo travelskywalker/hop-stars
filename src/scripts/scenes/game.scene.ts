@@ -67,12 +67,8 @@ export class GameScene extends Scene {
   squareFar: projection.Sprite2d [] = [];
 
   // animate squares
-  animateParam: number = 7; //points needed to animate tiles
-  animate: boolean = false;
-  hit1: string = 'left';
-  hit3: string = 'left';
-  hit5: string = 'left';
-  hit7: string = 'left';
+  squareAnimateThreshold: number = 7; //points needed to animate tiles
+  squareAnimate: boolean = false;
   hit: any = [];
   squareFarPosition: any = [];
   squareFarToAnimate: any = [];
@@ -81,7 +77,8 @@ export class GameScene extends Scene {
   // coins
   coin: projection.Sprite2d [] = [];
   score_coin: SpriteActor;
-  coinAnimate: boolean = false;
+  coinAnimate: boolean = false; //config
+  randomCoin: boolean = false; //config
 
   // score
   scoreText: Text;
@@ -91,7 +88,7 @@ export class GameScene extends Scene {
   stageText: Text;
   stage: number = 1;
   stageProgress: number = 1;
-  stageLimit: number = 5;
+  stageLimit: number = 50; //config
 
   init(): void {
     
@@ -159,8 +156,6 @@ export class GameScene extends Scene {
     s_img_0.anchor.set(0.5, 0.5);
     s_img_0.position.y = 0;
     this.squareFar[0].addChild(s_img_0);
-    this.squareFar[0].addChild(this.coin[0]);
-    
     
     // square 1 ------------------
     this.squareFar[1] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
@@ -176,8 +171,6 @@ export class GameScene extends Scene {
     s_img_1.anchor.set(0.5, 0.5);
     s_img_1.position.y = 0;
     this.squareFar[1].addChild(s_img_1);
-    this.squareFar[1].addChild(this.coin[1]);
-    
 
     // square 2 ------------------
     this.squareFar[2] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
@@ -193,7 +186,6 @@ export class GameScene extends Scene {
     s_img_2.anchor.set(0.5, 0.5);
     s_img_2.position.y = 0;
     this.squareFar[2].addChild(s_img_2);
-    this.squareFar[2].addChild(this.coin[2]);
 
     // square 3 ------------------
     this.squareFar[3] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
@@ -209,7 +201,6 @@ export class GameScene extends Scene {
     s_img_3.anchor.set(0.5, 0.5);
     s_img_3.position.y = 0;
     this.squareFar[3].addChild(s_img_3);
-    this.squareFar[3].addChild(this.coin[3]);
 
     // square 4 ------------------
     this.squareFar[4] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
@@ -225,7 +216,6 @@ export class GameScene extends Scene {
     s_img_4.anchor.set(0.5, 0.5);
     s_img_4.position.y = 0;
     this.squareFar[4].addChild(s_img_4);
-    this.squareFar[4].addChild(this.coin[4]);
 
     // square 5 ------------------
     this.squareFar[5] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
@@ -241,7 +231,6 @@ export class GameScene extends Scene {
     s_img_5.anchor.set(0.5, 0.5);
     s_img_5.position.y = 0;
     this.squareFar[5].addChild(s_img_5);
-    this.squareFar[5].addChild(this.coin[5]);
     
     // square 6 ------------------
     this.squareFar[6] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
@@ -251,14 +240,12 @@ export class GameScene extends Scene {
     this.coin[6].proj.affine = PIXI.projection.AFFINE.AXIS_X;
     this.coin[6].scale.set(this.squareFar[0].width * 0.008);
     this.coin[6].anchor.set(0.5, 1);
-    this.squareFar[6].addChild(this.coin[6]);
 
     const s_img_6 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/platform.png'));
     s_img_6.scale.set(-this.initial_square.width * 0.0062, -this.initial_square.height * 0.011);
     s_img_6.anchor.set(0.5, 0.5);
     s_img_6.position.y = 0;
     this.squareFar[6].addChild(s_img_6);
-    this.squareFar[6].addChild(this.coin[6]);
 
     // square 7 ------------------
     this.squareFar[7] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
@@ -268,7 +255,6 @@ export class GameScene extends Scene {
     this.coin[7].proj.affine = PIXI.projection.AFFINE.AXIS_X;
     this.coin[7].scale.set(this.squareFar[0].width * 0.008);
     this.coin[7].anchor.set(0.5, 1);
-    this.squareFar[7].addChild(this.coin[7]);
 
     // animating coin --------------
     this.coin[100] = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('/assets/coin.png'));
@@ -281,7 +267,6 @@ export class GameScene extends Scene {
     s_img_7.anchor.set(0.5, 0.5);
     s_img_7.position.y = 0;
     this.squareFar[7].addChild(s_img_7);
-    this.squareFar[7].addChild(this.coin[7]);
 
     this.generateStartSquares();
 
@@ -501,7 +486,7 @@ export class GameScene extends Scene {
   animateSquare(){
     
     // do not animate if animation is turned off
-    if(this.animate == false) return false;
+    if(this.squareAnimate == false) return false;
     console.log("animate squares");
 
     let squares = this.animatedSquares;
@@ -536,6 +521,26 @@ export class GameScene extends Scene {
     };
   }
 
+  addCoin(squares: number[]){
+
+    for(let x=0; x<=squares.length-1; x++){
+
+      if(this.randomCoin == true){
+
+        let n = Math.floor(Math.random() * 2);
+        
+        if(n == 1){
+          this.squareFar[squares[x]].addChild(this.coin[squares[x]]);
+        }
+        
+      }else{
+
+        this.squareFar[squares[x]].addChild(this.coin[squares[x]]);
+      }
+    }
+    
+  }
+
   coinAnimation(){
     if(this.coinAnimate == false) {
       this.container2d.removeChild(this.coin[100]);
@@ -568,7 +573,6 @@ export class GameScene extends Scene {
     }
 
     // animate square
-    // this.animate = true;
     try{
       this.animateSquare();
     }catch(error){
@@ -582,14 +586,14 @@ export class GameScene extends Scene {
         if(this.squareFar[0].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
           this.squareFar[0].position.y = this.squareFar[7].position.y + this.square_distance;
           this.squareFar[0].position.x = this.randomPosition();
-          this.squareFar[0].addChild(this.coin[0]);
+          this.addCoin([0]);
           this.squareFarPosition[0] = this.squareFar[0].position.x;
           this.squareFarToAnimate[0] = this.isAnimating();
           }
         if(this.squareFar[1].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
           this.squareFar[1].position.y = this.squareFar[0].position.y + this.square_distance; 
           this.squareFar[1].position.x = this.randomPosition();
-          this.squareFar[1].addChild(this.coin[1]);
+          this.addCoin([1]);
           this.squareFarPosition[1] = this.squareFar[1].position.x;
           this.squareFarToAnimate[1] = this.isAnimating();
 
@@ -597,42 +601,42 @@ export class GameScene extends Scene {
         if(this.squareFar[2].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
           this.squareFar[2].position.y = this.squareFar[1].position.y + this.square_distance; 
           this.squareFar[2].position.x = this.randomPosition();
-          this.squareFar[2].addChild(this.coin[2]);
+          this.addCoin([2]);
           this.squareFarPosition[2] = this.squareFar[2].position.x;
           this.squareFarToAnimate[2] = this.isAnimating();
         }
         if(this.squareFar[3].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
           this.squareFar[3].position.y = this.squareFar[2].position.y + this.square_distance; 
           this.squareFar[3].position.x = this.randomPosition();
-          this.squareFar[3].addChild(this.coin[3]);
+          this.addCoin([3]);
           this.squareFarPosition[3] = this.squareFar[3].position.x;
           this.squareFarToAnimate[3] = this.isAnimating();
         }
         if(this.squareFar[4].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
           this.squareFar[4].position.y = this.squareFar[3].position.y + this.square_distance;
           this.squareFar[4].position.x = this.randomPosition();
-          this.squareFar[4].addChild(this.coin[4]);
+          this.addCoin([4]);
           this.squareFarPosition[4] = this.squareFar[4].position.x;
           this.squareFarToAnimate[4] = this.isAnimating();
         }
         if(this.squareFar[5].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
           this.squareFar[5].position.y = this.squareFar[4].position.y + this.square_distance;
           this.squareFar[5].position.x = this.randomPosition();
-          this.squareFar[5].addChild(this.coin[5]);
+          this.addCoin([5]);
           this.squareFarPosition[5] = this.squareFar[5].position.x;
           this.squareFarToAnimate[5] = this.isAnimating();
         }
         if(this.squareFar[6].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
           this.squareFar[6].position.y = this.squareFar[5].position.y + this.square_distance;
           this.squareFar[6].position.x = this.randomPosition();
-          this.squareFar[6].addChild(this.coin[6]);
+          this.addCoin([6]);
           this.squareFarPosition[6] = this.squareFar[6].position.x;
           this.squareFarToAnimate[6] = this.isAnimating();
         }
         if(this.squareFar[7].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
           this.squareFar[7].position.y = this.squareFar[6].position.y + this.square_distance; 
           this.squareFar[7].position.x = this.randomPosition();
-          this.squareFar[7].addChild(this.coin[7]);
+          this.addCoin([7]);
           this.squareFarPosition[7] = this.squareFar[7].position.x;
           this.squareFarToAnimate[7] = this.isAnimating();
         }
@@ -658,31 +662,47 @@ export class GameScene extends Scene {
             // IF BALL IS ON AIR
             if ( this.air_time <= -1 || this.air_time <= 1 ) {
 
+              // stage progression by platform ----
+              if(this.stageProgress == this.stageLimit){
+                this.stage += 1;
+                this.stageProgress = 1;
+                this.renderStage(this.stage);
+              }else{
+                this.stageProgress+=1;
+              }
+
               // IF BALL FAILED TO BOUNCE ON SQUARE
               if(this.isInSquare(square, bouncePosition) === true ) {
                 // IF BALL FALL ON COIN
-                if(this.isCoined(square, bouncePosition) && this.TOUCHEND == false){
-                  this.app.getSoundPlayer().play('coin');
-                  this.scoreText.text = `${this.score += 1}`;
-                  
-                  // remove coin
-                  square.removeChildAt(1);
-                  // this.animateCoin(this.squareFar[this.bounce_count]);
 
-                  // animate square
-                  if(this.score >= this.animateParam){
-                    this.animate = true;
+                // if square has coin, check if ball fall on coin, get coin, add score
+                try{
+                  square.getChildIndex(this.coin[this.bounce_count])
+
+                  // console.log("has coin", square.getChildIndex(this.coin[this.bounce_count]))
+                  if(this.isCoined(square, bouncePosition) && this.TOUCHEND == false){
+                    this.app.getSoundPlayer().play('coin');
+                    this.scoreText.text = `${this.score += 1}`;
+                    
+                    // remove coin
+                    try{
+                      square.removeChildAt(1);
+                    }catch(e){
+
+                    }
+                    // this.animateCoin(this.squareFar[this.bounce_count]);
+
+                    // animate square on points threshold
+                    // if(this.score >= this.squareAnimateThreshold){
+                    //   this.squareAnimate = true;
+                    // }
+                    
                   }
 
-                  if(this.stageProgress == this.stageLimit){
-                    this.stage += 1;
-                    this.stageProgress = 1;
-                    this.renderStage(this.stage);
-                  }else{
-                    this.stageProgress+=1;
-                  }
+                }catch(e){
+                  // console.log(e);
                 }
-                
+
                 this.bounce_count += 1;
                 this.air_time = this.FREE_FALL * 2 - 1;
               } else {
@@ -739,7 +759,7 @@ animateCoin(square: projection.Sprite2d){
     this.stageProgress = 1;
 
     this.generateStartSquares();
-    this.animate = false;
+    this.squareAnimate = false;
     this.renderStage(1);
   }
 
@@ -794,6 +814,8 @@ animateCoin(square: projection.Sprite2d){
     this.squareFar[5].position.set(this.randomPosition(),this.initial_square_distance + this.square_distance * 5);
     this.squareFar[6].position.set(this.randomPosition(),this.initial_square_distance + this.square_distance * 6);
     this.squareFar[7].position.set(this.randomPosition(),this.initial_square_distance + this.square_distance * 7);
+
+    this.addCoin([0,1,2,3,4,5,6,7]);
   }
 
   isInSquare(square:projection.Sprite2d, ball_bounce: number){
@@ -868,6 +890,9 @@ animateCoin(square: projection.Sprite2d){
   }
 
   stage2(){
+
+    // animate squares
+    this.squareAnimate = true;
 
     // SPEED
     this.FREE_FALL = 15;
