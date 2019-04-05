@@ -55,18 +55,31 @@ export class HowtowinScene extends Scene  {
         wordWrap: true,
         wordWrapWidth: modal.width
     });
-    this.copyText1 = new PIXI.Text(`HOW TO WIN`, this.copyText1Style);
+    this.copyText1 = new PIXI.Text(`HOW TO PLAY`, this.copyText1Style);
     this.copyText1.position.x = (modalWidth - this.copyText1.width) * .5;
     this.copyText1.position.y = modal.height * 0.1;
     modal.addChild(this.copyText1);
     
-    const howtoText = `Hop on as many squares as possible and collect Imfree coins to earn points.
-        
-    Make sure that the ball bounces on each square or you lose.
-    
-    Keep playing until you reach the top of the weekly leaderboard to win prizes.
-    
-    Weekly rankings will reset every Sunday at 12AM.`;
+    // const howtoText = `Control the ball by dragging or swiping left and right
+
+    // Land on platform and collect ImFree Coins to get score
+
+    // Avoid falling down
+
+    // Beat the highest score before the week ends and win prizes.
+
+    // Weekly ranking will reset every 11:00 PM Saturday.
+
+    // Next weekly ranking will start every 2:00 AM Monday.`;
+
+    const howtoText = `Control the ball by dragging or swiping left and right
+
+Land on platform and collect ImFree Coins to get score
+
+avoid falling down
+
+Beat the highest score`;
+
     // initialize and set text copy 2
     this.copyText2Style = new PIXI.TextStyle({
         fontFamily: 'Chennai',
@@ -76,7 +89,7 @@ export class HowtowinScene extends Scene  {
         align: 'center',
         fill: ['#0285c6'],
         wordWrap: true,
-        wordWrapWidth: modal.width * .8
+        wordWrapWidth: this.app.getScreenSize().w * .7//modal.width * .8
     });
     this.copyText2 = new PIXI.Text(
         howtoText, 
