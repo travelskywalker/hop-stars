@@ -1,5 +1,11 @@
 import { Subject } from 'rxjs/Subject';
 
+interface JavaScriptInterface { 
+  gameCancelled(): any; 
+  gameStarted(): any;
+}
+declare var Android: JavaScriptInterface;
+
 export class IAppState {
 
   explosionActive: boolean;
@@ -43,6 +49,15 @@ export class AppState extends Subject<IAppState> {
       return 0;
     }else{
       return gamedata.bestScore;
+    }
+  }
+
+  public gameCancelled(){
+    try {
+      Android.gameCancelled();
+       console.log('call: Android.gameCancelled(); to return to mobile');
+    } catch (err) {
+      console.error("Android gameCancelled is not defined.", err);
     }
   }
 
