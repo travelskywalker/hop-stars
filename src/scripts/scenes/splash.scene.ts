@@ -4,7 +4,6 @@ import { Subscription } from 'rxjs/Subscription';
 import { SpriteActor } from '@src/core/sprite.actor';
 import { SpriteAnimatedActor } from '@src/core/sprite.animated.actor';
 import { LeaderboardModal } from './../components/leaderboard.modal';
-
 export class SplashScene extends Scene {
 
   state_subscription: Subscription;
@@ -224,12 +223,7 @@ export class SplashScene extends Scene {
     this.closeBtn.getSprite().interactive = true;
     this.closeBtn.getSprite().on('pointerup', () => {
       this.app.getSoundPlayer().play('button'); 
-      try {
-        // Android.gameCancelled();
-         console.log('call: Android.gameCancelled(); to return to mobile');
-      } catch (err) {
-        console.error("Android gameCancelled is not defined.", err);
-      }
+     this.app.getState().gameCancelled();
     });
     this.addChild(this.closeBtn);
 
