@@ -88,8 +88,7 @@ export class GameScene extends Scene {
   stageText: Text;
   stage: number = 1;
   stageProgress: number = 1;
-  stageLimit: number = 50
-  ; //config
+  stageLimit: number = 50; //config
 
   // sounds
   randomTileSound: boolean = true; //config
