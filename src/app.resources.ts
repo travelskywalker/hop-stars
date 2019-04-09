@@ -18,10 +18,12 @@ export function resourcesProvider(_app: App, loaded: (resources: any) => void, p
   loader.add('lvl3', `./assets/hop-game-level-3.json`);
   // sounds
   loader.add('ball_bounce', './assets/ball_bounce.{ogg,mp3}');
-  loader.add('BGM_1', './assets/BGM_1.{ogg,mp3}');
+  loader.add('BGM_default', './assets/BGM_default.{ogg,mp3}');
   loader.add('button', './assets/button.{ogg,mp3}');
   loader.add('coin', './assets/coin.{ogg,mp3}');
-  loader.add('BGM_2', './assets/BGM_2.{ogg,mp3}');
+  loader.add('BGM_S1', './assets/BGM_S1.{ogg,mp3}');
+  loader.add('BGM_S2', './assets/BGM_S2.{ogg,mp3}');
+  loader.add('BGM_S3', './assets/BGM_S3.{ogg,mp3}');
   loader.add('tile_1', './assets/tile_1.{ogg,mp3}');
   loader.add('tile_2', './assets/tile_2.{ogg,mp3}');
   loader.add('tile_3', './assets/tile_3.{ogg,mp3}');
