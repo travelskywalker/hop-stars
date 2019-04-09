@@ -90,6 +90,10 @@ export class GameScene extends Scene {
   stageProgress: number = 1;
   stageLimit: number = 50; //config
 
+  // sounds
+  randomTileSound: boolean = true; //config
+  tileSound: boolean = true; //config
+
   init(): void {
     
     this.bigWhiteTexture = new PIXI.Texture(PIXI.Texture.EMPTY.baseTexture);
@@ -677,7 +681,8 @@ export class GameScene extends Scene {
 
               // IF BALL FAILED TO BOUNCE ON SQUARE
               if(this.isInSquare(square, bouncePosition) === true ) {
-                // IF BALL FALL ON COIN
+                
+                this.playTileSound();
 
                 // if square has coin, check if ball fall on coin, get coin, add score
                 try{
@@ -741,22 +746,22 @@ export class GameScene extends Scene {
         
       }
   }
-}
+  }
 
-animateCoin(square: projection.Sprite2d){
+  animateCoin(square: projection.Sprite2d){
 
-  let sqx = square.x;
-  let sqy = square.y;
+    let sqx = square.x;
+    let sqy = square.y;
 
-  this.coin[100].position.set(sqx,sqy);
-  this.container2d.addChild(this.coin[100]);
+    this.coin[100].position.set(sqx,sqy);
+    this.container2d.addChild(this.coin[100]);
 
-  this.coinAnimate = true;
+    this.coinAnimate = true;
 
-  setTimeout(() => {
-    this.container2d.removeChild(this.coin[100]);
-  }, this.FREE_FALL*5);
-}
+    setTimeout(() => {
+      this.container2d.removeChild(this.coin[100]);
+    }, this.FREE_FALL*5);
+  }
 
   resetStage(){
     this.stage = 1;
@@ -849,6 +854,16 @@ animateCoin(square: projection.Sprite2d){
      this.TOUCHEND = false;
     } else {
       this.GAME_RESET = false;
+    }
+  }
+  // SOUND ------------------------------------------------------------------
+  playTileSound(){
+    if (this.tileSound == false) return;
+
+    if(this.randomTileSound == true){
+      
+    }else{
+      // play default tile sound
     }
   }
 
