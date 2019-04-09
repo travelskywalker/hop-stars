@@ -17,20 +17,24 @@ export class AppSound {
     });
   }
 
-  play(name: SoundName) {
+  play(name: string) {
     PIXI.sound.play(name);
     if(name == 'coin'){
       PIXI.sound.volume('coin', .3);
     }
   }
 
-  stop(name: SoundName) {
+  stop(name: string) {
     PIXI.sound.stop(name);
   }
 }
 
-export type SoundName =
-    'ball_bounce'
-  | 'BGM'
-  | 'button'
-  | 'coin';
+// export type SoundName =
+//     'ball_bounce'
+//   | 'BGM'
+//   | 'button'
+//   | 'coin'
+//   | 'tile_1'
+//   | 'tile_2'
+//   | 'tile_3'
+//   | 'tile_4'
