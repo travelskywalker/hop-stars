@@ -88,7 +88,8 @@ export class GameScene extends Scene {
   stageText: Text;
   stage: number = 1;
   stageProgress: number = 1;
-  stageLimit: number = 50; //config
+  stageLimit: number = 50
+  ; //config
 
   // sounds
   randomTileSound: boolean = true; //config
@@ -868,6 +869,17 @@ export class GameScene extends Scene {
       this.app.getSoundPlayer().play('tile_1');
     }
   }
+  playBGMSound(name:string) {
+    PIXI.sound.play(name, { loop: true });
+  }
+  stopBGMSound() {
+    // this.app.getSoundPlayer().stop(name);
+    PIXI.sound.stopAll();
+  }
+  resetBGMSound(){
+    PIXI.sound.stopAll();
+    PIXI.sound.play("BGM_default", { loop: true });
+  }
 
   // STAGES -----------------------------------------------------------------
   stage4(){
@@ -908,10 +920,14 @@ export class GameScene extends Scene {
     this.container.addChild(this.gradient_bg.getSprite());
     this.container.setChildIndex(this.gradient_bg.getSprite(),2)
     this.container.setChildIndex(this.scoreText,3)
+
+    this.stopBGMSound();
+    this.playBGMSound('BGM_S3');
+
   }
 
   stage2(){
-
+    
     // animate squares
     this.squareAnimate = true;
 
@@ -941,6 +957,9 @@ export class GameScene extends Scene {
     this.container.addChild(this.gradient_bg.getSprite());
     this.container.setChildIndex(this.gradient_bg.getSprite(),2)
     this.container.setChildIndex(this.scoreText,3)
+
+    this.stopBGMSound();
+    this.playBGMSound('BGM_S2');
   }
 
   stage1(){
@@ -972,6 +991,8 @@ export class GameScene extends Scene {
     this.container.setChildIndex(this.bg_img.getSprite(),0);
     this.container.addChild(this.gradient_bg.getSprite());
     this.container.setChildIndex(this.gradient_bg.getSprite(),2)
+
+    this.resetBGMSound();
   }
 
 }
