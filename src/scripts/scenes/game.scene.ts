@@ -680,9 +680,9 @@ export class GameScene extends Scene {
               }
 
               // IF BALL FAILED TO BOUNCE ON SQUARE
-              if(this.isInSquare(square, bouncePosition) === true ) {
+              if(this.isInSquare(square, bouncePosition) == true ) {
                 
-                this.playTileSound();
+                if(this.TOUCHEND == false) this.playTileSound();
 
                 // if square has coin, check if ball fall on coin, get coin, add score
                 try{
