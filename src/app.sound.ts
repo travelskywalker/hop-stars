@@ -11,7 +11,7 @@ export class AppSound {
   constructor(_app: App) {
     this.app = _app;
     PIXI.sound.volumeAll = 0;
-    PIXI.sound.play('BGM', { loop: true });
+    PIXI.sound.play('BGM_1', { loop: true });
     this.state_subscription = this.app.getState().subscribe((_state: IAppState) => {
       PIXI.sound.volumeAll = [0, 1][_state.volume];
     });
