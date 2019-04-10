@@ -17,11 +17,8 @@ export class AppSound {
     });
   }
 
-  play(name: string) {
-    PIXI.sound.play(name);
-    if(name == 'coin'){
-      PIXI.sound.volume('coin', .3);
-    }
+  play(name: string, volume: any=1) {
+    PIXI.sound.play(name, {"volume": volume});
   }
 
   stop(name: string) {
