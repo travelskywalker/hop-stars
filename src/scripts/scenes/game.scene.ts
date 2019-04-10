@@ -15,7 +15,6 @@ export class GameScene extends Scene {
   circle: Graphics;
 
   circle1: SpriteAnimatedActor;
-
   square_bg: Graphics;
   circle_bg: Graphics;
 
@@ -69,6 +68,7 @@ export class GameScene extends Scene {
   // squares
   initial_square: projection.Sprite2d;
   squareFar: projection.Sprite2d [] = [];
+  tiles: SpriteAnimatedActor [] = [];
 
   // animate squares
   squareAnimateThreshold: number = 7; //points needed to animate tiles
@@ -97,7 +97,7 @@ export class GameScene extends Scene {
   // sounds
   randomTileSound: boolean = true; //config
   tileSound: boolean = true; //config
-  tileVolume: any = 1; //config
+  tileVolume: any = 2; //config
 
   init(): void {
     
@@ -145,7 +145,7 @@ export class GameScene extends Scene {
     this.initial_square.anchor.set(0.5);
     this.initial_square.position.set(0, this.initial_square_y);
 
-    const s_img_i = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('./assets/platform.png'));
+    const s_img_i = new PIXI.projection.Sprite2d(SpriteAnimatedActor('tiles_ball', this.app));
     s_img_i.scale.set(-this.initial_square.width * 0.0062, -this.initial_square.height * 0.011);
     s_img_i.anchor.set(0.5, 0.5);
     s_img_i.position.y = 0;
@@ -161,10 +161,19 @@ export class GameScene extends Scene {
     this.coin[0].anchor.set(0.5, 1);
     
     const s_img_0 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('./assets/platform.png'));
-    s_img_0.scale.set(-this.initial_square.width * 0.0062, -this.initial_square.height * 0.011);
+    s_img_0.scale.set(-this.initial_square.width * 0.0062, this.initial_square.height * 0.011);
     s_img_0.anchor.set(0.5, 0.5);
     s_img_0.position.y = 0;
     this.squareFar[0].addChild(s_img_0);
+    ///// hop effect
+    this.tiles[0] = new SpriteAnimatedActor('tiles_ball', this.app);
+    this.tiles[0].addAnimation('tiles_ball', 'tiles');
+    this.tiles[0].getAnimatedSprite().scale.set(1.05, -1);
+    this.tiles[0].setAnchor(this.squareFar[0].position.x, 0);
+    this.tiles[0].setPosition(-(this.tiles[0].getAnimatedSprite().width / 2), this.tiles[0].getAnimatedSprite().height / 2);
+    s_img_0.addChild(this.tiles[0].getAnimatedSprite());
+    ///// end hop effect
+    
     
     // square 1 ------------------
     this.squareFar[1] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
@@ -176,10 +185,18 @@ export class GameScene extends Scene {
     this.coin[1].anchor.set(0.5, 1);
     
     const s_img_1 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('./assets/platform.png'));
-    s_img_1.scale.set(-this.initial_square.width * 0.0062, -this.initial_square.height * 0.011);
+    s_img_1.scale.set(-this.initial_square.width * 0.0062, this.initial_square.height * 0.011);
     s_img_1.anchor.set(0.5, 0.5);
     s_img_1.position.y = 0;
     this.squareFar[1].addChild(s_img_1);
+    ///// hop effect
+    this.tiles[1] = new SpriteAnimatedActor('tiles_ball', this.app);
+    this.tiles[1].addAnimation('tiles_ball', 'tiles');
+    this.tiles[1].getAnimatedSprite().scale.set(1.05, -1);
+    this.tiles[1].setAnchor(this.squareFar[1].position.x, 0);
+    this.tiles[1].setPosition(-(this.tiles[1].getAnimatedSprite().width / 2), this.tiles[1].getAnimatedSprite().height / 2);
+    s_img_1.addChild(this.tiles[1].getAnimatedSprite());
+    ///// end hop effect
 
     // square 2 ------------------
     this.squareFar[2] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
@@ -191,10 +208,18 @@ export class GameScene extends Scene {
     this.coin[2].anchor.set(0.5, 1);
     
     const s_img_2 = new PIXI.projection.Sprite2d(PIXI.Texture.fromImage('./assets/platform.png'));
-    s_img_2.scale.set(-this.initial_square.width * 0.0062, -this.initial_square.height * 0.011);
+    s_img_2.scale.set(-this.initial_square.width * 0.0062, this.initial_square.height * 0.011);
     s_img_2.anchor.set(0.5, 0.5);
     s_img_2.position.y = 0;
     this.squareFar[2].addChild(s_img_2);
+    ///// hop effect
+    this.tiles[2] = new SpriteAnimatedActor('tiles_ball', this.app);
+    this.tiles[2].addAnimation('tiles_ball', 'tiles');
+    this.tiles[2].getAnimatedSprite().scale.set(1.05, -1);
+    this.tiles[2].setAnchor(this.squareFar[2].position.x, 0);
+    this.tiles[2].setPosition(-(this.tiles[2].getAnimatedSprite().width / 2), this.tiles[2].getAnimatedSprite().height / 2);
+    s_img_2.addChild(this.tiles[2].getAnimatedSprite());
+    ///// end hop effect
 
     // square 3 ------------------
     this.squareFar[3] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
@@ -210,6 +235,14 @@ export class GameScene extends Scene {
     s_img_3.anchor.set(0.5, 0.5);
     s_img_3.position.y = 0;
     this.squareFar[3].addChild(s_img_3);
+    ///// hop effect
+    this.tiles[0] = new SpriteAnimatedActor('tiles_ball', this.app);
+    this.tiles[0].addAnimation('tiles_ball', 'tiles');
+    this.tiles[0].getAnimatedSprite().scale.set(1.05, -1);
+    this.tiles[0].setAnchor(this.squareFar[0].position.x, 0);
+    this.tiles[0].setPosition(-(this.tiles[0].getAnimatedSprite().width / 2), this.tiles[0].getAnimatedSprite().height / 2);
+    s_img_0.addChild(this.tiles[0].getAnimatedSprite());
+    ///// end hop effect
 
     // square 4 ------------------
     this.squareFar[4] = new PIXI.projection.Sprite2d(this.bigWhiteTexture);
@@ -294,7 +327,7 @@ export class GameScene extends Scene {
     lightY.tint = 0x000000;
     lightY.anchor.set(0.5, 0);
     lightY.scale.set(this.app.getScreenSize().w * 0.2, this.app.getScreenSize().h);
-    lightY.alpha = 0;
+    lightY.alpha = 0.1;
     this.container2d.addChildAt(lightY, 0);
     
   /////  SCORE
@@ -340,9 +373,9 @@ export class GameScene extends Scene {
     
   // EVENTS
     // const circle1 = new SpriteActor('ball', this.app, 'common', 'ball.png');
-    this.circle1 = new SpriteAnimatedActor('ball', this.app);
+    this.circle1 = new SpriteAnimatedActor('tiles_ball', this.app);
 
-    this.circle1.addAnimation('ball', 'ball');
+    this.circle1.addAnimation('tiles_ball', 'ball');
     // this.circle1.switchAnimation('ball', 0.9, true);
     this.circle1.setAnchor(this.circle.position.x, 0);
     this.circle1.setPosition(this.deviceScreenSize - this.circle.width/2, this.circleYPosition - this.circle.width/2);
@@ -603,7 +636,7 @@ export class GameScene extends Scene {
         // add square
         if(this.squareFar[0].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
           this.squareFar[0].position.y = this.squareFar[7].position.y + this.square_distance;
-          this.squareFar[0].position.x = this.randomPosition();
+          this.squareFar[0].position.x = 0;
           this.addCoin([0]);
           this.squareFarPosition[0] = this.squareFar[0].position.x;
           this.squareFarToAnimate[0] = this.isAnimating();
@@ -692,6 +725,9 @@ export class GameScene extends Scene {
               // IF BALL FAILED TO BOUNCE ON SQUARE
               if(this.isInSquare(square, bouncePosition) == true ) {
                 
+
+                this.tiles[this.bounce_count].switchAnimation('tiles', 0.5, false);
+
                 if(this.TOUCHEND == false) this.playTileSound();
 
                 // if square has coin, check if ball fall on coin, get coin, add score
@@ -825,14 +861,14 @@ export class GameScene extends Scene {
 
   generateStartSquares(){
     this.initial_square.position.y = this.initial_square_y;
-    this.squareFar[0].position.set(this.randomPosition(), this.initial_square_distance);
+    this.squareFar[0].position.set(0, this.initial_square_distance);
     this.squareFar[1].position.set(this.randomPosition(), this.initial_square_distance + this.square_distance);
-    this.squareFar[2].position.set(this.randomPosition(),this.initial_square_distance + this.square_distance * 2);
-    this.squareFar[3].position.set(this.randomPosition(),this.initial_square_distance + this.square_distance * 3);
-    this.squareFar[4].position.set(this.randomPosition(),this.initial_square_distance + this.square_distance * 4);
-    this.squareFar[5].position.set(this.randomPosition(),this.initial_square_distance + this.square_distance * 5);
-    this.squareFar[6].position.set(this.randomPosition(),this.initial_square_distance + this.square_distance * 6);
-    this.squareFar[7].position.set(this.randomPosition(),this.initial_square_distance + this.square_distance * 7);
+    this.squareFar[2].position.set(this.randomPosition(), this.initial_square_distance + this.square_distance * 2);
+    this.squareFar[3].position.set(this.randomPosition(), this.initial_square_distance + this.square_distance * 3);
+    this.squareFar[4].position.set(this.randomPosition(), this.initial_square_distance + this.square_distance * 4);
+    this.squareFar[5].position.set(this.randomPosition(), this.initial_square_distance + this.square_distance * 5);
+    this.squareFar[6].position.set(this.randomPosition(), this.initial_square_distance + this.square_distance * 6);
+    this.squareFar[7].position.set(this.randomPosition(), this.initial_square_distance + this.square_distance * 7);
 
     this.addCoin([0,1,2,3,4,5,6,7]);
   }
@@ -877,7 +913,7 @@ export class GameScene extends Scene {
       this.app.getSoundPlayer().play('tile_'+n);
     }else{
       // play default tile sound
-      this.app.getSoundPlayer().play('tile_1',this.tileVolume);
+      this.app.getSoundPlayer().play('tile_0',this.tileVolume);
     }
   }
   playBGMSound(name:string) {
