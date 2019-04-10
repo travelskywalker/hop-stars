@@ -93,7 +93,7 @@ export class GameScene extends Scene {
   // sounds
   randomTileSound: boolean = true; //config
   tileSound: boolean = true; //config
-  tileVolume: any = .2; //config
+  tileVolume: any = 1; //config
 
   init(): void {
     
@@ -862,8 +862,8 @@ export class GameScene extends Scene {
     if (this.tileSound == false) return;
 
     if(this.randomTileSound == true){
-      let n = Math.floor(Math.random() * 4 +1);
-      this.app.getSoundPlayer().play('tile_'+n,this.tileVolume);
+      let n = Math.floor(Math.random() * 8 +1);
+      this.app.getSoundPlayer().play('tile_'+n);
     }else{
       // play default tile sound
       this.app.getSoundPlayer().play('tile_1',this.tileVolume);
