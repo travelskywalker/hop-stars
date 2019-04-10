@@ -861,7 +861,7 @@ export class GameScene extends Scene {
     if (this.tileSound == false) return;
 
     if(this.randomTileSound == true){
-      let n = Math.floor(Math.random() * 4 +1);
+      let n = Math.floor(Math.random() * 8 +1);
       this.app.getSoundPlayer().play('tile_'+n);
     }else{
       // play default tile sound
