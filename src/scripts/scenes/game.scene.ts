@@ -3,6 +3,7 @@ import { Text, Container, Graphics, Texture, projection, Sprite } from 'pixi.js'
 import 'pixi-projection';
 import { App } from '@src/app';
 import { SpriteActor } from '@src/core/sprite.actor';
+import { SpriteAnimatedActor } from '@src/core/sprite.animated.actor';
 
 export class GameScene extends Scene {
 
@@ -334,12 +335,15 @@ export class GameScene extends Scene {
     this.circle.drawCircle(this.deviceScreenSize, this.circleYPosition, this.CIRCLEWIDTH);
     
   // EVENTS
-    const circle1 = new SpriteActor('ball', this.app, 'common', 'ball.png');
+    // const circle1 = new SpriteActor('ball', this.app, 'common', 'ball.png');
+    const circle1 = new SpriteAnimatedActor('plane', this.app);
     // circle1.setAnchor(this.circle.position.x, 0);
-    circle1.setPosition(this.deviceScreenSize - this.circle.width/2, this.circleYPosition - this.circle.width/2);
+    // circle1.setPosition(this.deviceScreenSize - this.circle.width/2, this.circleYPosition - this.circle.width/2);
+    circle1.getAnimatedSprite().position.x = this.deviceScreenSize - this.circle.width/2;
+    circle1.getAnimatedSprite().position.y = this.circleYPosition - this.circle.width/2
     circle1.setScaleUpToScreenPercWidth(.16);  
-
-    this.circle.addChild(circle1.getSprite());
+    // this.circle.addChild(circle1.getSprite());
+    this.circle.addChild(circle1.getAnimatedSprite());
     this.circle_bg.addChild(this.circle);
 
   //// TOUCH START
