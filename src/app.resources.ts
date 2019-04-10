@@ -16,7 +16,7 @@ export function resourcesProvider(_app: App, loaded: (resources: any) => void, p
   loader.add('lvl1', `./assets/hop-game-level-1.json`);
   loader.add('lvl2', `./assets/hop-game-level-2.json`);
   loader.add('lvl3', `./assets/hop-game-level-3.json`);
-  loader.add('ball', `./assets/ball_sprites.json`);
+  loader.add('tiles_ball', `./assets/tiles_ball_sprites.json`);
   // sounds
   loader.add('ball_bounce', './assets/ball_bounce.{ogg,mp3}');
   loader.add('BGM_default', './assets/BGM_default.{ogg,mp3}');
