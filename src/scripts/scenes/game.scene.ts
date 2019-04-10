@@ -13,6 +13,9 @@ export class GameScene extends Scene {
   bg_img: SpriteActor;
   gradient_bg: SpriteActor;
   circle: Graphics;
+
+  circle1: SpriteAnimatedActor;
+
   square_bg: Graphics;
   circle_bg: Graphics;
 
@@ -337,14 +340,16 @@ export class GameScene extends Scene {
     
   // EVENTS
     // const circle1 = new SpriteActor('ball', this.app, 'common', 'ball.png');
-    const circle1 = new SpriteAnimatedActor('plane', this.app);
-    // circle1.setAnchor(this.circle.position.x, 0);
-    // circle1.setPosition(this.deviceScreenSize - this.circle.width/2, this.circleYPosition - this.circle.width/2);
-    circle1.getAnimatedSprite().position.x = this.deviceScreenSize - this.circle.width/2;
-    circle1.getAnimatedSprite().position.y = this.circleYPosition - this.circle.width/2
-    circle1.setScaleUpToScreenPercWidth(.16);  
-    // this.circle.addChild(circle1.getSprite());
-    this.circle.addChild(circle1.getAnimatedSprite());
+    this.circle1 = new SpriteAnimatedActor('ball', this.app);
+
+    this.circle1.addAnimation('ball', 'ball');
+    // this.circle1.switchAnimation('ball', 0.9, true);
+    this.circle1.setAnchor(this.circle.position.x, 0);
+    this.circle1.setPosition(this.deviceScreenSize - this.circle.width/2, this.circleYPosition - this.circle.width/2);
+    
+    this.circle1.setScaleUpToScreenPercWidth(.16);
+    // this.circle.addChild(this.circle1.getSprite());
+    this.circle.addChild(this.circle1.getAnimatedSprite());
     this.circle_bg.addChild(this.circle);
 
   //// TOUCH START
@@ -516,7 +521,7 @@ export class GameScene extends Scene {
           this.hit[squares[x]] = 'left';
           this.squareFar[squares[x]].x += moveSpeed;
 
-        }else{
+        } else {
 
           if(this.squareFar[squares[x]].x >= this.squareFarPosition[squares[x]]){
 
@@ -857,7 +862,9 @@ export class GameScene extends Scene {
     // bounce ball when tapped
     if(this.GAME_RESET == false) {
      this.TOUCHEND = false;
+     
     } else {
+      this.circle1.switchAnimation('ball', 0.9, true);
       this.GAME_RESET = false;
     }
   }
