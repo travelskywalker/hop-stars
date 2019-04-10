@@ -28,6 +28,10 @@ export function resourcesProvider(_app: App, loaded: (resources: any) => void, p
   loader.add('tile_2', './assets/tile_2.{ogg,mp3}');
   loader.add('tile_3', './assets/tile_3.{ogg,mp3}');
   loader.add('tile_4', './assets/tile_4.{ogg,mp3}');
+  loader.add('tile_5', './assets/tile_5.{ogg,mp3}');
+  loader.add('tile_6', './assets/tile_6.{ogg,mp3}');
+  loader.add('tile_7', './assets/tile_7.{ogg,mp3}');
+  loader.add('tile_8', './assets/tile_8.{ogg,mp3}');
   
   // start loading resources
   loader.load((_loader: any, resources: any) => {
