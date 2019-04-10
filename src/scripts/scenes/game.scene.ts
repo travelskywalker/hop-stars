@@ -94,6 +94,7 @@ export class GameScene extends Scene {
   // sounds
   randomTileSound: boolean = true; //config
   tileSound: boolean = true; //config
+  tileVolume: any = 1; //config
 
   init(): void {
     
@@ -694,7 +695,7 @@ export class GameScene extends Scene {
 
                   // console.log("has coin", square.getChildIndex(this.coin[this.bounce_count]))
                   if(this.isCoined(square, bouncePosition) && this.TOUCHEND == false){
-                    this.app.getSoundPlayer().play('coin');
+                    this.app.getSoundPlayer().play('coin', .3);
                     this.scoreText.text = `${this.score += 1}`;
                     
                     // remove coin
@@ -869,7 +870,7 @@ export class GameScene extends Scene {
       this.app.getSoundPlayer().play('tile_'+n);
     }else{
       // play default tile sound
-      this.app.getSoundPlayer().play('tile_1');
+      this.app.getSoundPlayer().play('tile_1',this.tileVolume);
     }
   }
   playBGMSound(name:string) {
