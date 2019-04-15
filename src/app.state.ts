@@ -3,6 +3,8 @@ import { Subject } from 'rxjs/Subject';
 interface JavaScriptInterface { 
   gameCancelled(): any; 
   gameStarted(): any;
+  gameEnded(): any;
+  sendScore(): any;
 }
 declare var Android: JavaScriptInterface;
 
@@ -59,6 +61,48 @@ export class AppState extends Subject<IAppState> {
     } catch (err) {
       console.error("Android gameCancelled is not defined.", err);
     }
+  }
+
+  public sendScore(score: number){
+    let payload = {
+      'score': score,
+      'bestscore': this.getBestScore()
+    }
+    
+    try {
+      Android.sendScore()
+    } catch (error) {
+      console.error("Android.sendScore is not defined", payload);
+    }
+  }
+
+  // Game Event:
+  public eventStarted() {
+    try {
+      Android.gameStarted();
+    } catch (err) {
+      console.error("Android gameStarted is not defined.");
+    }
+  }
+
+  public eventCancelled() {
+    try {
+      Android.gameCancelled();
+    } catch (err) {
+      console.error("Android gameCancelled is not defined.");
+    }
+  }
+
+  public eventEnded() {
+    try {
+      Android.gameEnded();
+    } catch (err) {
+      console.error("Android gameEnded is not defined.");
+    }
+  }
+
+  private getCurrentDateTime(){
+    return 'bleeee';
   }
 
 }
