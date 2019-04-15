@@ -252,6 +252,8 @@ export class GameOverScene extends Scene {
   }
 
   start(): void {
+    // send data 
+    this.app.getState().sendScore(this.app.currentScore);
     this.animatingTop = false;
     this.animatingBottom = false;
     // submit score data
