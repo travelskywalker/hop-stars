@@ -340,15 +340,13 @@ export class GameScene extends Scene {
     
   // EVENTS
     // const circle1 = new SpriteActor('ball', this.app, 'common', 'ball.png');
-    this.circle1 = new SpriteAnimatedActor('ball', this.app);
-
-    this.circle1.addAnimation('ball', 'ball');
+    this.circle1 = new SpriteAnimatedActor('tiles_ball', this.app);
+    this.circle1.addAnimation('tiles_ball', 'ball');
     // this.circle1.switchAnimation('ball', 0.9, true);
     this.circle1.setAnchor(this.circle.position.x, 0);
     this.circle1.setPosition(this.deviceScreenSize - this.circle.width/2, this.circleYPosition - this.circle.width/2);
     
     this.circle1.setScaleUpToScreenPercWidth(.16);
-    // this.circle.addChild(this.circle1.getSprite());
     this.circle.addChild(this.circle1.getAnimatedSprite());
     this.circle_bg.addChild(this.circle);
 
@@ -428,15 +426,19 @@ export class GameScene extends Scene {
     this.container.addChild(this.swipe_hand.getSprite());
     this.container.addChild(taptostart.getSprite());
 
-    instructionContainer.on('pointerup', () => { 
+    instructionContainer.on('touchstart', () => { 
       this.container.removeChild(instructionContainer);
       this.container.removeChild(this.swipe.getSprite());
       this.container.removeChild(this.swipe_hand.getSprite());
       this.container.removeChild(taptostart.getSprite());
+
+      // game started
+      this.app.getState().eventStarted(); //send payload
+      this.ball_click(); 
     })
     // END OF INSTRUCTION
 
-}
+  }
 
   randomPosition(){
 
@@ -599,7 +601,7 @@ export class GameScene extends Scene {
 
     this.coinAnimation();
 
-      if(this.GAME_RESET != true) {  
+      if(this.GAME_RESET != true) {
         // add square
         if(this.squareFar[0].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
           this.squareFar[0].position.y = this.squareFar[7].position.y + this.square_distance;
