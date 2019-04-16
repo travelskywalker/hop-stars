@@ -99,6 +99,9 @@ export class GameScene extends Scene {
   tileSound: boolean = true; //config
   tileVolume: any = 1; //config
 
+  // game
+  gameStarted: boolean = false;
+
   init(): void {
     
     this.bigWhiteTexture = new PIXI.Texture(PIXI.Texture.EMPTY.baseTexture);
@@ -116,6 +119,7 @@ export class GameScene extends Scene {
   start(): void {
 
   this.coinAnimate = false;
+  this.gameStarted = false;
 
   // hit
   for(let x=1; x<=7; x++){
@@ -353,6 +357,18 @@ export class GameScene extends Scene {
   //// TOUCH START
     this.circle_bg.on('touchstart', (interactionData: PIXI.interaction.InteractionEvent) => {      
       if(interactionData.data.identifier > 0) return;
+
+      this.container.removeChild(instructionContainer);
+      this.container.removeChild(this.swipe.getSprite());
+      this.container.removeChild(this.swipe_hand.getSprite());
+      this.container.removeChild(taptostart.getSprite());
+
+      // game started
+      if(this.gameStarted == false){
+        this.app.getState().eventStarted(); //send payload
+        this.gameStarted = true;
+      }
+    
       this.ball_click();
 
       // get initial tapped postion
@@ -363,7 +379,7 @@ export class GameScene extends Scene {
 
    //// TOUCH MOVE
     this.circle_bg.on('touchmove', (interactionData: PIXI.interaction.InteractionEvent) => {
-
+      console.log('touchmove');
       // disable multitouch
       if(interactionData.data.identifier > 0) return;
 
@@ -404,7 +420,7 @@ export class GameScene extends Scene {
     instructionContainer.position.x = 0;
     instructionContainer.position.y = 0;
     instructionContainer.alpha = .4;
-    instructionContainer.interactive = true;
+    // instructionContainer.interactive = true;
     
     const taptostart = new SpriteActor('tap-bg', this.app, 'common', 'TAP TO START.png');
     taptostart.setAnchor(.5, .5);
