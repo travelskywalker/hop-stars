@@ -87,11 +87,13 @@ export class LeaderboardModal extends PIXI.Container {
       // player name
       const player_name = new PIXI.Text(`${data[x].name}`, {
         fontFamily: this.fontFamily,
-        fontSize: `${user_details.height * 0.4}px`,
+        fontSize: `${user_details.height * 0.5}px`,
         fill: 0x744395,
         align: 'center',
       });
       player_name.anchor.set(0, 0);
+      player_name.position.y = user_details.height * 0.5 - player_name.height * 0.5;
+      player_name.position.x = 0
       user_details.addChild(player_name);
 
       // player points
@@ -101,13 +103,13 @@ export class LeaderboardModal extends PIXI.Container {
         fill: 0XFFFFFF,
         align: 'center',
       });
-      player_points.anchor.set(0, 0);
-      player_points.position.y = user_details.height - player_points.height;
-      user_details.addChild(player_points);
+      // player_points.anchor.set(0, 0);
+      // player_points.position.y = user_details.height - player_points.height;
+      // user_details.addChild(player_points);
 
       // rewards
       const rewards = new PIXI.Graphics();  
-      rewards.beginFill(0xbe388e, 1);
+      rewards.beginFill(0xbe388e, 0);
       rewards.drawRoundedRect(0, 0, this.profile_container[x].width * 0.2, this.profile_container[x].height * 0.45, 40);
       rewards.endFill();
       rewards.position.x = this.profile_container[x].width - rewards.width;
@@ -120,9 +122,12 @@ export class LeaderboardModal extends PIXI.Container {
         fill: 0XFFFFFF,
         align: 'center',
       });
-      rewards_text.position.y = rewards.height * 0.5 - rewards_text.height * 0.5;
-      rewards_text.position.x = rewards.width * 0.5 - rewards_text.width * 0.5;
-      rewards.addChild(rewards_text);
+      // rewards_text.position.y = rewards.height * 0.5 - rewards_text.height * 0.5;
+      // rewards_text.position.x = rewards.width * 0.5 - rewards_text.width * 0.5;
+      // rewards.addChild(rewards_text);
+      player_points.position.y = rewards.height * 0.5 - rewards_text.height * 0.5;
+      player_points.position.x = rewards.width * 0.5 - rewards_text.width * 0.5;
+      rewards.addChild(player_points);
 
       // line break
       const breakline = new PIXI.Graphics();
@@ -196,6 +201,7 @@ export class LeaderboardModal extends PIXI.Container {
     this.tab_nav_container.endFill();
     this.tab_nav_container.position.x = (data.app.getScreenSize().w / 2 ) - (this.tab_nav_container.width / 2), - this.tab_nav_container.width * 0.5 ;
     this.tab_nav_container.position.y = Title.position.y + Title.height;
+    this.tab_nav_container.visible = false; // show or hide nav bar
    
     let is_weekly_active:boolean = true;
     // weekly
