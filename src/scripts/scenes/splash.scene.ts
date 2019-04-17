@@ -200,13 +200,18 @@ export class SplashScene extends Scene {
   data = {
     best_score: this.app.getState().getBestScore(),
     current_score: 0
-  };  
+  };
+
+  // timespent
+  timeStart: any;
 
   init(): void {
 
   }
 
   start(): void {
+
+    this.timeStart = Date.now();
     
     // initialize and set bg
     this.bg = new SpriteActor('splash-bg', this.app, 'common', 'startscreen_bg.jpg');
@@ -329,7 +334,12 @@ export class SplashScene extends Scene {
   }
 
   remove(): void {
-
+    let timespent = {
+                        screen: "main_menu",
+                        timestart:this.timeStart,
+                        timeend: Date.now()
+                    }
+    this.app.getState().eventStarted(timespent);
   }
 
 }

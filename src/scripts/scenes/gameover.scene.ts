@@ -253,11 +253,16 @@ export class GameOverScene extends Scene {
 
   start(): void {
     // send data 
-    this.app.getState().sendScore(this.app.currentScore);
+    // this.app.getState().sendScore(this.app.currentScore);
     this.animatingTop = false;
     this.animatingBottom = false;
-    // submit score data
-    this.app.getState().submitScore(this.app.currentScore);
+    // event | gameend
+    let event = {
+      event: "end",
+      session_id: this.app.session_id,
+      score: this.app.currentScore
+      }
+    this.app.getState().eventStarted(event);
 
     // initialize and set bg
     this.bg = new SpriteActor('gameover-bg', this.app, 'common', 'GAMEOVER_layover.png');

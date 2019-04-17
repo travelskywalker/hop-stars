@@ -101,6 +101,10 @@ export class GameScene extends Scene {
 
   // game
   gameStarted: boolean = false;
+  timeStart: any;
+
+  // data requirements
+  sessionId: any;
 
   init(): void {
     
@@ -117,6 +121,9 @@ export class GameScene extends Scene {
   }
 
   start(): void {
+
+  // data requirements
+  this.sessionId = this.app.getState().generateSessionId();
 
   this.coinAnimate = false;
   this.gameStarted = false;
@@ -365,7 +372,11 @@ export class GameScene extends Scene {
 
       // game started
       if(this.gameStarted == false){
-        this.app.getState().eventStarted(); //send payload
+        let event = {
+                    event: "start",
+                    session_id: this.sessionId
+                    }
+        this.app.getState().eventStarted(event); //send payload
         this.gameStarted = true;
       }
     
@@ -449,7 +460,7 @@ export class GameScene extends Scene {
       this.container.removeChild(taptostart.getSprite());
 
       // game started
-      this.app.getState().eventStarted(); //send payload
+      // this.app.getState().eventStarted(); //send payload
       this.ball_click(); 
     })
     // END OF INSTRUCTION
@@ -826,7 +837,7 @@ export class GameScene extends Scene {
   reset_game() {
       
     // goto gameover scene
-      this.app.goToScene(4, {score: this.score});
+      this.app.goToScene(4, {score: this.score, session_id: this.sessionId, timeStart: this.timeStart});
 
     // IF BALL OUT OF SCREEN, RESET GAME
       this.circle.position.y = 0; 

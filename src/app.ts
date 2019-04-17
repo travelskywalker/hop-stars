@@ -11,7 +11,9 @@ import { resourcesProvider } from '@src/app.resources';
 import { AppSound } from './app.sound';
 
 export class App {
+  // data requirements
   public currentScore: number = 0;
+  public session_id: any;
   // pixijs engine reference
   public _app: PIXI.Application;
 
@@ -167,7 +169,7 @@ export class App {
     this._timeSinceStart += this._app.ticker.elapsedMS;
   }
 
-  public goToScene(sceneIndex: number, data = {score: 0}) {
+  public goToScene(sceneIndex: number, data: any = {}) {
 
     // get target scene from scene list
     const entryScene = this._scenes[sceneIndex];
@@ -183,6 +185,7 @@ export class App {
     this._app.stage.addChild(entryScene.container);
     this._currentScene = entryScene;
     this.currentScore = data.score;
+    this.session_id = data.session_id;
 
   }
 
