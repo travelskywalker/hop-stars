@@ -940,7 +940,7 @@ export class GameScene extends Scene {
      this.GRAVITY = this.INITIAL_VELOCITY / this.FREE_FALL;
      this.SQUARE_VELOCITY = this.square_distance / (this.FREE_FALL * 2 - 1);
      // BACKGROUND
-    this.bg_img = new SpriteActor('stage3-bg', this.app, 'lvl3', 'lv3_spacebg_mountains.jpg');
+    this.bg_img = new SpriteActor('stage3-bg', this.app, 'lvl3', 'lv3_spacebg_gradient.png');
     this.bg = new Graphics();
     this.bg.beginFill(0xF2F2F2, 0);
     this.bg.drawRect(0, 0, this.app.getScreenSize().w, this.app.getScreenSize().h);
