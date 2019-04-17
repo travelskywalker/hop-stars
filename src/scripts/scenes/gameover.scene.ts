@@ -342,7 +342,9 @@ export class GameOverScene extends Scene {
      // initialize and set play button
      this.play_again_btn = new SpriteActor('play-again', this.app, 'common', 'restart_btn.png');
      this.play_again_btn.setAnchor(0.5, 0.5);
-     this.play_again_btn.setPosition(this.home_btn.getSprite().position.x + (this.home_btn.getSprite().width * 1.1), this.home_btn.getSprite().position.y - (this.play_again_btn.getSprite().height * .7));
+     this.play_again_btn.setPosition(
+       this.app.getScreenSize().w / 2, 
+       this.home_btn.getSprite().position.y - this.play_again_btn.getSprite().height/3);
      this.play_again_btn.setScaleUpToScreenPercWidth(.275);
      setTimeout( () => this.play_again_btn.getSprite().interactive = true, 500);
      this.play_again_btn.getSprite().on('pointerup', () => { 

@@ -200,18 +200,13 @@ export class SplashScene extends Scene {
   data = {
     best_score: this.app.getState().getBestScore(),
     current_score: 0
-  };
-
-  // timespent
-  timeStart: any;
+  };  
 
   init(): void {
 
   }
 
   start(): void {
-
-    this.timeStart = Date.now();
     
     // initialize and set bg
     this.bg = new SpriteActor('splash-bg', this.app, 'common', 'startscreen_bg.jpg');
@@ -277,14 +272,11 @@ export class SplashScene extends Scene {
 
 
     this.sound_btn = new SpriteAnimatedActor('volume', this.app);
-    
     this.sound_btn.addAnimation('common', 'volume');
-    // this.sound_btn.setScale(0.33,0.33);
-    this.sound_btn.setScaleUpToScreenPercWidth(0.25);
     this.sound_btn.getAnimatedSprite().gotoAndStop(this.app.getState().state.volume);
     this.sound_btn.setAnchor(0.5, 0.5);
     this.sound_btn.setPosition(this.app.getScreenSize().w * 0.25, this.app.getScreenSize().h * .875);
-    
+    this.sound_btn.setScaleUpToScreenPercWidth(0.25);
     this.sound_btn.getAnimatedSprite().interactive = true;
     // toggle image on and off
     this.sound_btn.getAnimatedSprite().on('pointerup', () => { 
@@ -292,9 +284,9 @@ export class SplashScene extends Scene {
       this.app.getState().toggle_volume();  
       this.sound_btn.getAnimatedSprite().gotoAndStop(this.app.getState().state.volume);
       console.log("sound on/off");
+      
     });
-    
-    this.container.addChild(this.sound_btn.getAnimatedSprite());
+    this.addChild(this.sound_btn);
 
     // initialize and set leaderboard_btn button
     this.leaderboard_btn = new SpriteActor('leaderboard_btn', this.app, 'common', 'leaderboard_btn.png');
@@ -310,7 +302,7 @@ export class SplashScene extends Scene {
       this.container.addChild(this.lmodal);
       
     });
-    this.container.addChild(this.leaderboard_btn.getSprite());
+    this.addChild(this.leaderboard_btn);
 
     // initialize and set mechanic_btn button
     this.howtowin_btn = new SpriteActor('howtowin_btn', this.app, 'common', 'howtowin_btn.png');
@@ -324,7 +316,7 @@ export class SplashScene extends Scene {
       this.app.goToScene(3);
       
     });
-    this.container.addChild(this.howtowin_btn.getSprite());
+    this.addChild(this.howtowin_btn);
 
 
     this.state_subscription = this.app.getState().subscribe((state: IAppState) => {
@@ -337,12 +329,7 @@ export class SplashScene extends Scene {
   }
 
   remove(): void {
-    let timespent = {
-                        screen: "main_menu",
-                        timestart:this.timeStart,
-                        timeend: Date.now()
-                    }
-    this.app.getState().eventStarted(timespent);
+
   }
 
 }
