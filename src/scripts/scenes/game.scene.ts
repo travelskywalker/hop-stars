@@ -379,7 +379,7 @@ export class GameScene extends Scene {
 
    //// TOUCH MOVE
     this.circle_bg.on('touchmove', (interactionData: PIXI.interaction.InteractionEvent) => {
-      console.log('touchmove');
+      // console.log('touchmove');
       // disable multitouch
       if(interactionData.data.identifier > 0) return;
 
