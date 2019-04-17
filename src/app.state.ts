@@ -5,6 +5,8 @@ interface JavaScriptInterface {
   gameStarted(): any;
   gameEnded(): any;
   sendScore(): any;
+  eventStarted(data:any): any;
+  timeSpent(data: any): any;
 }
 declare var Android: JavaScriptInterface;
 
@@ -77,11 +79,12 @@ export class AppState extends Subject<IAppState> {
   }
 
   // Game Event:
-  public eventStarted() {
+  public eventStarted(data: any) {
     try {
-      Android.gameStarted();
+      // Android.gameStarted();
+      Android.eventStarted(data);
     } catch (err) {
-      console.error("Android gameStarted is not defined.");
+      console.error("Android gameStarted is not defined.", data);
     }
   }
 
@@ -101,8 +104,16 @@ export class AppState extends Subject<IAppState> {
     }
   }
 
-  private getCurrentDateTime(){
-    return 'bleeee';
+  public timeSpent(data: any){
+    try {
+      Android.timeSpent(data);
+    } catch (err) {
+      console.error("Android timeSpent is not defined.", data);
+    }
+  }
+
+  public generateSessionId(){
+    return `${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   }
 
 }
