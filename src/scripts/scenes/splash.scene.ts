@@ -207,6 +207,8 @@ export class SplashScene extends Scene {
   }
 
   start(): void {
+
+    this.data.best_score = this.app.getState().getBestScore();
     
     // initialize and set bg
     this.bg = new SpriteActor('splash-bg', this.app, 'common', 'startscreen_bg.jpg');

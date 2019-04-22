@@ -35,7 +35,7 @@ export class AppState extends Subject<IAppState> {
   }
 
   public submitScore(score: number){
-    console.log("submit score", score);
+    
     if(this.getBestScore() < score){
       this.saveBestScore(score);
     }
@@ -70,6 +70,9 @@ export class AppState extends Subject<IAppState> {
       'score': score,
       'bestscore': this.getBestScore()
     }
+
+    // save best score
+    this.submitScore(score);
     
     try {
       Android.sendScore()
