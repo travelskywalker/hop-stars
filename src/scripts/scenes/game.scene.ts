@@ -845,22 +845,31 @@ export class GameScene extends Scene {
   }
 
   reset_game() {
-      
-    // goto gameover scene
-      // this.showNTOModal();
-      // this.app.goToScene(4, {score: this.score, session_id: this.sessionId, timeStart: this.timeStart});
 
-    // IF BALL OUT OF SCREEN, RESET GAME
-      this.circle.position.y = 0; 
-      this.circle.position.x = 0;
-      this.container2d.position.x = this.deviceScreenSize;
-      this.YVELOCITY = this.INITIAL_VELOCITY;
-      this.GAME_RESET = true;
-      this.TOUCHEND = false;
-      this.bounce_count = 0;
-      setTimeout(()=>{ this.scoreText.text = `${this.score = 0}`;},100);
-      this.bg_img.getSprite().position.x = this.bg_initial_x;
-      this.resetStage();
+    // goto gameover scene
+      
+    if(this.app.getState().isOnline() == true){
+
+      this.app.goToScene(4, {score: this.score, session_id: this.sessionId, timeStart: this.timeStart});
+
+      // IF BALL OUT OF SCREEN, RESET GAME
+     this.circle.position.y = 0; 
+     this.circle.position.x = 0;
+     this.container2d.position.x = this.deviceScreenSize;
+     this.YVELOCITY = this.INITIAL_VELOCITY;
+     
+     this.TOUCHEND = false;
+     this.bounce_count = 0;
+     setTimeout(()=>{ this.scoreText.text = `${this.score = 0}`;},100);
+     this.bg_img.getSprite().position.x = this.bg_initial_x;
+     this.resetStage();
+
+    }else{
+      this.showNTOModal();
+    }
+
+    this.GAME_RESET = true;
+     
   }
 
   generateStartSquares(){
@@ -1105,6 +1114,16 @@ export class GameScene extends Scene {
       details: '',
     });
     this.container.addChild(this.cancel);
+
+    this.retry.clicked = () => { 
+      if(this.app.getState().isOnline() == true){
+        this.app.goToScene(4, {score: this.score, session_id: this.sessionId, timeStart: this.timeStart});
+      } 
+    };
+
+    this.cancel.clicked = () => { 
+      this.app.getState().eventStarted({event:'cancel'});
+    };
   }
   removeNTOModal(){
     this.container.removeChild(this.ntoContainer);
