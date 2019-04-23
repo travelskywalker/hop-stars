@@ -188,6 +188,7 @@ export class SplashScene extends Scene {
   // buttons
   play_btn: SpriteActor;
   sound_btn: SpriteAnimatedActor;
+  // sound_btn: SpriteActor;
   leaderboard_btn: SpriteActor;
   howtowin_btn: SpriteActor;
   closeBtn: SpriteActor;
@@ -278,7 +279,7 @@ export class SplashScene extends Scene {
     this.sound_btn.getAnimatedSprite().gotoAndStop(this.app.getState().state.volume);
     this.sound_btn.setAnchor(0.5, 0.5);
     this.sound_btn.setPosition(this.app.getScreenSize().w * 0.25, this.app.getScreenSize().h * .875);
-    this.sound_btn.setScaleUpToScreenPercWidth(0.25);
+    this.sound_btn.setScaleUpToScreenPercWidth(.25);
     this.sound_btn.getAnimatedSprite().interactive = true;
     // toggle image on and off
     this.sound_btn.getAnimatedSprite().on('pointerup', () => { 
@@ -286,9 +287,15 @@ export class SplashScene extends Scene {
       this.app.getState().toggle_volume();  
       this.sound_btn.getAnimatedSprite().gotoAndStop(this.app.getState().state.volume);
       console.log("sound on/off");
-      
     });
     this.addChild(this.sound_btn);
+
+    // this.sound_btn = new SpriteActor('volume_on', this.app, 'common', 'volume_on.png');
+    // this.sound_btn.setAnchor(0.5, 0.5);
+    // this.sound_btn.setPosition(this.app.getScreenSize().w * 0.25, this.app.getScreenSize().h * .875);
+    // this.sound_btn.setScaleUpToScreenPercWidth(.25);
+
+    // this.addChild(this.sound_btn);
 
     // initialize and set leaderboard_btn button
     this.leaderboard_btn = new SpriteActor('leaderboard_btn', this.app, 'common', 'leaderboard_btn.png');

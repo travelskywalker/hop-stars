@@ -56,6 +56,7 @@ export class SpriteAnimatedActor extends Actor {
 
   public setScaleUpToScreenPercWidth(perc: number): void {
 
+    this.animatedSprite.scale = new PIXI.Point(0.01, 0.01);
     const point = this.animatedSprite.scale;
     perc = this.app.getScreenSize().w * perc;
     do {
