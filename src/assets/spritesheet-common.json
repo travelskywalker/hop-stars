@@ -2,7 +2,7 @@
 
 "ball.png":
 {
-	"frame": {"x":377,"y":0,"w":228,"h":228},
+	"frame": {"x":739,"y":0,"w":228,"h":228},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":228,"h":228},
@@ -26,7 +26,7 @@
 },
 "GAMEOVER.png":
 {
-	"frame": {"x":1002,"y":922,"w":644,"h":345},
+	"frame": {"x":0,"y":660,"w":644,"h":345},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":644,"h":345},
@@ -34,7 +34,7 @@
 },
 "GAMEOVER_layover.png":
 {
-	"frame": {"x":362,"y":280,"w":360,"h":640},
+	"frame": {"x":1370,"y":660,"w":360,"h":640},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":360,"h":640},
@@ -42,15 +42,15 @@
 },
 "hophop_logo.png":
 {
-	"frame": {"x":1643,"y":0,"w":278,"h":278},
+	"frame": {"x":502,"y":1302,"w":1172,"h":576},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":278,"h":278},
-	"sourceSize": {"w":278,"h":278}
+	"spriteSourceSize": {"x":0,"y":0,"w":1172,"h":576},
+	"sourceSize": {"w":1172,"h":576}
 },
 "howtowin_btn.png":
 {
-	"frame": {"x":866,"y":0,"w":257,"h":257},
+	"frame": {"x":1228,"y":0,"w":257,"h":257},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":257,"h":257},
@@ -58,7 +58,7 @@
 },
 "Instruction-group.png":
 {
-	"frame": {"x":1086,"y":280,"w":360,"h":117},
+	"frame": {"x":377,"y":0,"w":360,"h":117},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":360,"h":117},
@@ -66,7 +66,7 @@
 },
 "leaderboard_btn.png":
 {
-	"frame": {"x":1125,"y":0,"w":257,"h":257},
+	"frame": {"x":1487,"y":0,"w":257,"h":257},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":257,"h":257},
@@ -74,7 +74,7 @@
 },
 "leaderbord_bg.png":
 {
-	"frame": {"x":724,"y":280,"w":360,"h":640},
+	"frame": {"x":646,"y":660,"w":360,"h":640},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":360,"h":640},
@@ -82,7 +82,7 @@
 },
 "platform.png":
 {
-	"frame": {"x":0,"y":922,"w":498,"h":283},
+	"frame": {"x":919,"y":259,"w":498,"h":283},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":498,"h":283},
@@ -98,7 +98,7 @@
 },
 "restart_btn.png":
 {
-	"frame": {"x":1448,"y":280,"w":399,"h":399},
+	"frame": {"x":1419,"y":259,"w":399,"h":399},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":399,"h":399},
@@ -106,7 +106,7 @@
 },
 "start_btn.png":
 {
-	"frame": {"x":500,"y":922,"w":500,"h":482},
+	"frame": {"x":0,"y":1302,"w":500,"h":482},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":500,"h":482},
@@ -114,7 +114,7 @@
 },
 "startscreen_bg.jpg":
 {
-	"frame": {"x":0,"y":280,"w":360,"h":640},
+	"frame": {"x":1008,"y":660,"w":360,"h":640},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":360,"h":640},
@@ -122,38 +122,38 @@
 },
 "TAP TO START.png":
 {
-	"frame": {"x":0,"y":1406,"w":658,"h":112},
+	"frame": {"x":259,"y":259,"w":658,"h":112},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":658,"h":112},
 	"sourceSize": {"w":658,"h":112}
 },
-"volume_off.png":
+"volume_0.png":
 {
-	"frame": {"x":1384,"y":0,"w":257,"h":257},
+	"frame": {"x":969,"y":0,"w":257,"h":255},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":257,"h":255},
 	"sourceSize": {"w":257,"h":255}
 },
-"volume_on.png":
+"volume_1.png":
 {
-	"frame": {"x":607,"y":0,"w":257,"h":255},
+	"frame": {"x":0,"y":259,"w":257,"h":257},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":257,"h":257},
 	"sourceSize": {"w":257,"h":257}
 }},
 "animations": {
-	"volume": ["volume_off.png","volume_on.png"]
+	"volume": ["volume_0.png","volume_1.png"]
 },
 "meta": {
 	"app": "https://www.codeandweb.com/texturepacker",
 	"version": "1.0",
 	"image": "spritesheet-common.png",
 	"format": "RGBA8888",
-	"size": {"w":1921,"h":1518},
+	"size": {"w":1818,"h":1878},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:8fe9dc314adc5f99f877e0e841297456:ad18f67e730f662776c3b1651532d09c:ffdfe67b9ed6064a2fef44caf4436f75$"
+	"smartupdate": "$TexturePacker:SmartUpdate:35c2fa56925194b164b54faa7843a4b7:adf99d91b853c5e63792ad474c2c3aac:ffdfe67b9ed6064a2fef44caf4436f75$"
 }
 }
