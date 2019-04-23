@@ -100,8 +100,7 @@ Beat the highest score`;
 
     this.closeBtn = new SpriteActor('close-btn', this.app, 'common', 'close_btn.png');
     this.closeBtn.setAnchor(0, 0);
-    console.log(modal.position.y, modal.height, this.closeBtn.getSprite().height );
-    this.closeBtn.setPosition(modal.width - this.closeBtn.getSprite().width, -(this.closeBtn.getSprite().height/2));
+    this.closeBtn.setPosition(modal.width - (this.closeBtn.getSprite().width/3), -(this.closeBtn.getSprite().height/3));
     this.closeBtn.setScaleUpToScreenPercWidth(.099);
     this.closeBtn.getSprite().interactive = true;
     this.closeBtn.getSprite().on('pointerup', () => { 

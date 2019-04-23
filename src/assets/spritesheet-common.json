@@ -130,7 +130,7 @@
 },
 "volume_off.png":
 {
-	"frame": {"x":607,"y":0,"w":257,"h":255},
+	"frame": {"x":1384,"y":0,"w":257,"h":257},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":257,"h":255},
@@ -138,7 +138,7 @@
 },
 "volume_on.png":
 {
-	"frame": {"x":1384,"y":0,"w":257,"h":257},
+	"frame": {"x":607,"y":0,"w":257,"h":255},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":257,"h":257},
