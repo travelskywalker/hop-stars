@@ -1,0 +1,28 @@
+{"frames": {
+
+"lv3_spacebg_gradient.png":
+{
+	"frame": {"x":0,"y":0,"w":720,"h":1280},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":720,"h":1280},
+	"sourceSize": {"w":720,"h":1280}
+},
+"lv3_spacebg_gradientoverlay.png":
+{
+	"frame": {"x":722,"y":0,"w":720,"h":1280},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":720,"h":1280},
+	"sourceSize": {"w":720,"h":1280}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "hop-game-level-3.png",
+	"format": "RGBA8888",
+	"size": {"w":1442,"h":1280},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:4cc76570fa729f57b52d46f9e39ca574:1355c49af03d03ffcdfe401e9d032494:9b78c4f356a981f34ae232ea984795be$"
+}
+}

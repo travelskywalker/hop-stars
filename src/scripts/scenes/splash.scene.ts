@@ -234,7 +234,8 @@ export class SplashScene extends Scene {
     this.logo = new SpriteActor('logo', this.app, 'common', 'hophop_logo.png');
     this.logo.setAnchor(0.5, 0.5);
     this.logo.setPosition(this.app.getScreenSize().w * 0.5, this.app.getScreenSize().h * 0.25);
-    this.logo.setScaleUpToScreenPercWidth(0.675);
+    // this.logo.setScaleUpToScreenPercWidth(0.675);
+    this.logo.setScaleUpToScreenPercWidth(.8);
     this.addChild(this.logo);
 
       // TEXTS 
@@ -257,7 +258,7 @@ export class SplashScene extends Scene {
     this.copyText1.anchor.x = .5;
     this.copyText1.anchor.y = .5;
     this.copyText1.position.x = this.app.getScreenSize().w * 0.5;
-    this.copyText1.position.y = this.logo.getSprite().position.y + ((this.logo.getSprite().height / 3) + this.copyText1.height);
+    this.copyText1.position.y = this.logo.getSprite().position.y + ((this.logo.getSprite().height /2) + this.copyText1.height);
     this.container.addChild(this.copyText1);  
 
     // initialize and set play button
