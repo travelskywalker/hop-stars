@@ -1,0 +1,68 @@
+{"frames": {
+
+"exit_button.png":
+{
+	"frame": {"x":0,"y":0,"w":18,"h":18},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":18,"h":18},
+	"sourceSize": {"w":18,"h":18}
+},
+"hand.png":
+{
+	"frame": {"x":20,"y":0,"w":37,"h":55},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":37,"h":55},
+	"sourceSize": {"w":37,"h":55}
+},
+"home.png":
+{
+	"frame": {"x":59,"y":0,"w":257,"h":257},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":257,"h":257},
+	"sourceSize": {"w":257,"h":257}
+},
+"lv1_gamearea_bgsample.png":
+{
+	"frame": {"x":318,"y":0,"w":720,"h":1280},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":720,"h":1280},
+	"sourceSize": {"w":720,"h":1280}
+},
+"lv1_mountainbg_gradientoverlay.png":
+{
+	"frame": {"x":1040,"y":0,"w":720,"h":1280},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":720,"h":1280},
+	"sourceSize": {"w":720,"h":1280}
+},
+"swipe-arrow.png":
+{
+	"frame": {"x":0,"y":1282,"w":360,"h":34},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":360,"h":34},
+	"sourceSize": {"w":360,"h":34}
+},
+"swipe-text.png":
+{
+	"frame": {"x":362,"y":1282,"w":262,"h":27},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":262,"h":27},
+	"sourceSize": {"w":262,"h":27}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "hop-game-level-1.png",
+	"format": "RGBA8888",
+	"size": {"w":1760,"h":1316},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:1b6a49482575831eb57ea88dd03711e8:e051742aae2e22e1989f21a5089e4afb:384003f9ecd9bf6422822dfce641e4f7$"
+}
+}
