@@ -142,14 +142,14 @@ export class GameScene extends Scene {
   }
 
   ///// BACKGROUND IMAGE
-  console.log('initial velocity', this.INITIAL_VELOCITY);
-  console.log('gravity', this.GRAVITY);
-  console.log('initial square distance', this.initial_square_distance);
-  console.log('square fall pos: ', this.initial_square_y);
-  console.log('square distance: ', this.square_distance);
-  console.log('--------');
-  console.log('device height', this.app.getScreenSize().h);
-  console.log('device width', this.app.getScreenSize().w);
+  // console.log('initial velocity', this.INITIAL_VELOCITY);
+  // console.log('gravity', this.GRAVITY);
+  // console.log('initial square distance', this.initial_square_distance);
+  // console.log('square fall pos: ', this.initial_square_y);
+  // console.log('square distance: ', this.square_distance);
+  // console.log('--------');
+  // console.log('device height', this.app.getScreenSize().h);
+  // console.log('device width', this.app.getScreenSize().w);
 
    // stage
    this.stageText = new Text('',{fontFamily : 'Arial', fontSize: 100, fill : 0x000000, align : 'center'});
@@ -433,7 +433,7 @@ export class GameScene extends Scene {
     this.container2d.addChild(this.squareFar[7]);
 
     this.GAME_RESET = true;
-
+    
     // INSTRUCITON
     const instructionContainer = new Graphics();
     instructionContainer.beginFill(0x000).drawRoundedRect(0, 0, this.app.getScreenSize().w, this.app.getScreenSize().h, 0);
@@ -515,7 +515,7 @@ export class GameScene extends Scene {
       }
       
     }catch(e){
-
+      // console.log(e);
     }
 
     // render stages
@@ -533,6 +533,7 @@ export class GameScene extends Scene {
         this.stage4();
         break;
     }
+
   }
 
   isAnimating(){
@@ -639,6 +640,7 @@ export class GameScene extends Scene {
     this.coinAnimation();
 
       if(this.GAME_RESET != true) {
+        
         // add square
         if(this.squareFar[0].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
           this.squareFar[0].position.y = this.squareFar[7].position.y + this.square_distance;
@@ -1053,6 +1055,7 @@ export class GameScene extends Scene {
     this.container.setChildIndex(this.gradient_bg.getSprite(),2)
 
     this.resetBGMSound();
+
   }
 
   // NETWORK TIMEOUT
