@@ -1,9 +1,10 @@
 import { Scene } from '@src/core/scene';
-import { Text, Container, Graphics, Texture, projection, Sprite } from 'pixi.js';
+import { Text, Container, Graphics, Texture, projection, Sprite, TextStyle } from 'pixi.js';
 import 'pixi-projection';
 import { App } from '@src/app';
 import { SpriteActor } from '@src/core/sprite.actor';
 import { SpriteAnimatedActor } from '@src/core/sprite.animated.actor';
+import { Button } from '@src/scripts/components/button.component';
 
 export class GameScene extends Scene {
 
@@ -105,6 +106,13 @@ export class GameScene extends Scene {
 
   // data requirements
   sessionId: any;
+
+  // Nto 
+  ntoContainer: Graphics;
+  ntoStyle: TextStyle;
+  ntoText: Text;
+  retry: Button;
+  cancel: Button;
 
   init(): void {
     
@@ -362,7 +370,8 @@ export class GameScene extends Scene {
     this.circle_bg.addChild(this.circle);
 
   //// TOUCH START
-    this.circle_bg.on('touchstart', (interactionData: PIXI.interaction.InteractionEvent) => {      
+    this.circle_bg.on('touchstart', (interactionData: PIXI.interaction.InteractionEvent) => {  
+        
       if(interactionData.data.identifier > 0) return;
 
       this.container.removeChild(instructionContainer);
@@ -379,7 +388,7 @@ export class GameScene extends Scene {
         this.app.getState().eventStarted(event); //send payload
         this.gameStarted = true;
       }
-    
+      
       this.ball_click();
 
       // get initial tapped postion
@@ -454,6 +463,7 @@ export class GameScene extends Scene {
     this.container.addChild(taptostart.getSprite());
 
     instructionContainer.on('touchstart', () => { 
+      alert('s');
       this.container.removeChild(instructionContainer);
       this.container.removeChild(this.swipe.getSprite());
       this.container.removeChild(this.swipe_hand.getSprite());
@@ -837,7 +847,8 @@ export class GameScene extends Scene {
   reset_game() {
       
     // goto gameover scene
-      this.app.goToScene(4, {score: this.score, session_id: this.sessionId, timeStart: this.timeStart});
+      // this.showNTOModal();
+      // this.app.goToScene(4, {score: this.score, session_id: this.sessionId, timeStart: this.timeStart});
 
     // IF BALL OUT OF SCREEN, RESET GAME
       this.circle.position.y = 0; 
@@ -1033,6 +1044,73 @@ export class GameScene extends Scene {
     this.container.setChildIndex(this.gradient_bg.getSprite(),2)
 
     this.resetBGMSound();
+  }
+
+  // NETWORK TIMEOUT
+  showNTOModal(){
+    // NTO BG
+    this.ntoContainer = new PIXI.Graphics();
+    this.ntoContainer.beginFill(0x000).drawRoundedRect(0, 0, this.app.getScreenSize().w, this.app.getScreenSize().h, 0);
+    this.ntoContainer.position.x = 0;
+    this.ntoContainer.position.y = 0;
+    this.ntoContainer.alpha = .4;
+    // NTO TEXT
+    this.ntoStyle = new PIXI.TextStyle({
+      fontFamily: 'Chennai-Bold',
+      fontSize: `${this.ntoContainer.height * .05}px`,
+      fontStyle: 'normal',
+      fontWeight: 'normal',
+      align: 'center',
+      fill: ['#ffffff'],
+      dropShadow: true,
+      dropShadowAngle: 12,
+      dropShadowBlur: 15,
+      dropShadowColor: 0x6e706f,
+      dropShadowDistance: 0
+      // wordWrap: true,
+      // wordWrapWidth: this.app.getScreenSize().w * .7//modal.width * .8
+    });
+    
+    this.ntoText = new PIXI.Text(
+        `No Internet Connection`, 
+        this.ntoStyle);
+    this.ntoText.anchor.x = .5;
+    this.ntoText.anchor.y = .5;
+    this.ntoText.position.x = this.app.getScreenSize().w * .5;
+    this.ntoText.position.y = this.ntoContainer.height * .4;
+    this.container.addChild(this.ntoContainer);
+    this.container.addChild(this.ntoText);
+
+    // NTO BUTTON
+     this.retry = new Button({
+      app: this.app,
+      text: 'Retry',
+      height: null,
+      y: this.app.getScreenSize().h - this.app.getScreenSize().h * 0.275,
+      align: 'center',
+      type: 'selected',
+      icon: '',
+      details: '',
+    });
+    this.container.addChild(this.retry);
+
+    this.cancel = new Button({
+      app: this.app,
+      text: 'Cancel',
+      height: null,
+      y: this.retry.position.y + (this.retry.height * 1.2),
+      align: 'center',
+      type: 'selected',
+      icon: '',
+      details: '',
+    });
+    this.container.addChild(this.cancel);
+  }
+  removeNTOModal(){
+    this.container.removeChild(this.ntoContainer);
+    this.container.removeChild(this.ntoText);
+    this.container.removeChild(this.retry);
+    this.container.removeChild(this.cancel);
   }
 
 }
