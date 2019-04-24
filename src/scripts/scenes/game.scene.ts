@@ -113,6 +113,8 @@ export class GameScene extends Scene {
   ntoText: Text;
   retry: Button;
   cancel: Button;
+  instructionContainer: Graphics;
+  taptostart: SpriteActor;
 
   init(): void {
     
@@ -130,8 +132,8 @@ export class GameScene extends Scene {
 
   start(): void {
 
-  // data requirements
-  this.sessionId = this.app.getState().generateSessionId();
+  // set session id to null
+  this.sessionId = null;
 
   this.coinAnimate = false;
   this.gameStarted = false;
@@ -374,26 +376,33 @@ export class GameScene extends Scene {
         
       if(interactionData.data.identifier > 0) return;
 
-      this.container.removeChild(instructionContainer);
+      this.container.removeChild(this.instructionContainer);
       this.container.removeChild(this.swipe.getSprite());
       this.container.removeChild(this.swipe_hand.getSprite());
-      this.container.removeChild(taptostart.getSprite());
+      this.container.removeChild(this.taptostart.getSprite());
 
-      // game started
-      if(this.gameStarted == false){
-        let event = {
-                    event: "start",
-                    session_id: this.sessionId
-                    }
-        this.app.getState().eventStarted(event); //send payload
-        this.gameStarted = true;
+      if(this.app.getState().isOnline() == true){
+
+        // data requirements
+        this.sessionId = this.app.getState().generateSessionId();
+        // game started
+        if(this.gameStarted == false){
+          let event = {
+                      event: "start",
+                      session_id: this.sessionId
+                      }
+          this.app.getState().eventStarted(event); //send payload
+          this.gameStarted = true;
+        }
+        
+        this.ball_click();
+
+        // get initial tapped postion
+        const point = interactionData.data.getLocalPosition(this.circle);
+        this.initialPoint = point;
+      }else{
+        this.showNTOModal();
       }
-      
-      this.ball_click();
-
-      // get initial tapped postion
-      const point = interactionData.data.getLocalPosition(this.circle);
-      this.initialPoint = point;
 
   });
 
@@ -435,17 +444,17 @@ export class GameScene extends Scene {
     this.GAME_RESET = true;
     
     // INSTRUCITON
-    const instructionContainer = new Graphics();
-    instructionContainer.beginFill(0x000).drawRoundedRect(0, 0, this.app.getScreenSize().w, this.app.getScreenSize().h, 0);
-    instructionContainer.position.x = 0;
-    instructionContainer.position.y = 0;
-    instructionContainer.alpha = .4;
+    this.instructionContainer = new Graphics();
+    this.instructionContainer.beginFill(0x000).drawRoundedRect(0, 0, this.app.getScreenSize().w, this.app.getScreenSize().h, 0);
+    this.instructionContainer.position.x = 0;
+    this.instructionContainer.position.y = 0;
+    this.instructionContainer.alpha = .4;
     // instructionContainer.interactive = true;
     
-    const taptostart = new SpriteActor('tap-bg', this.app, 'common', 'TAP TO START.png');
-    taptostart.setAnchor(.5, .5);
-    taptostart.setPosition(this.app.getScreenSize().w * .5, this.app.getScreenSize().h * .4);
-    taptostart.setScaleUpToScreenPercWidth(.7);
+    this.taptostart = new SpriteActor('tap-bg', this.app, 'common', 'TAP TO START.png');
+    this.taptostart.setAnchor(.5, .5);
+    this.taptostart.setPosition(this.app.getScreenSize().w * .5, this.app.getScreenSize().h * .4);
+    this.taptostart.setScaleUpToScreenPercWidth(.7);
 
     this.swipe = new SpriteActor('swipe-bg', this.app, 'lvl1', 'swipe-arrow.png');
     this.swipe.setAnchor(.5, .5);
@@ -457,23 +466,26 @@ export class GameScene extends Scene {
     this.swipe_hand.setPosition(this.app.getScreenSize().w * .5, this.swipe.getSprite().position.y + this.swipe.getSprite().height );
     this.swipe_hand.setScaleUpToScreenPercHeight(0.1);
 
-    this.container.addChild(instructionContainer);
+    this.showInstructionScreen();
+  }
+
+  showInstructionScreen(){
+    this.container.addChild(this.instructionContainer);
     this.container.addChild(this.swipe.getSprite());
     this.container.addChild(this.swipe_hand.getSprite());
-    this.container.addChild(taptostart.getSprite());
+    this.container.addChild(this.taptostart.getSprite());
 
-    instructionContainer.on('touchstart', () => { 
-      this.container.removeChild(instructionContainer);
-      this.container.removeChild(this.swipe.getSprite());
-      this.container.removeChild(this.swipe_hand.getSprite());
-      this.container.removeChild(taptostart.getSprite());
+    this.instructionContainer.on('touchstart', () => { 
+    this.container.removeChild(this.instructionContainer);
+    this.container.removeChild(this.swipe.getSprite());
+    this.container.removeChild(this.swipe_hand.getSprite());
+    this.container.removeChild(this.taptostart.getSprite());
 
       // game started
       // this.app.getState().eventStarted(); //send payload
       this.ball_click(); 
     })
     // END OF INSTRUCTION
-
   }
 
   randomPosition(){
@@ -852,10 +864,8 @@ export class GameScene extends Scene {
 
   reset_game() {
 
-    // goto gameover scene
-      
     if(this.app.getState().isOnline() == true){
-
+      // goto gameover scene
       this.app.goToScene(4, {score: this.score, session_id: this.sessionId, timeStart: this.timeStart});
 
       // IF BALL OUT OF SCREEN, RESET GAME
@@ -1124,7 +1134,16 @@ export class GameScene extends Scene {
 
     this.retry.clicked = () => { 
       if(this.app.getState().isOnline() == true){
-        this.app.goToScene(4, {score: this.score, session_id: this.sessionId, timeStart: this.timeStart});
+        // check if game start or game end using session ID
+        // session id is being set on game start
+        if(this.sessionId != null){
+          this.app.goToScene(4, {score: this.score, session_id: this.sessionId, timeStart: this.timeStart});
+        }else{
+          // reload instruction screen
+          // remove NTO modal
+          this.showInstructionScreen();
+          this.removeNTOModal();
+        }
       }
     };
     this.cancel.clicked = () => { 
