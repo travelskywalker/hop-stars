@@ -76,7 +76,7 @@ export class HowtowinScene extends Scene  {
 
 Land on platform and collect ImFree Coins to get score
 
-avoid falling down
+Avoid falling down
 
 Beat the highest score`;
 
