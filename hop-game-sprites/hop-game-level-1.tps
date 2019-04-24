@@ -195,6 +195,19 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">hop-game-asset/hand.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>44,44,89,89</rect>
+                <key>scale9Paddings</key>
+                <rect>44,44,89,89</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">hop-game-asset/home.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -208,42 +221,16 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../../Downloads/Instruction Screen/hand.png</key>
+            <key type="filename">hop-game-asset/swipe-arrow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>9,14,19,27</rect>
+                <rect>180,17,360,35</rect>
                 <key>scale9Paddings</key>
-                <rect>9,14,19,27</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../../Downloads/Instruction Screen/swipe-arrow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>90,9,180,17</rect>
-                <key>scale9Paddings</key>
-                <rect>90,9,180,17</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../../Downloads/Instruction Screen/swipe-text.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>66,7,131,13</rect>
-                <key>scale9Paddings</key>
-                <rect>66,7,131,13</rect>
+                <rect>180,17,360,35</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -266,10 +253,9 @@
             <filename>hop-game-asset/Level1/lv1_mountainbg_gradientoverlay.png</filename>
             <filename>hop-game-asset/Level1/lv1_gamearea_bgsample.png</filename>
             <filename>../../Downloads/exit_button.png</filename>
-            <filename>../../Downloads/Instruction Screen/hand.png</filename>
-            <filename>../../Downloads/Instruction Screen/swipe-arrow.png</filename>
-            <filename>../../Downloads/Instruction Screen/swipe-text.png</filename>
             <filename>hop-game-asset/home.png</filename>
+            <filename>hop-game-asset/swipe-arrow.png</filename>
+            <filename>hop-game-asset/hand.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
