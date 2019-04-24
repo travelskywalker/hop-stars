@@ -405,6 +405,7 @@ export class GameScene extends Scene {
         const point = interactionData.data.getLocalPosition(this.circle);
         this.initialPoint = point;
       }else{
+        this.removeNTOModal();
         this.showNTOModal();
       }
 
@@ -916,18 +917,19 @@ export class GameScene extends Scene {
      this.container2d.position.x = this.deviceScreenSize;
      this.YVELOCITY = this.INITIAL_VELOCITY;
      
-     this.TOUCHEND = false;
+     
      this.bounce_count = 0;
      setTimeout(()=>{ this.scoreText.text = `${this.score = 0}`;},100);
      this.bg_img.getSprite().position.x = this.bg_initial_x;
-     this.resetStage();
+     
 
     }else{
       this.showNTOModal();
     }
 
     this.GAME_RESET = true;
-     
+    this.TOUCHEND = false;
+    this.resetStage();
   }
 
   generateStartSquares(){
