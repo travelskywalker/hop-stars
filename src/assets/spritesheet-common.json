@@ -130,19 +130,19 @@
 },
 "volume_0.png":
 {
-	"frame": {"x":969,"y":0,"w":257,"h":255},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":257,"h":255},
-	"sourceSize": {"w":257,"h":255}
-},
-"volume_1.png":
-{
 	"frame": {"x":0,"y":259,"w":257,"h":257},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":257,"h":257},
 	"sourceSize": {"w":257,"h":257}
+},
+"volume_1.png":
+{
+	"frame": {"x":969,"y":0,"w":257,"h":255},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":257,"h":255},
+	"sourceSize": {"w":257,"h":255}
 }},
 "animations": {
 	"volume": ["volume_0.png","volume_1.png"]
