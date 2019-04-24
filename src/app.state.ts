@@ -2,8 +2,8 @@ import { Subject } from 'rxjs/Subject';
 
 interface JavaScriptInterface { 
   gameCancelled(): any; 
-  gameStarted(): any;
-  gameEnded(): any;
+  gameStarted(data: any): any;
+  gameEnded(data: any): any;
   sendScore(): any;
   eventStarted(data:any): any;
   timeSpent(data: any): any;
@@ -56,7 +56,7 @@ export class AppState extends Subject<IAppState> {
     }
   }
 
-  public gameCancelled(){
+  gameCancelled(){
     try {
       Android.gameCancelled();
        console.log('call: Android.gameCancelled(); to return to mobile');
@@ -83,27 +83,36 @@ export class AppState extends Subject<IAppState> {
 
   // Game Event:
   public eventStarted(data: any) {
+
+    switch (data.event) {
+      case 'start':
+        this.gameStarted(data);
+        break;
+      
+      case 'end':
+        this.gameEnded(data);
+        break;
+    
+      default:
+        this.gameCancelled();
+        break;
+    }
+
+  }
+
+  gameStarted(data: any){
     try {
-      // Android.gameStarted();
-      Android.eventStarted(data);
+      Android.gameStarted(data);
     } catch (err) {
       console.error("Android gameStarted is not defined.", data);
     }
   }
 
-  public eventCancelled() {
+  gameEnded(data: any){
     try {
-      Android.gameCancelled();
+      Android.gameEnded(data);
     } catch (err) {
-      console.error("Android gameCancelled is not defined.");
-    }
-  }
-
-  public eventEnded() {
-    try {
-      Android.gameEnded();
-    } catch (err) {
-      console.error("Android gameEnded is not defined.");
+      console.error("Android gameEnded is not defined.", data);
     }
   }
 
@@ -117,6 +126,11 @@ export class AppState extends Subject<IAppState> {
 
   public generateSessionId(){
     return `${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+  }
+
+  // check if online
+  public isOnline(){
+    return (navigator.onLine) ? true : false;
   }
 
 }

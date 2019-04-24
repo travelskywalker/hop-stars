@@ -94,8 +94,14 @@ export class App {
 
     // create pixijs renderer
     this._app.renderer = PIXI.autoDetectRenderer();
+    // this._app.renderer = new PIXI.CanvasRenderer();
+
+    if(this._app.renderer.type == 2){
+      this._app.renderer.plugins['sprite2d'] = this._app.renderer.plugins['sprite'];
+    }
+
     this._app.renderer.backgroundColor = 0xFFFFFF;
-    PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
+    PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST; 
 
     // adapt size to screensize
     this._app.renderer.view.style.position = 'absolute';

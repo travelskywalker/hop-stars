@@ -142,14 +142,14 @@ export class GameScene extends Scene {
   }
 
   ///// BACKGROUND IMAGE
-  console.log('initial velocity', this.INITIAL_VELOCITY);
-  console.log('gravity', this.GRAVITY);
-  console.log('initial square distance', this.initial_square_distance);
-  console.log('square fall pos: ', this.initial_square_y);
-  console.log('square distance: ', this.square_distance);
-  console.log('--------');
-  console.log('device height', this.app.getScreenSize().h);
-  console.log('device width', this.app.getScreenSize().w);
+  // console.log('initial velocity', this.INITIAL_VELOCITY);
+  // console.log('gravity', this.GRAVITY);
+  // console.log('initial square distance', this.initial_square_distance);
+  // console.log('square fall pos: ', this.initial_square_y);
+  // console.log('square distance: ', this.square_distance);
+  // console.log('--------');
+  // console.log('device height', this.app.getScreenSize().h);
+  // console.log('device width', this.app.getScreenSize().w);
 
    // stage
    this.stageText = new Text('',{fontFamily : 'Arial', fontSize: 100, fill : 0x000000, align : 'center'});
@@ -433,7 +433,7 @@ export class GameScene extends Scene {
     this.container2d.addChild(this.squareFar[7]);
 
     this.GAME_RESET = true;
-
+    
     // INSTRUCITON
     const instructionContainer = new Graphics();
     instructionContainer.beginFill(0x000).drawRoundedRect(0, 0, this.app.getScreenSize().w, this.app.getScreenSize().h, 0);
@@ -515,7 +515,7 @@ export class GameScene extends Scene {
       }
       
     }catch(e){
-
+      // console.log(e);
     }
 
     // render stages
@@ -533,6 +533,7 @@ export class GameScene extends Scene {
         this.stage4();
         break;
     }
+
   }
 
   isAnimating(){
@@ -639,6 +640,7 @@ export class GameScene extends Scene {
     this.coinAnimation();
 
       if(this.GAME_RESET != true) {
+        
         // add square
         if(this.squareFar[0].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
           this.squareFar[0].position.y = this.squareFar[7].position.y + this.square_distance;
@@ -845,22 +847,31 @@ export class GameScene extends Scene {
   }
 
   reset_game() {
-      
-    // goto gameover scene
-      // this.showNTOModal();
-      // this.app.goToScene(4, {score: this.score, session_id: this.sessionId, timeStart: this.timeStart});
 
-    // IF BALL OUT OF SCREEN, RESET GAME
-      this.circle.position.y = 0; 
-      this.circle.position.x = 0;
-      this.container2d.position.x = this.deviceScreenSize;
-      this.YVELOCITY = this.INITIAL_VELOCITY;
-      this.GAME_RESET = true;
-      this.TOUCHEND = false;
-      this.bounce_count = 0;
-      setTimeout(()=>{ this.scoreText.text = `${this.score = 0}`;},100);
-      this.bg_img.getSprite().position.x = this.bg_initial_x;
-      this.resetStage();
+    // goto gameover scene
+      
+    if(this.app.getState().isOnline() == true){
+
+      this.app.goToScene(4, {score: this.score, session_id: this.sessionId, timeStart: this.timeStart});
+
+      // IF BALL OUT OF SCREEN, RESET GAME
+     this.circle.position.y = 0; 
+     this.circle.position.x = 0;
+     this.container2d.position.x = this.deviceScreenSize;
+     this.YVELOCITY = this.INITIAL_VELOCITY;
+     
+     this.TOUCHEND = false;
+     this.bounce_count = 0;
+     setTimeout(()=>{ this.scoreText.text = `${this.score = 0}`;},100);
+     this.bg_img.getSprite().position.x = this.bg_initial_x;
+     this.resetStage();
+
+    }else{
+      this.showNTOModal();
+    }
+
+    this.GAME_RESET = true;
+     
   }
 
   generateStartSquares(){
@@ -1044,6 +1055,7 @@ export class GameScene extends Scene {
     this.container.setChildIndex(this.gradient_bg.getSprite(),2)
 
     this.resetBGMSound();
+
   }
 
   // NETWORK TIMEOUT
@@ -1105,6 +1117,16 @@ export class GameScene extends Scene {
       details: '',
     });
     this.container.addChild(this.cancel);
+
+    this.retry.clicked = () => { 
+      if(this.app.getState().isOnline() == true){
+        this.app.goToScene(4, {score: this.score, session_id: this.sessionId, timeStart: this.timeStart});
+      } 
+    };
+
+    this.cancel.clicked = () => { 
+      this.app.getState().eventStarted({event:'cancel'});
+    };
   }
   removeNTOModal(){
     this.container.removeChild(this.ntoContainer);
