@@ -185,9 +185,6 @@ export class GameOverScene extends Scene {
   // bg
   bg: SpriteActor;
 
-  // logo
-  gameOverLogo: SpriteActor;
-
   // coin
   coin: SpriteActor;
  
@@ -197,6 +194,8 @@ export class GameOverScene extends Scene {
   leaderboard_btn: SpriteActor;
 
   // Texts
+  gameOverLogo: PIXI.Text;
+  gameOverLogoStyle: PIXI.TextStyle;
   copyText1: PIXI.Text;
   copyText1Style: PIXI.TextStyle;
   copyText2: PIXI.Text;
@@ -222,13 +221,12 @@ export class GameOverScene extends Scene {
     if(this.animatingTop == true) return;
     
     if(this.topAnimationStart <= this.app.getScreenSize().h * 0.25){
-
-      this.container.addChild(this.gameOverLogo.getSprite());
+      this.container.addChild(this.gameOverLogo);
       this.container.addChild(this.copyText1);
       this.container.addChild(this.score_container);
 
-      this.gameOverLogo.getSprite().y = this.topAnimationStart += 35;
-      this.copyText1.y = this.gameOverLogo.getSprite().position.y + ((this.gameOverLogo.getSprite().height / 2) + this.copyText1.height);
+      this.gameOverLogo.y = this.topAnimationStart += 35;
+      this.copyText1.y = this.gameOverLogo.position.y + ((this.gameOverLogo.height / 2) + this.copyText1.height);
       this.score_container.y = this.copyText1.position.y + this.copyText1.height;
     }else{
 
@@ -273,37 +271,67 @@ export class GameOverScene extends Scene {
     this.addChild(this.bg);
 
     // initialize and set logo
-    this.gameOverLogo = new SpriteActor('gameover-logo', this.app, 'common', 'GAMEOVER.png');
-    this.gameOverLogo.setAnchor(0.5, 0.5);
-    this.gameOverLogo.setPosition(this.app.getScreenSize().w * 0.5, this.app.getScreenSize().h * 0.25);
-    this.gameOverLogo.setScaleUpToScreenPercWidth(0.675);
-    // this.addChild(this.gameOverLogo);
-    
+    this.gameOverLogoStyle = new PIXI.TextStyle({
+      fontFamily: 'Chennai-Bold',
+      fontSize: `${this.app.getScreenSize().h * .13}px`,
+      fontStyle: 'normal',
+      fontWeight: 'bold',
+      fill: ['#fc84a9'],
+      align: 'center',
+      wordWrap: false,
+      dropShadow: true,
+      dropShadowAngle: 12,
+      dropShadowBlur: 15,
+      dropShadowColor: 0x072e49,
+      dropShadowDistance: 0,
+      padding: 5,
+      lineHeight: this.app.getScreenSize().h * .11
+    });
+    const gotext = `GAME
+OVER`;
+    this.gameOverLogo = new PIXI.Text(gotext, this.gameOverLogoStyle);
+    this.gameOverLogo.anchor.set(.5, .5);
+    this.gameOverLogo.position.x = this.app.getScreenSize().w * 0.5;
+    this.gameOverLogo.position.y = this.app.getScreenSize().h * 0.25;
+    // this.gameOverLogo.setScaleUpToScreenPercWidth(0.675)
+
     // TEXTS 
     // initialize and set text copy 1
     this.copyText1Style = new PIXI.TextStyle({
       fontFamily: 'Chennai-Bold',
-      fontSize: `${this.gameOverLogo.getSprite().height * .105}px`,
+      fontSize: `${this.gameOverLogo.height * .105}px`,
       fontStyle: 'normal',
       fontWeight: 'bold',
       fill: ['#ffffff'],
-      wordWrap: false
+      wordWrap: false,
+      dropShadow: true,
+      dropShadowAngle: 12,
+      dropShadowBlur: 6,
+      dropShadowColor: 0x6e706f,
+      dropShadowDistance: 0,
+      padding: 15
     });
    
     this.copyText1 = new PIXI.Text(`BEST SCORE: ${this.app.getState().getBestScore()}`, this.copyText1Style);
     this.copyText1.anchor.x = .5;
     this.copyText1.anchor.y = .5;
     this.copyText1.position.x = this.app.getScreenSize().w * 0.5;
-    this.copyText1.position.y = this.gameOverLogo.getSprite().position.y + ((this.gameOverLogo.getSprite().height / 2) + this.copyText1.height);
+    this.copyText1.position.y = this.gameOverLogo.position.y + ((this.gameOverLogo.height / 2) + this.copyText1.height);
 
     // SCORE
     const scoreText = new PIXI.Text(
       `${this.app.currentScore}`,
       {
         fontFamily: 'Chennai-Bold',
-        fontSize: `${this.gameOverLogo.getSprite().height * .5}px`,
+        fontSize: `${this.gameOverLogo.height * .5}px`,
         fill : 0Xffffff, 
         align : 'right',
+        dropShadow: true,
+        dropShadowAngle: 12,
+        dropShadowBlur: 6,
+        dropShadowColor: 0x6e706f,
+        dropShadowDistance: 0,
+        padding: 15
       });
     scoreText.anchor.set(0 , 0);
 

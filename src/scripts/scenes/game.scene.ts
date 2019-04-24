@@ -114,7 +114,8 @@ export class GameScene extends Scene {
   retry: Button;
   cancel: Button;
   instructionContainer: Graphics;
-  taptostart: SpriteActor;
+  taptostart: Text;
+  swipeLeftRight: Text;
 
   init(): void {
     
@@ -335,9 +336,10 @@ export class GameScene extends Scene {
       align : 'right',
       dropShadow: true,
       dropShadowAngle: 12,
-      dropShadowBlur: 15,
+      dropShadowBlur: 6,
       dropShadowColor: 0x6e706f,
-      dropShadowDistance: 0
+      dropShadowDistance: 0,
+      padding: 15
     });
   this.scoreText.anchor.set(1 , 0);
   this.scoreText.position.x = this.score_coin.getSprite().position.x - 20;
@@ -379,7 +381,9 @@ export class GameScene extends Scene {
       this.container.removeChild(this.instructionContainer);
       this.container.removeChild(this.swipe.getSprite());
       this.container.removeChild(this.swipe_hand.getSprite());
-      this.container.removeChild(this.taptostart.getSprite());
+
+      this.container.removeChild(this.taptostart);
+      this.container.removeChild(this.swipeLeftRight);
 
       if(this.app.getState().isOnline() == true){
 
@@ -451,20 +455,55 @@ export class GameScene extends Scene {
     this.instructionContainer.alpha = .4;
     // instructionContainer.interactive = true;
     
-    this.taptostart = new SpriteActor('tap-bg', this.app, 'common', 'TAP TO START.png');
-    this.taptostart.setAnchor(.5, .5);
-    this.taptostart.setPosition(this.app.getScreenSize().w * .5, this.app.getScreenSize().h * .4);
-    this.taptostart.setScaleUpToScreenPercWidth(.7);
+
+    const taptostartStyle = new PIXI.TextStyle({
+      fontFamily: 'Chennai-Bold',
+      fontSize: `${this.app.getScreenSize().h * .06}px`,
+      fontStyle: 'normal',
+      fontWeight: 'bold',
+      fill: ['#ffffff'],
+      wordWrap: false,
+      dropShadow: true,
+      dropShadowAngle: 12,
+      dropShadowBlur: 10,
+      dropShadowColor: 0x1374ad,
+      dropShadowDistance: 0,
+      padding: 15
+    });
+    this.taptostart = new PIXI.Text(`TAP TO START`, taptostartStyle);
+    this.taptostart.anchor.set(.5, .5);
+    this.taptostart.position.x = this.app.getScreenSize().w * .5;
+    this.taptostart.position.y = this.app.getScreenSize().h * .4;
 
     this.swipe = new SpriteActor('swipe-bg', this.app, 'lvl1', 'swipe-arrow.png');
     this.swipe.setAnchor(.5, .5);
     this.swipe.setPosition(this.app.getScreenSize().w * .5, this.app.getScreenSize().h * .85);
-    this.swipe.setScaleUpToScreenPercWidth(.9);
+    this.swipe.setScaleUpToScreenPercWidth(1);
+
+    const swipeLeftRightStyle = new PIXI.TextStyle({
+      fontFamily: 'Chennai',
+      fontSize: `${this.app.getScreenSize().h * .0175}px`,
+      fontStyle: 'normal',
+      fontWeight: 'normal',
+      fill: ['#ffffff'],
+      wordWrap: false,
+      dropShadow: true,
+      dropShadowAngle: 12,
+      dropShadowBlur: 10,
+      dropShadowColor: 0x1374ad,
+      dropShadowDistance: 0,
+      padding: 5
+    });
+    this.swipeLeftRight = new PIXI.Text(`SWIPE LEFT AND RIGHT TO CONTROL THE BALL.`, swipeLeftRightStyle);
+    this.swipeLeftRight.anchor.set(.5, .5);
+    this.swipeLeftRight.position.x = this.swipe.getSprite().position.x;
+    this.swipeLeftRight.position.y = this.app.getScreenSize().h - this.swipeLeftRight.height;
 
     this.swipe_hand = new SpriteActor('swipe-hand', this.app, 'lvl1', 'hand.png');
     this.swipe_hand.setAnchor(.5, .5);
-    this.swipe_hand.setPosition(this.app.getScreenSize().w * .5, this.swipe.getSprite().position.y + this.swipe.getSprite().height );
-    this.swipe_hand.setScaleUpToScreenPercHeight(0.1);
+    this.swipe_hand.setPosition(this.app.getScreenSize().w * .5, this.swipe.getSprite().position.y + (this.swipe.getSprite().height *.8) );
+    // this.swipe_hand.setScaleUpToScreenPercHeight(0.01);
+    this.swipe_hand.setScaleUpToScreenPercWidth(0.2);
 
     this.showInstructionScreen();
   }
@@ -473,13 +512,16 @@ export class GameScene extends Scene {
     this.container.addChild(this.instructionContainer);
     this.container.addChild(this.swipe.getSprite());
     this.container.addChild(this.swipe_hand.getSprite());
-    this.container.addChild(this.taptostart.getSprite());
+
+    this.container.addChild(this.taptostart);
+    this.container.addChild(this.swipeLeftRight);
 
     this.instructionContainer.on('touchstart', () => { 
-    this.container.removeChild(this.instructionContainer);
-    this.container.removeChild(this.swipe.getSprite());
-    this.container.removeChild(this.swipe_hand.getSprite());
-    this.container.removeChild(this.taptostart.getSprite());
+      this.container.removeChild(this.instructionContainer);
+      this.container.removeChild(this.swipe.getSprite());
+      this.container.removeChild(this.swipe_hand.getSprite());
+      this.container.removeChild(this.taptostart);
+      this.container.removeChild(this.swipeLeftRight);
 
       // game started
       // this.app.getState().eventStarted(); //send payload
@@ -511,7 +553,7 @@ export class GameScene extends Scene {
         return rightMid;
         break;
       default:
-        return mid
+        return mid;
         break;
     }
   }
@@ -1090,9 +1132,10 @@ export class GameScene extends Scene {
       fill: ['#ffffff'],
       dropShadow: true,
       dropShadowAngle: 12,
-      dropShadowBlur: 15,
+      dropShadowBlur: 6,
       dropShadowColor: 0x6e706f,
-      dropShadowDistance: 0
+      dropShadowDistance: 0,
+      padding: 15
       // wordWrap: true,
       // wordWrapWidth: this.app.getScreenSize().w * .7//modal.width * .8
     });

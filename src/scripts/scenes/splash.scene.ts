@@ -191,7 +191,8 @@ export class SplashScene extends Scene {
   // sound_btn: SpriteActor;
   leaderboard_btn: SpriteActor;
   howtowin_btn: SpriteActor;
-  closeBtn: SpriteActor;
+  closeBtnStyle: PIXI.TextStyle;
+  closeBtn: PIXI.Text;
 
   // Texts
   copyText1: PIXI.Text;
@@ -219,16 +220,16 @@ export class SplashScene extends Scene {
     this.bg.setScaleUpToScreenPercHeight(1);
     this.addChild(this.bg);
 
-    this.closeBtn =  new SpriteActor('exit_button', this.app, 'lvl1', 'exit_button.png');
-    this.closeBtn.setAnchor(0, 0);
-    this.closeBtn.setPosition(this.app.getScreenSize().w * .92, this.app.getScreenSize().h * .02);
-    this.closeBtn.setScaleUpToScreenPercWidth(.05);
-    this.closeBtn.getSprite().interactive = true;
-    this.closeBtn.getSprite().on('pointerup', () => {
-      this.app.getSoundPlayer().play('button'); 
-     this.app.getState().gameCancelled();
-    });
-    this.addChild(this.closeBtn);
+    // this.closeBtn =  new SpriteActor('exit_button', this.app, 'lvl1', 'exit_button.png');
+    // this.closeBtn.setAnchor(0, 0);
+    // this.closeBtn.setPosition(this.app.getScreenSize().w * .92, this.app.getScreenSize().h * .02);
+    // this.closeBtn.setScaleUpToScreenPercWidth(.05);
+    // this.closeBtn.getSprite().interactive = true;
+    // this.closeBtn.getSprite().on('pointerup', () => {
+    //   this.app.getSoundPlayer().play('button'); 
+    //  this.app.getState().gameCancelled();
+    // });
+    // this.addChild(this.closeBtn);
 
     // initialize and set logo
     this.logo = new SpriteActor('logo', this.app, 'common', 'hophop_logo.png');
@@ -238,20 +239,45 @@ export class SplashScene extends Scene {
     this.logo.setScaleUpToScreenPercWidth(.8);
     this.addChild(this.logo);
 
+    this.closeBtnStyle = new PIXI.TextStyle({
+      fontFamily: 'Chennai-Bold',
+      fontSize: `${this.logo.getSprite().height * .19}px`,
+      fontStyle: 'normal',
+      fontWeight: 'bold',
+      fill: ['#540a6f'],
+      wordWrap: false,
+      dropShadow: false,
+      dropShadowAngle: 12,
+      dropShadowBlur: 6,
+      dropShadowColor: 0x6e706f,
+      dropShadowDistance: 0,
+      padding: 15
+    });
+    this.closeBtn = new PIXI.Text(`X`, this.closeBtnStyle);
+    this.closeBtn.anchor.set(0,0);
+    this.closeBtn.position.set(this.app.getScreenSize().w * .92, this.app.getScreenSize().h * .02);
+    this.closeBtn.interactive = true;
+    this.closeBtn.on('pointerup', () => {
+       this.app.getSoundPlayer().play('button'); 
+       this.app.getState().gameCancelled();
+    });
+    this.container.addChild(this.closeBtn);
+
       // TEXTS 
     // initialize and set text copy 1
     this.copyText1Style = new PIXI.TextStyle({
       fontFamily: 'Chennai-Bold',
-      fontSize: `${this.logo.getSprite().height * .105}px`,
+      fontSize: `${this.logo.getSprite().height * .15}px`,
       fontStyle: 'normal',
       fontWeight: 'bold',
       fill: ['#ffffff'],
       wordWrap: false,
       dropShadow: true,
       dropShadowAngle: 12,
-      dropShadowBlur: 15,
+      dropShadowBlur: 6,
       dropShadowColor: 0x6e706f,
-      dropShadowDistance: 0
+      dropShadowDistance: 0,
+      padding: 15
     });
    
     this.copyText1 = new PIXI.Text(`BEST SCORE: ${this.data.best_score}`, this.copyText1Style);
@@ -264,8 +290,8 @@ export class SplashScene extends Scene {
     // initialize and set play button
     this.play_btn = new SpriteActor('play', this.app, 'common', 'start_btn.png');
     this.play_btn.setAnchor(0.5, 0);
-    this.play_btn.setPosition(this.logo.getSprite().position.x, this.copyText1.position.y + (this.copyText1.height * 0.7));
-    this.play_btn.setScaleUpToScreenPercWidth(.375);
+    this.play_btn.setPosition(this.logo.getSprite().position.x, this.copyText1.position.y + (this.copyText1.height * 2));
+    this.play_btn.setScaleUpToScreenPercWidth(.315);
     this.play_btn.getSprite().interactive = true;
     this.play_btn.getSprite().on('pointerup', () => { 
       console.log('go to instruction screen scene ');
@@ -339,7 +365,7 @@ export class SplashScene extends Scene {
   }
 
   remove(): void {
-
+    this.container.removeChildren();
   }
 
 }

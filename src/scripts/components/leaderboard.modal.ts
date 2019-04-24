@@ -1,6 +1,6 @@
 import { App, app } from '@src/app';
 import { SpriteActor } from '@src/core/sprite.actor';
-import { Graphics, Container } from 'pixi.js';
+import { Graphics, Container, TextStyle } from 'pixi.js';
 
 export interface leaderboardData {
   app: App;
@@ -27,7 +27,8 @@ export class LeaderboardModal extends PIXI.Container {
   weekly: PIXI.Text;
   alltime: PIXI.Text;
   // x btn
-  closeBtn: SpriteActor;
+  closeBtnStyle: PIXI.TextStyle;
+  closeBtn: PIXI.Text;
 
   constructor(data: leaderboardData) {
     super();
@@ -269,18 +270,45 @@ export class LeaderboardModal extends PIXI.Container {
       this.navBtnActive(is_weekly_active);
     });
 
-    this.closeBtn =  new SpriteActor('exit_button', data.app, 'lvl1', 'exit_button.png');
-    this.closeBtn.setAnchor(0, 0);
-    this.closeBtn.setPosition(data.app.getScreenSize().w * .92, Title.position.y);
-    this.closeBtn.setScaleUpToScreenPercWidth(.05);
-    this.closeBtn.getSprite().interactive = true;
-    this.closeBtn.getSprite().on('pointerup', () => { 
+    // this.closeBtn =  new SpriteActor('exit_button', data.app, 'lvl1', 'exit_button.png');
+    // this.closeBtn.setAnchor(0, 0);
+    // this.closeBtn.setPosition(data.app.getScreenSize().w * .92, Title.position.y);
+    // this.closeBtn.setScaleUpToScreenPercWidth(.05);
+    // this.closeBtn.getSprite().interactive = true;
+    // this.closeBtn.getSprite().on('pointerup', () => { 
+    //   console.log('close modal');
+    //   this.removeChild(this.leaderboard_bg);
+    //   this.removeChild(this.bg_image.getSprite());
+    //   this.removeChildren();
+    // });
+    // this.leaderboard_bg.addChild(this.closeBtn.getSprite());
+    // this.addChild(this.leaderboard_bg);
+
+    this.closeBtnStyle = new PIXI.TextStyle({
+      fontFamily: 'Chennai-Bold',
+      fontSize: `${Title.height * .8}px`,
+      fontStyle: 'normal',
+      fontWeight: 'bold',
+      fill: ['#540a6f'],
+      wordWrap: false,
+      dropShadow: false,
+      dropShadowAngle: 12,
+      dropShadowBlur: 6,
+      dropShadowColor: 0x6e706f,
+      dropShadowDistance: 0,
+      padding: 15
+    });
+    this.closeBtn = new PIXI.Text(`X`, this.closeBtnStyle);
+    this.closeBtn.anchor.set(0,0);
+    this.closeBtn.position.set(data.app.getScreenSize().w * .92, Title.position.y);
+    this.closeBtn.interactive = true;
+    this.closeBtn.on('pointerup', () => {
       console.log('close modal');
       this.removeChild(this.leaderboard_bg);
       this.removeChild(this.bg_image.getSprite());
       this.removeChildren();
     });
-    this.leaderboard_bg.addChild(this.closeBtn.getSprite());
+    this.leaderboard_bg.addChild(this.closeBtn);
     this.addChild(this.leaderboard_bg);
   }
 }
