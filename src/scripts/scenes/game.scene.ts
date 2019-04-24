@@ -121,7 +121,7 @@ export class GameScene extends Scene {
     this.bigWhiteTexture.orig.height = this.CIRCLEWIDTH * 4;
     this.last_square_position = this.initial_square_distance + (this.initial_square_distance - this.initial_square_y) * 8;
     this.air_time = this.FREE_FALL * 2 - 1;
-  
+
   }
 
   public getScore(){
@@ -463,7 +463,6 @@ export class GameScene extends Scene {
     this.container.addChild(taptostart.getSprite());
 
     instructionContainer.on('touchstart', () => { 
-      alert('s');
       this.container.removeChild(instructionContainer);
       this.container.removeChild(this.swipe.getSprite());
       this.container.removeChild(this.swipe_hand.getSprite());
@@ -640,6 +639,11 @@ export class GameScene extends Scene {
     this.coinAnimation();
 
       if(this.GAME_RESET != true) {
+
+        // app running in bakground controller
+        if(this.app.isRunningBackground == true){
+          this.reset_game();
+        }
         
         // add square
         if(this.squareFar[0].position.y <= -(this.bigWhiteTexture.height * 0.5)) {
@@ -1121,9 +1125,8 @@ export class GameScene extends Scene {
     this.retry.clicked = () => { 
       if(this.app.getState().isOnline() == true){
         this.app.goToScene(4, {score: this.score, session_id: this.sessionId, timeStart: this.timeStart});
-      } 
+      }
     };
-
     this.cancel.clicked = () => { 
       this.app.getState().eventStarted({event:'cancel'});
     };

@@ -14,6 +14,7 @@ export class App {
   // data requirements
   public currentScore: number = 0;
   public session_id: any;
+
   // pixijs engine reference
   public _app: PIXI.Application;
 
@@ -36,6 +37,9 @@ export class App {
   // loader
   private _loaderSprite: PIXI.Sprite;
   private _loaderText: PIXI.Text;
+
+  // 
+  public isRunningBackground: boolean = false;
 
   constructor() {
   
@@ -78,6 +82,19 @@ export class App {
       // start engine on resources ready
       this.start.bind(this),
     );
+    
+    window.document.addEventListener("visibilitychange", (e) =>  {
+      if(window.document.visibilityState == 'hidden'){
+        this.isRunningBackground = true;
+        PIXI.sound.pauseAll();
+      }else{
+        setTimeout(() => {
+          this.isRunningBackground = false;
+          PIXI.sound.resumeAll();
+        }, 50);
+      }
+      
+    });
   }
 
   private setup() {
