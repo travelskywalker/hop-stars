@@ -107,7 +107,14 @@ export class App {
     const h = window.innerHeight;
 
     // create application
-    this._app = new PIXI.Application(w * window.devicePixelRatio, h * window.devicePixelRatio, { resolution: window.devicePixelRatio });
+    try {
+      this._app = new PIXI.Application(w * window.devicePixelRatio, h * window.devicePixelRatio, { resolution: window.devicePixelRatio });
+    } catch (error) {
+      alert(`Error: Sorry your device GPU is not supported.`);
+    }
+
+    console.log(PIXI.settings);
+    
 
     // create pixijs renderer
     this._app.renderer = PIXI.autoDetectRenderer();
@@ -126,7 +133,8 @@ export class App {
     this._app.renderer.view.style.width = `${window.innerWidth}px`;
     this._app.renderer.view.style.height = `${window.innerHeight}px`;
     this._app.renderer.resize(w * window.devicePixelRatio, h * window.devicePixelRatio);
-
+    
+    // console.log(PIXI.settings);
     // finally insert canvas to html
     setTimeout(() => { document.body.appendChild(this._app.view); }, 200);
   }
