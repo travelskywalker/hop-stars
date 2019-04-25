@@ -110,7 +110,7 @@ export class App {
     try {
       this._app = new PIXI.Application(w * window.devicePixelRatio, h * window.devicePixelRatio, { resolution: window.devicePixelRatio });
     } catch (error) {
-      alert(`Error: Sorry your device GPU is not supported.`);
+      alert(`Sorry, your device is not supported.`);
     }
 
     console.log(PIXI.settings);
