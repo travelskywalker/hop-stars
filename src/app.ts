@@ -112,8 +112,6 @@ export class App {
     } catch (error) {
       alert(`Sorry, your device is not supported.`);
     }
-
-    console.log(PIXI.settings);
     
 
     // create pixijs renderer
