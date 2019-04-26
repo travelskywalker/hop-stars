@@ -7,7 +7,9 @@ interface JavaScriptInterface {
   sendScore(): any;
   eventStarted(data:any): any;
   timeSpent(data: any): any;
+  
 }
+
 declare var Android: JavaScriptInterface;
 
 export class IAppState {
@@ -94,7 +96,7 @@ export class AppState extends Subject<IAppState> {
         break;
     
       default:
-        this.gameCancelled();
+        // this.gameCancelled();
         break;
     }
 
@@ -109,6 +111,8 @@ export class AppState extends Subject<IAppState> {
   }
 
   gameEnded(data: any){
+    console.error("Android.gameEnded not properly configured",data);
+    return;
     try {
       Android.gameEnded(data);
     } catch (err) {
@@ -127,6 +131,8 @@ export class AppState extends Subject<IAppState> {
   public generateSessionId(){
     return `${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   }
+
+  // HELPERS
 
   // check if online
   public isOnline(){
