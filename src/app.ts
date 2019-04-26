@@ -111,12 +111,16 @@ export class App {
 
       // adjust frame rate from default(0.4-0.6) to 1.5 || optimization
       PIXI.settings.TARGET_FPMS = 1.5;
-      
+
       this._app = new PIXI.Application(w * window.devicePixelRatio, h * window.devicePixelRatio, { resolution: window.devicePixelRatio });
     } catch (error) {
-      alert(`Sorry, your device is not supported.`);
+
+      // alert(`Sorry, your device is not supported.`);
+      // create not available page
+      setTimeout(() => {
+        document.getElementById('not-supported').classList.add('active');
+      }, 50);
     }
-    
 
     // create pixijs renderer
     this._app.renderer = PIXI.autoDetectRenderer();
