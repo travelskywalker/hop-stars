@@ -27,16 +27,69 @@
                 margin: 0;
                 background-color: white;
             }
-            #code_input{
-                padding: 1rem;
-                border: 1px solid orange;
-                position: absolute;
+            #not-supported{
+                display: none;
+                position: relative;
+                min-width: 0;
+                word-wrap: break-word;
+                background-clip: border-box;
+                border-radius: .25rem;
+                font-family: 'Chennai';
+                border: 5px solid #c6c8ca;
+                margin: 0 auto;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+            #not-supported.active{
+                display: block;
+                display: -ms-flexbox;
+                display: flex;
+                -ms-flex-direction: column;
+                flex-direction: column;
+            }
+            #not-supported .card-body {
+                -ms-flex: 1 1 auto;
+                flex: 1 1 auto;
+                padding: 1.25rem;
+            }
+            .btn {
+                display: block;
+                font-weight: 400;
+                color: #212529;
                 text-align: center;
+                vertical-align: middle;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+                background-color: transparent;
+                border: 1px solid transparent;
+                padding: .375rem .75rem;
+                font-size: 1rem;
+                line-height: 1.5;
+                border-radius: .25rem;
+                transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+                font-family: 'Chennai';
+                margin: 5% auto 0;
             }
-            #code_input:focus{
-                outline: none;
-            }
+            .btn.btn-primary {
+                color: #fff;
+                background-color: #007bff;
+                border-color: #007bff;
+            } 
+            .alert-danger {
+                color: #1b1e21;
+                background-color: #d6d8d9;
+                border-color: #c6c8ca;
+            }           
         </style>   
     </head>
-    <body></body>
+    <body>
+        <div id="not-supported" class="card " style="width: 18rem;">
+            <div class="card-body alert-danger">
+                <p class="card-text alert-danger">Sorry, your device is not supported</p>
+                <button class="btn btn-primary" onclick="try{Android.gameCancelled()}catch(e){console.error('Android.gameCancelled is not defined')}">Ok</button>
+            </div>
+        </div>
+    </body>
 </html>
