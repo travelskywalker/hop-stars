@@ -973,7 +973,8 @@ export class GameScene extends Scene {
      this.TOUCHEND = false;
      
     } else {
-      this.circle1.switchAnimation('ball', 0.9, true);
+      // adjust animation rate from 0.9 to 5 || optimization
+      this.circle1.switchAnimation('ball',5, true);
       this.GAME_RESET = false;
     }
   }

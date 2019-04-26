@@ -108,6 +108,10 @@ export class App {
 
     // create application
     try {
+
+      // adjust frame rate from default(0.4-0.6) to 1.5 || optimization
+      PIXI.settings.TARGET_FPMS = 1.5;
+      
       this._app = new PIXI.Application(w * window.devicePixelRatio, h * window.devicePixelRatio, { resolution: window.devicePixelRatio });
     } catch (error) {
       alert(`Sorry, your device is not supported.`);
