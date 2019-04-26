@@ -974,7 +974,7 @@ export class GameScene extends Scene {
      
     } else {
       // adjust animation rate from 0.9 to 5 || optimization
-      this.circle1.switchAnimation('ball',5, true);
+      this.circle1.switchAnimation('ball',0.95, true);
       this.GAME_RESET = false;
     }
   }
@@ -998,8 +998,13 @@ export class GameScene extends Scene {
     PIXI.sound.stopAll();
   }
   resetBGMSound(){
-    PIXI.sound.stopAll();
-    PIXI.sound.play("BGM_default", { loop: true });
+    
+    // prevent multiple sounds in gameover
+    setTimeout(() => {
+      PIXI.sound.stopAll();
+      PIXI.sound.play("BGM_default", { loop: true });
+    }, 100);
+    
   }
 
   // STAGES -----------------------------------------------------------------
