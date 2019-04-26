@@ -24,17 +24,9 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":134,"h":134},
 	"sourceSize": {"w":134,"h":134}
 },
-"GAMEOVER_layover.png":
-{
-	"frame": {"x":362,"y":516,"w":360,"h":640},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":360,"h":640},
-	"sourceSize": {"w":360,"h":640}
-},
 "hophop_logo.png":
 {
-	"frame": {"x":0,"y":1642,"w":720,"h":354},
+	"frame": {"x":1265,"y":259,"w":720,"h":354},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":720,"h":354},
@@ -42,7 +34,7 @@
 },
 "howtowin_btn.png":
 {
-	"frame": {"x":518,"y":257,"w":257,"h":257},
+	"frame": {"x":1198,"y":0,"w":257,"h":257},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":257,"h":257},
@@ -50,7 +42,7 @@
 },
 "leaderboard_btn.png":
 {
-	"frame": {"x":259,"y":257,"w":257,"h":257},
+	"frame": {"x":1457,"y":0,"w":257,"h":257},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":257,"h":257},
@@ -58,7 +50,7 @@
 },
 "restart_btn.png":
 {
-	"frame": {"x":0,"y":1158,"w":399,"h":399},
+	"frame": {"x":362,"y":259,"w":399,"h":399},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":399,"h":399},
@@ -66,7 +58,7 @@
 },
 "start_btn.png":
 {
-	"frame": {"x":401,"y":1158,"w":500,"h":482},
+	"frame": {"x":763,"y":259,"w":500,"h":482},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":500,"h":482},
@@ -74,7 +66,7 @@
 },
 "startscreen_bg.jpg":
 {
-	"frame": {"x":0,"y":516,"w":360,"h":640},
+	"frame": {"x":0,"y":259,"w":360,"h":640},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":360,"h":640},
@@ -82,7 +74,7 @@
 },
 "volume_0.png":
 {
-	"frame": {"x":0,"y":257,"w":257,"h":257},
+	"frame": {"x":680,"y":0,"w":257,"h":257},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":257,"h":257},
@@ -90,7 +82,7 @@
 },
 "volume_1.png":
 {
-	"frame": {"x":680,"y":0,"w":257,"h":255},
+	"frame": {"x":939,"y":0,"w":257,"h":255},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":257,"h":255},
@@ -112,8 +104,8 @@
 	"version": "1.0",
 	"image": "spritesheet-common.png",
 	"format": "RGBA8888",
-	"size": {"w":937,"h":1996},
+	"size": {"w":1985,"h":899},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:50a28ecd72578640631c27c09a1fb89b:be2b7150edecfd5e4d5720a471ee583d:ffdfe67b9ed6064a2fef44caf4436f75$"
+	"smartupdate": "$TexturePacker:SmartUpdate:a4fcd4f484bf5b188e9fdf8b7f3b52a8:99a428ec375ffa47ef604f9f05aa67e5:ffdfe67b9ed6064a2fef44caf4436f75$"
 }
 }

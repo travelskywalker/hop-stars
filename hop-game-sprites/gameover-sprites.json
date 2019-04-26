@@ -1,0 +1,20 @@
+{"frames": {
+
+"GAMEOVER_layover.png":
+{
+	"frame": {"x":0,"y":0,"w":720,"h":1280},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":720,"h":1280},
+	"sourceSize": {"w":720,"h":1280}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "gameover-sprites.png",
+	"format": "RGBA8888",
+	"size": {"w":720,"h":1280},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:063f18de157c4eb8072c34843f42cb39:d2cbbc6d7284829f35981994b78e51bb:7b2c60cb18713dccaaf556cfef0833e2$"
+}
+}
