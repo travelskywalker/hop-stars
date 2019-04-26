@@ -184,15 +184,15 @@ export class SplashScene extends Scene {
 
   // logo
   logo: SpriteActor;
- 
+  closeBtn: SpriteActor;
   // buttons
   play_btn: SpriteActor;
   sound_btn: SpriteAnimatedActor;
   // sound_btn: SpriteActor;
   leaderboard_btn: SpriteActor;
   howtowin_btn: SpriteActor;
-  closeBtnStyle: PIXI.TextStyle;
-  closeBtn: PIXI.Text;
+  // closeBtnStyle: PIXI.TextStyle;
+  // closeBtn: PIXI.Text;
 
   // Texts
   copyText1: PIXI.Text;
@@ -220,16 +220,16 @@ export class SplashScene extends Scene {
     this.bg.setScaleUpToScreenPercHeight(1);
     this.addChild(this.bg);
 
-    // this.closeBtn =  new SpriteActor('exit_button', this.app, 'lvl1', 'exit_button.png');
-    // this.closeBtn.setAnchor(0, 0);
-    // this.closeBtn.setPosition(this.app.getScreenSize().w * .92, this.app.getScreenSize().h * .02);
-    // this.closeBtn.setScaleUpToScreenPercWidth(.05);
-    // this.closeBtn.getSprite().interactive = true;
-    // this.closeBtn.getSprite().on('pointerup', () => {
-    //   this.app.getSoundPlayer().play('button'); 
-    //  this.app.getState().gameCancelled();
-    // });
-    // this.addChild(this.closeBtn);
+    this.closeBtn =  new SpriteActor('exit_button', this.app, 'common', 'x_btn.png');
+    this.closeBtn.setAnchor(0, 0);
+    this.closeBtn.setPosition(this.app.getScreenSize().w * .92, this.app.getScreenSize().h * .02);
+    this.closeBtn.setScaleUpToScreenPercWidth(.0625);
+    this.closeBtn.getSprite().interactive = true;
+    this.closeBtn.getSprite().on('pointerup', () => {
+      this.app.getSoundPlayer().play('button'); 
+     this.app.getState().gameCancelled();
+    });
+    this.addChild(this.closeBtn);
 
     // initialize and set logo
     this.logo = new SpriteActor('logo', this.app, 'common', 'hophop_logo.png');
@@ -239,29 +239,29 @@ export class SplashScene extends Scene {
     this.logo.setScaleUpToScreenPercWidth(.8);
     this.addChild(this.logo);
 
-    this.closeBtnStyle = new PIXI.TextStyle({
-      fontFamily: 'Chennai-Bold',
-      fontSize: `${this.logo.getSprite().height * .19}px`,
-      fontStyle: 'normal',
-      fontWeight: 'bold',
-      fill: ['#540a6f'],
-      wordWrap: false,
-      dropShadow: false,
-      dropShadowAngle: 12,
-      dropShadowBlur: 6,
-      dropShadowColor: 0x6e706f,
-      dropShadowDistance: 0,
-      padding: 15
-    });
-    this.closeBtn = new PIXI.Text(`X`, this.closeBtnStyle);
-    this.closeBtn.anchor.set(0,0);
-    this.closeBtn.position.set(this.app.getScreenSize().w * .92, this.app.getScreenSize().h * .02);
-    this.closeBtn.interactive = true;
-    this.closeBtn.on('pointerup', () => {
-       this.app.getSoundPlayer().play('button'); 
-       this.app.getState().gameCancelled();
-    });
-    this.container.addChild(this.closeBtn);
+    // this.closeBtnStyle = new PIXI.TextStyle({
+    //   fontFamily: 'Arial',
+    //   fontSize: `79px`,
+    //   fontStyle: 'bold',
+    //   fontWeight: 'bold',
+    //   fill: ['#540a6f'],
+    //   wordWrap: false,
+    //   dropShadow: false,
+    //   dropShadowAngle: 12,
+    //   dropShadowBlur: 6,
+    //   dropShadowColor: 0x6e706f,
+    //   dropShadowDistance: 0,
+    //   padding: 15
+    // });
+    // this.closeBtn = new PIXI.Text(`X`, this.closeBtnStyle);
+    // this.closeBtn.anchor.set(0,0);
+    // this.closeBtn.position.set(this.app.getScreenSize().w * .92, this.app.getScreenSize().h * .02);
+    // this.closeBtn.interactive = true;
+    // this.closeBtn.on('pointerup', () => {
+    //    this.app.getSoundPlayer().play('button'); 
+    //    this.app.getState().gameCancelled();
+    // });
+    // this.container.addChild(this.closeBtn);
 
       // TEXTS 
     // initialize and set text copy 1
