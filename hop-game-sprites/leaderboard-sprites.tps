@@ -132,7 +132,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>spritesheet-common.json</filename>
+                <filename></filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -181,167 +181,37 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">hop-game-asset/GAMEOVER_layover.png</key>
-            <key type="filename">hop-game-asset/startscreen_bg.jpg</key>
+            <key type="filename">hop-game-asset/leaderbord_bg.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>90,160,180,320</rect>
+                <rect>180,320,360,640</rect>
                 <key>scale9Paddings</key>
-                <rect>90,160,180,320</rect>
+                <rect>180,320,360,640</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">hop-game-asset/ball.png</key>
+            <key type="filename">hop-game-asset/profile-avatar.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>19,19,38,38</rect>
+                <rect>21,21,41,41</rect>
                 <key>scale9Paddings</key>
-                <rect>19,19,38,38</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">hop-game-asset/close_btn.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>14,14,27,27</rect>
-                <key>scale9Paddings</key>
-                <rect>14,14,27,27</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">hop-game-asset/coin.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>9,9,19,19</rect>
-                <key>scale9Paddings</key>
-                <rect>9,9,19,19</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">hop-game-asset/hophop_logo.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>70,70,139,139</rect>
-                <key>scale9Paddings</key>
-                <rect>70,70,139,139</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">hop-game-asset/howtowin_btn.png</key>
-            <key type="filename">hop-game-asset/leaderboard_btn.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>24,24,49,49</rect>
-                <key>scale9Paddings</key>
-                <rect>24,24,49,49</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">hop-game-asset/restart_btn.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>33,33,67,67</rect>
-                <key>scale9Paddings</key>
-                <rect>33,33,67,67</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">hop-game-asset/start_btn.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>38,38,76,76</rect>
-                <key>scale9Paddings</key>
-                <rect>38,38,76,76</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">hop-game-asset/volume_0.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>64,64,129,127</rect>
-                <key>scale9Paddings</key>
-                <rect>64,64,129,127</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">hop-game-asset/volume_1.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>64,64,129,129</rect>
-                <key>scale9Paddings</key>
-                <rect>64,64,129,129</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">hop-game-asset/x_btn.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>39,39,77,77</rect>
-                <key>scale9Paddings</key>
-                <rect>39,39,77,77</rect>
+                <rect>21,21,41,41</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
         </map>
         <key>fileList</key>
         <array>
-            <filename>hop-game-asset/ball.png</filename>
-            <filename>hop-game-asset/close_btn.png</filename>
-            <filename>hop-game-asset/coin.png</filename>
-            <filename>hop-game-asset/GAMEOVER_layover.png</filename>
-            <filename>hop-game-asset/hophop_logo.png</filename>
-            <filename>hop-game-asset/howtowin_btn.png</filename>
-            <filename>hop-game-asset/leaderboard_btn.png</filename>
-            <filename>hop-game-asset/restart_btn.png</filename>
-            <filename>hop-game-asset/start_btn.png</filename>
-            <filename>hop-game-asset/startscreen_bg.jpg</filename>
-            <filename>hop-game-asset/volume_0.png</filename>
-            <filename>hop-game-asset/volume_1.png</filename>
-            <filename>hop-game-asset/x_btn.png</filename>
+            <filename>hop-game-asset/leaderbord_bg.png</filename>
+            <filename>hop-game-asset/profile-avatar.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

@@ -1,0 +1,28 @@
+{"frames": {
+
+"leaderbord_bg.png":
+{
+	"frame": {"x":0,"y":0,"w":720,"h":1280},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":720,"h":1280},
+	"sourceSize": {"w":720,"h":1280}
+},
+"profile-avatar.png":
+{
+	"frame": {"x":722,"y":0,"w":82,"h":82},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":82,"h":82},
+	"sourceSize": {"w":82,"h":82}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "leaderboard-sprites.png",
+	"format": "RGBA8888",
+	"size": {"w":804,"h":1280},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:f8d02638ddbecade8bfcc81c4b50d564:a63ed64f2e8cd0b5c013004f9bcaaa72:b4dddd2c03833d11c95f2cb8084e0618$"
+}
+}
