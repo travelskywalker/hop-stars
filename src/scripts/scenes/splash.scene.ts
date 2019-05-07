@@ -204,11 +204,16 @@ export class SplashScene extends Scene {
     current_score: 0
   };  
 
+  // timespent
+  timeStart: any;
+
   init(): void {
 
   }
 
   start(): void {
+
+    this.timeStart = Date.now();
 
     this.data.best_score = this.app.getState().getBestScore();
     
@@ -366,6 +371,15 @@ export class SplashScene extends Scene {
 
   remove(): void {
     this.container.removeChildren();
+
+    let timespent = {
+      screen: "main_menu",
+      timestart:this.timeStart,
+      timeend: Date.now()
+    }
+
+    this.app.getState().timeSpent(timespent);
+
   }
 
 }
