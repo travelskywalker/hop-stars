@@ -4,11 +4,13 @@ import { Subscription } from 'rxjs/Subscription';
 import { SpriteActor } from '@src/core/sprite.actor';
 import { SpriteAnimatedActor } from '@src/core/sprite.animated.actor';
 import { LeaderboardModal } from './../components/leaderboard.modal';
+import { HowtowinModal } from './../components/howtowin.modal';
 export class SplashScene extends Scene {
 
   state_subscription: Subscription;
 
   lmodal: LeaderboardModal;
+  howtomodal: HowtowinModal;
   // Dummy data for testing
   dummy_data:object = { 
       alltime: [
@@ -352,9 +354,12 @@ export class SplashScene extends Scene {
     this.howtowin_btn.setScaleUpToScreenPercWidth(.25);
     this.howtowin_btn.getSprite().interactive = true;
     this.howtowin_btn.getSprite().on('pointerup', () => { 
-      console.log('show howtowin scene');
+      console.log('show howtowin modal');
       this.app.getSoundPlayer().play('button');
-      this.app.goToScene(3);
+      // this.app.goToScene(3);
+      // modal
+      this.howtomodal = new HowtowinModal({app: this.app});
+      this.container.addChild(this.howtomodal);
       
     });
     this.addChild(this.howtowin_btn);
