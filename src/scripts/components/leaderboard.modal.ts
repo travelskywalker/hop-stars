@@ -1,14 +1,20 @@
 import { App, app } from '@src/app';
 import { SpriteActor } from '@src/core/sprite.actor';
-import { Graphics, Container, TextStyle } from 'pixi.js';
 
 export interface leaderboardData {
   app: App;
   var: any;
 }
 
-export class LeaderboardModal extends PIXI.Container {
+interface JavaScriptInterface { 
+  getLeaderboardData(): any;
+  setLeaderboardData(data: any): any;
+}
 
+declare var Android: JavaScriptInterface;
+
+export class LeaderboardModal extends PIXI.Container {
+  app: App;
   // bg
   bg_image: SpriteActor;
   leaderboard_bg: PIXI.Graphics;
@@ -31,22 +37,106 @@ export class LeaderboardModal extends PIXI.Container {
   // closeBtn: PIXI.Text;
   closeBtn: SpriteActor;
 
+  leaderboardData: any;
+
+  is_weekly_active:boolean = true;
+
+  // Dummy data for testing
+  dummy_data:object =  [
+      {
+        name: 'Sander',
+        score: '2500',
+        prize: 'P5000',
+        user_id: 99991,
+      },
+      {
+        name: 'Alben',
+        score: '250',
+        prize: 'P3000',
+        user_id: 99992,
+      },
+      {
+        name: 'Lei',
+        score: '250',
+        prize: 'P1000',
+        user_id: 99991,
+      },
+      {
+        name: 'Edric',
+        score: '250',
+        prize: 'P100',
+        user_id: 99992,
+      },
+      {
+        name: 'Ben',
+        score: '25',
+        prize: 'P100',
+        user_id: 99991,
+      },
+      {
+        name: 'Sander',
+        score: '25',
+        prize: 'P100',
+        user_id: 99992,
+      },
+      {
+        name: 'Sander',
+        score: '25',
+        prize: 'P100',
+        user_id: 99991,
+      },
+      {
+        name: 'Sander',
+        score: '25',
+        prize: 'P100',
+        user_id: 99992,
+      },
+      {
+        name: 'Sander',
+        score: '25',
+        prize: 'P50',
+        user_id: 99991,
+      },
+      {
+        name: 'Sander',
+        score: '25',
+        prize: 'P50',
+        user_id: 99992,
+      },
+      {
+        name: 'Sander',
+        score: '25',
+        prize: 'P50',
+        user_id: 99991,
+      },
+      {
+        name: 'Sander',
+        score: '25',
+        prize: 'P50',
+        user_id: 99992,
+      }
+    ];
+
   constructor(data: leaderboardData) {
+
     super();
+    this.app = data.app;
+    this.leaderboardData = this.getLeaderboardData();
 
-    this.createLeaderboard(data);
-
+    console.log("show leaderboard modal");
   }
 
-  private render_leaderboard(dataApp:any, data: any) {
-    
+  private render_leaderboard() {
+
+    let data = this.leaderboardData;
     for (let x = 0; x < data.length; x++) {
+
       // initialize and set bg color via drawing shapes
       this.profile_container[x] = new PIXI.Graphics();
       this.profile_container[x].beginFill(0X2E2D4B, 0);
-      this.profile_container[x].drawRect(0, 0, dataApp.app.getScreenSize().w * 0.9, dataApp.app.getScreenSize().h * 0.12);
+      this.profile_container[x].drawRect(0, 0, this.app.getScreenSize().w * 0.9, this.app.getScreenSize().h * 0.12);
       this.profile_container[x].endFill();
-      this.profile_container[x].position.x = dataApp.app.getScreenSize().w * 0.5 - this.profile_container[x].width * 0.5;
+      this.profile_container[x].position.x = this.app.getScreenSize().w * 0.5 - this.profile_container[x].width * 0.5;
       if (x !== 0) {
         this.profile_container[x].position.y = this.profile_container[x - 1].position.y + this.profile_container[x - 1].height;
       } else {
@@ -69,7 +159,7 @@ export class LeaderboardModal extends PIXI.Container {
       this.profile_container[x].addChild(rank);
 
       // set player avatar
-      const avatar = new SpriteActor('profile_image', dataApp.app, 'leaderboard', 'profile-avatar.png');
+      const avatar = new SpriteActor('profile_image', this.app, 'leaderboard', 'profile-avatar.png');
       avatar.setScaleUpToScreenPercHeight(this.profile_container[x].height * 0.0002);
       avatar.setAnchor(0, 0);
       avatar.setPosition(
@@ -105,9 +195,6 @@ export class LeaderboardModal extends PIXI.Container {
         fill: 0XFFFFFF,
         align: 'center',
       });
-      // player_points.anchor.set(0, 0);
-      // player_points.position.y = user_details.height - player_points.height;
-      // user_details.addChild(player_points);
 
       // rewards
       const rewards = new PIXI.Graphics();  
@@ -124,9 +211,7 @@ export class LeaderboardModal extends PIXI.Container {
         fill: 0XFFFFFF,
         align: 'center',
       });
-      // rewards_text.position.y = rewards.height * 0.5 - rewards_text.height * 0.5;
-      // rewards_text.position.x = rewards.width * 0.5 - rewards_text.width * 0.5;
-      // rewards.addChild(rewards_text);
+
       player_points.position.y = rewards.height * 0.5 - rewards_text.height * 0.5;
       player_points.position.x = rewards.width * 0.5 - rewards_text.width * 0.5;
       rewards.addChild(player_points);
@@ -142,25 +227,10 @@ export class LeaderboardModal extends PIXI.Container {
     }
   }
 
-  private removeLeaderboardData(data: any) {
-    for (let x = 0; x < data.length; x++) {
-      this.leaderboard_bg.removeChild(this.profile_container[x]);
-    }
-  }
+  createLeaderboard() { 
 
-  private navBtnActive(is_weekly_active:boolean){
-    if(is_weekly_active) {
-      this.weekly.style.fill = 0x744395;
-      this.alltime.style.fill = 0xFFFFFF;
-    } else {
-      this.weekly.style.fill = 0xFFFFFF;
-      this.alltime.style.fill = 0x744395;
-    } 
-  }
-
-  createLeaderboard(data:any) {  
     // initialize and set bg color via drawing shapes
-    this.bg_image = new SpriteActor('leaderboard_bg', data.app, 'leaderboard', 'leaderbord_bg.png');
+    this.bg_image = new SpriteActor('leaderboard_bg', this.app, 'leaderboard', 'leaderbord_bg.png');
     this.bg_image.setAnchor(0, 0);
     this.bg_image.setPosition(0,0);
     this.bg_image.setScaleUpToScreenPercWidth(1);
@@ -170,9 +240,10 @@ export class LeaderboardModal extends PIXI.Container {
     // leaderboard container
     this.leaderboard_bg = new PIXI.Graphics();
     this.leaderboard_bg.beginFill(0x000000, 0);
-    this.leaderboard_bg.drawRect(0, 0, data.app.getScreenSize().w, data.app.getScreenSize().h);
+    this.leaderboard_bg.drawRect(0, 0, this.app.getScreenSize().w, this.app.getScreenSize().h);
     this.leaderboard_bg.endFill();
     this.leaderboard_bg.interactive = true;
+
     this.leaderboard_bg.on('touchstart', (interactionData: PIXI.interaction.InteractionEvent) => {
         const point = interactionData.data.getLocalPosition(this.leaderboard_bg);
         this.initialPoint = point;
@@ -181,36 +252,37 @@ export class LeaderboardModal extends PIXI.Container {
     this.leaderboard_bg.on('touchmove', (interactionData: PIXI.interaction.InteractionEvent) => {
         const point = interactionData.data.getLocalPosition(this.leaderboard_bg);
         this.leaderboard_bg.position.y =  Math.min(0, this.leaderboard_bg.position.y + point.y - this.initialPoint.y);
-        this.leaderboard_bg.position.y = Math.max(this.leaderboard_bg.position.y, -(this.leaderboard_bg.height - data.app.getScreenSize().h));
+        this.leaderboard_bg.position.y = Math.max(this.leaderboard_bg.position.y, -(this.leaderboard_bg.height - this.app.getScreenSize().h));
     });
 
     // Leaderboard Title
     const Title = new PIXI.Text(`LEADERBOARD`, {
       fontFamily: this.fontFamily,
-      fontSize: `${data.app.getScreenSize().w * 0.08}px`,
+      fontSize: `${this.app.getScreenSize().w * 0.08}px`,
       fill: 0XFFFFFF,
       align: 'center',
     });
+
     Title.anchor.set(0, 0);
-    Title.position.x = data.app.getScreenSize().w * 0.5 - Title.width * 0.5;
-    Title.position.y = data.app.getScreenSize().h * 0.02;
+    Title.position.x = this.app.getScreenSize().w * 0.5 - Title.width * 0.5;
+    Title.position.y = this.app.getScreenSize().h * 0.02;
     this.leaderboard_bg.addChild(Title);
 
     // Leaderboard Navigation
     this.tab_nav_container = new PIXI.Graphics();
     this.tab_nav_container.beginFill(0x000000, 0);
-    this.tab_nav_container.drawRect(0.5, 0.5, (data.app.getScreenSize().w ), data.app.getScreenSize().h * 0.06);
+    this.tab_nav_container.drawRect(0.5, 0.5, (this.app.getScreenSize().w ), this.app.getScreenSize().h * 0.06);
     this.tab_nav_container.endFill();
-    this.tab_nav_container.position.x = (data.app.getScreenSize().w / 2 ) - (this.tab_nav_container.width / 2), - this.tab_nav_container.width * 0.5 ;
+    this.tab_nav_container.position.x = (this.app.getScreenSize().w / 2 ) - (this.tab_nav_container.width / 2), - this.tab_nav_container.width * 0.5 ;
     this.tab_nav_container.position.y = Title.position.y + Title.height;
     this.tab_nav_container.visible = false; // show or hide nav bar
    
-    let is_weekly_active:boolean = true;
+    
     // weekly
     this.weekly = new PIXI.Text(`WEEKLY`, {
       fontFamily: this.fontFamily,
       fontSize: `${this.tab_nav_container.height * 0.35}px`,
-      fill: (is_weekly_active) ? 0x744395 : 0xFFFFFF,
+      fill: (this.is_weekly_active) ? 0x744395 : 0xFFFFFF,
       align: 'center',
     });
     this.weekly.anchor.set(0, 0);
@@ -247,69 +319,35 @@ export class LeaderboardModal extends PIXI.Container {
     this.tab_nav_container.addChild(this.alltime);
     this.tab_nav_container.addChild(seperatorBar);
 
-    // RENDER LEADERBOARD DATA
-    // Initial leaderboard data
-    const vardata = {app: data.app, var: data.var };
-    // button weekly state
-    this.render_leaderboard(vardata, vardata.var.weekly);
-    this.weekly.on('pointerup', () => { 
-      is_weekly_active = true;
-      // clear all time data
-      this.removeLeaderboardData(vardata.var.alltime);
-      // add weekly data
-      this.render_leaderboard(vardata, vardata.var.weekly);
-      // change color nav
-      this.navBtnActive(is_weekly_active);
-    });
-    this.alltime.on('pointerup', () => {
-      is_weekly_active = false;
-      // clear weekly data
-      this.removeLeaderboardData(vardata.var.weekly);
-      // add alltime data
-      this.render_leaderboard(vardata, vardata.var.alltime);
-      // change color nav
-      this.navBtnActive(is_weekly_active);
-    });
-
-    this.closeBtn =  new SpriteActor('exit_button', data.app, 'common', 'x_btn.png');
+    this.closeBtn =  new SpriteActor('exit_button', this.app, 'common', 'x_btn.png');
     this.closeBtn.setAnchor(0, 0);
-    this.closeBtn.setPosition(data.app.getScreenSize().w * .92, Title.position.y);
+    this.closeBtn.setPosition(this.app.getScreenSize().w * .92, Title.position.y);
     this.closeBtn.setScaleUpToScreenPercWidth(.0625);
     this.closeBtn.getSprite().interactive = true;
     this.closeBtn.getSprite().on('pointerup', () => { 
-      console.log('close modal');
+     
       this.removeChild(this.leaderboard_bg);
       this.removeChild(this.bg_image.getSprite());
       this.removeChildren();
     });
     this.leaderboard_bg.addChild(this.closeBtn.getSprite());
     this.addChild(this.leaderboard_bg);
+  }
 
-    // this.closeBtnStyle = new PIXI.TextStyle({
-    //   fontFamily: 'Chennai-Bold',
-    //   fontSize: `${Title.height * .8}px`,
-    //   fontStyle: 'normal',
-    //   fontWeight: 'bold',
-    //   fill: ['#540a6f'],
-    //   wordWrap: false,
-    //   dropShadow: false,
-    //   dropShadowAngle: 12,
-    //   dropShadowBlur: 6,
-    //   dropShadowColor: 0x6e706f,
-    //   dropShadowDistance: 0,
-    //   padding: 15
-    // });
-    // this.closeBtn = new PIXI.Text(`X`, this.closeBtnStyle);
-    // this.closeBtn.anchor.set(0,0);
-    // this.closeBtn.position.set(data.app.getScreenSize().w * .92, Title.position.y);
-    // this.closeBtn.interactive = true;
-    // this.closeBtn.on('pointerup', () => {
-    //   console.log('close modal');
-    //   this.removeChild(this.leaderboard_bg);
-    //   this.removeChild(this.bg_image.getSprite());
-    //   this.removeChildren();
-    // });
-    // this.leaderboard_bg.addChild(this.closeBtn);
-    this.addChild(this.leaderboard_bg);
+  // LEADERBOARD
+  public getLeaderboardData(){
+    try{
+      Android.getLeaderboardData();
+    }catch(e){
+      this.setLeaderboardData(this.dummy_data);
+      console.log("leaderboard data from dummy data")
+    }
+  }
+
+  public setLeaderboardData(data:any){
+
+    this.createLeaderboard();
+    this.leaderboardData = data;
+    this.render_leaderboard();
   }
 }

@@ -408,7 +408,6 @@ export class GameScene extends Scene {
         const point = interactionData.data.getLocalPosition(this.circle);
         this.initialPoint = point;
       }else{
-        this.removeNTOModal();
         this.showNTOModal();
       }
 
@@ -1127,88 +1126,20 @@ export class GameScene extends Scene {
 
   // NETWORK TIMEOUT
   showNTOModal(){
-    // NTO BG
-    this.ntoContainer = new PIXI.Graphics();
-    this.ntoContainer.beginFill(0x000).drawRoundedRect(0, 0, this.app.getScreenSize().w, this.app.getScreenSize().h, 0);
-    this.ntoContainer.position.x = 0;
-    this.ntoContainer.position.y = 0;
-    this.ntoContainer.alpha = .4;
-    // NTO TEXT
-    this.ntoStyle = new PIXI.TextStyle({
-      fontFamily: 'Chennai-Bold',
-      fontSize: `${this.ntoContainer.height * .05}px`,
-      fontStyle: 'normal',
-      fontWeight: 'normal',
-      align: 'center',
-      fill: ['#ffffff'],
-      dropShadow: true,
-      dropShadowAngle: 12,
-      dropShadowBlur: 6,
-      dropShadowColor: 0x6e706f,
-      dropShadowDistance: 0,
-      padding: 15
-      // wordWrap: true,
-      // wordWrapWidth: this.app.getScreenSize().w * .7//modal.width * .8
-    });
-    
-    this.ntoText = new PIXI.Text(
-        `No Internet Connection`, 
-        this.ntoStyle);
-    this.ntoText.anchor.x = .5;
-    this.ntoText.anchor.y = .5;
-    this.ntoText.position.x = this.app.getScreenSize().w * .5;
-    this.ntoText.position.y = this.ntoContainer.height * .4;
-    this.container.addChild(this.ntoContainer);
-    this.container.addChild(this.ntoText);
 
-    // NTO BUTTON
-     this.retry = new Button({
-      app: this.app,
-      text: 'Retry',
-      height: null,
-      y: this.app.getScreenSize().h - this.app.getScreenSize().h * 0.275,
-      align: 'center',
-      type: 'selected',
-      icon: '',
-      details: '',
-    });
-    this.container.addChild(this.retry);
+    // modal
+    let NTOModal = new NetworkTimeoutModal({app: this.app, var:""});
+    this.container.addChild(NTOModal);
 
-    this.cancel = new Button({
-      app: this.app,
-      text: 'Cancel',
-      height: null,
-      y: this.retry.position.y + (this.retry.height * 1.2),
-      align: 'center',
-      type: 'selected',
-      icon: '',
-      details: '',
-    });
-    this.container.addChild(this.cancel);
-
-    this.retry.clicked = () => { 
-      if(this.app.getState().isOnline() == true){
-        // check if game start or game end using session ID
-        // session id is being set on game start
-        if(this.sessionId != null){
-          this.app.goToScene(4, {score: this.score, session_id: this.sessionId, timeStart: this.timeStart});
-        }else{
-          // reload instruction screen
-          // remove NTO modal
-          this.showInstructionScreen();
-          this.removeNTOModal();
-        }
-      }
-    };
-    this.cancel.clicked = () => { 
-      this.app.getState().eventStarted({event:'cancel'});
-    };
   }
-  removeNTOModal(){
-    this.container.removeChild(this.ntoContainer);
-    this.container.removeChild(this.ntoText);
-    this.container.removeChild(this.retry);
-    this.container.removeChild(this.cancel);
+
+  networkResume(){
+    if(this.sessionId != null){
+      this.app.goToScene(4, {score: this.score, session_id: this.sessionId, timeStart: this.timeStart});
+    }else{
+      // reload instruction screen
+      this.showInstructionScreen();
+    }
   }
 
 }

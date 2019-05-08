@@ -388,7 +388,7 @@ OVER`;
     this.leaderboard_btn.setScaleUpToScreenPercWidth(.25);
     setTimeout( () => this.leaderboard_btn.getSprite().interactive = true, 500);
     this.leaderboard_btn.getSprite().on('pointerup', () => { 
-      console.log('show leaderboard scene');
+      
           // for modal
           this.lmodal = new LeaderboardModal({app: this.app, var: this.dummy_data});
           this.container.addChild(this.lmodal);

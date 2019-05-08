@@ -47,13 +47,13 @@ export class NetworkTimeoutModal extends PIXI.Container {
       // wordWrap: true,
       // wordWrapWidth: this.app.getScreenSize().w * .7//modal.width * .8
     });
-    
+
     this.ntoText = new PIXI.Text(
         `No Internet Connection`, 
         this.ntoStyle);
     this.ntoText.anchor.x = .5;
     this.ntoText.anchor.y = .5;
-    this.ntoText.position.x = this.app.getScreenSize().w * .5;
+    this.ntoText.position.x = dataApp.app.getScreenSize().w * .5;
     this.ntoText.position.y = this.ntoContainer.height * .4;
     this.addChild(this.ntoContainer);
     this.addChild(this.ntoText);
@@ -84,17 +84,10 @@ export class NetworkTimeoutModal extends PIXI.Container {
     this.addChild(this.cancel);
 
     this.retry.clicked = () => { 
+      
       if(dataApp.app.getState().isOnline() == true){
-        // check if game start or game end using session ID
-        // session id is being set on game start
-        if(dataApp.var.sessionId != null){
-            dataApp.app.goToScene(4, {score: dataApp.var.score, session_id: dataApp.var.sessionId, timeStart: dataApp.var.timeStart});
-        }else{
-          // reload instruction screen
-          // remove NTO modal
-          // this.showInstructionScreen();
-          this.removeNTOModal();
-        }
+        dataApp.app.getCurrentScene().networkResume();
+        this.removeNTOModal();
       }
     };
     this.cancel.clicked = () => { 

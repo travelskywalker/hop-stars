@@ -5,181 +5,15 @@ import { SpriteActor } from '@src/core/sprite.actor';
 import { SpriteAnimatedActor } from '@src/core/sprite.animated.actor';
 import { LeaderboardModal } from './../components/leaderboard.modal';
 import { HowtowinModal } from './../components/howtowin.modal';
+import { NetworkTimeoutModal } from '@src/scripts/components/nto.modal';
+
 export class SplashScene extends Scene {
 
   state_subscription: Subscription;
 
   lmodal: LeaderboardModal;
   howtomodal: HowtowinModal;
-  // Dummy data for testing
-  dummy_data:object = { 
-      alltime: [
-        {
-          name: 'Sander',
-          score: '2500',
-          prize: 'P5000',
-          user_id: 99991,
-        },
-        {
-          name: 'Alben',
-          score: '250',
-          prize: 'P3000',
-          user_id: 99992,
-        },
-        {
-          name: 'Lei',
-          score: '250',
-          prize: 'P1000',
-          user_id: 99991,
-        },
-        {
-          name: 'Edric',
-          score: '250',
-          prize: 'P100',
-          user_id: 99992,
-        },
-        {
-          name: 'Ben',
-          score: '25',
-          prize: 'P100',
-          user_id: 99991,
-        },
-        {
-          name: 'Sander',
-          score: '25',
-          prize: 'P100',
-          user_id: 99992,
-        },
-        {
-          name: 'Sander',
-          score: '25',
-          prize: 'P100',
-          user_id: 99991,
-        },
-        {
-          name: 'Sander',
-          score: '25',
-          prize: 'P100',
-          user_id: 99992,
-        },
-        {
-          name: 'Sander',
-          score: '25',
-          prize: 'P50',
-          user_id: 99991,
-        },
-        {
-          name: 'Sander',
-          score: '25',
-          prize: 'P50',
-          user_id: 99992,
-        },
-        {
-          name: 'Sander',
-          score: '25',
-          prize: 'P50',
-          user_id: 99991,
-        },
-        {
-          name: 'Sander',
-          score: '25',
-          prize: 'P50',
-          user_id: 99992,
-        }
-      ],
-      weekly: [
-        {
-          name: 'Alben',
-          score: '2500',
-          prize: 'P5000',
-          user_id: 99991,
-        },
-        {
-          name: 'Levy',
-          score: '250',
-          prize: 'P3000',
-          user_id: 99991,
-        },
-        {
-          name: 'Sander',
-          score: '25',
-          prize: 'P1000',
-          user_id: 99991,
-        },
-        {
-          name: 'Edric',
-          score: '25',
-          prize: 'P100',
-          user_id: 99992,
-        },
-        {
-          name: 'Ben',
-          score: '25',
-          prize: 'P100',
-          user_id: 99991,
-        },
-        {
-          name: 'Alben',
-          score: '25',
-          prize: 'P100',
-          user_id: 99991,
-        },
-        {
-          name: 'Alben',
-          score: '25',
-          prize: 'P100',
-          user_id: 99991,
-        },
-        {
-          name: 'Alben',
-          score: '25',
-          prize: 'P100',
-          user_id: 99991,
-        },
-        {
-          name: 'Alben',
-          score: '25',
-          prize: 'P100',
-          user_id: 99991,
-        },
-        {
-          name: 'Alben',
-          score: '25',
-          prize: 'P100',
-          user_id: 99992,
-        },
-        {
-          name: 'Alben',
-          score: '25',
-          prize: 'P50',
-          user_id: 99991,
-        },
-        {
-          name: 'Alben',
-          score: '25',
-          prize: 'P50',
-          user_id: 99991,
-        },
-        {
-          name: 'Alben',
-          score: '25',
-          prize: 'P50',
-          user_id: 99991,
-        },
-        {
-          name: 'Alben',
-          score: '25',
-          prize: 'P50',
-          user_id: 99991,
-        },
-        {
-          name: 'Alben',
-          score: '25',
-          prize: 'P50',
-          user_id: 99991,
-        }
-      ]
-  };
+  
 
   // bg
   bg: SpriteActor;
@@ -202,19 +36,23 @@ export class SplashScene extends Scene {
 
   // dummy score data
   data = {
-    best_score: this.app.getState().getBestScore(),
+    best_score: 0,//this.app.getState().getBestScore(),
     current_score: 0
   };  
 
   // timespent
   timeStart: any;
 
-  init(): void {
+  // nto
+  nto: NetworkTimeoutModal;
 
+  init(): void {
+    
   }
 
   start(): void {
-
+    let obj = this.app.getCurrentScene()
+    
     this.timeStart = Date.now();
 
     this.data.best_score = this.app.getState().getBestScore();
@@ -245,30 +83,6 @@ export class SplashScene extends Scene {
     // this.logo.setScaleUpToScreenPercWidth(0.675);
     this.logo.setScaleUpToScreenPercWidth(.8);
     this.addChild(this.logo);
-
-    // this.closeBtnStyle = new PIXI.TextStyle({
-    //   fontFamily: 'Arial',
-    //   fontSize: `79px`,
-    //   fontStyle: 'bold',
-    //   fontWeight: 'bold',
-    //   fill: ['#540a6f'],
-    //   wordWrap: false,
-    //   dropShadow: false,
-    //   dropShadowAngle: 12,
-    //   dropShadowBlur: 6,
-    //   dropShadowColor: 0x6e706f,
-    //   dropShadowDistance: 0,
-    //   padding: 15
-    // });
-    // this.closeBtn = new PIXI.Text(`X`, this.closeBtnStyle);
-    // this.closeBtn.anchor.set(0,0);
-    // this.closeBtn.position.set(this.app.getScreenSize().w * .92, this.app.getScreenSize().h * .02);
-    // this.closeBtn.interactive = true;
-    // this.closeBtn.on('pointerup', () => {
-    //    this.app.getSoundPlayer().play('button'); 
-    //    this.app.getState().gameCancelled();
-    // });
-    // this.container.addChild(this.closeBtn);
 
       // TEXTS 
     // initialize and set text copy 1
@@ -324,27 +138,17 @@ export class SplashScene extends Scene {
     });
     this.addChild(this.sound_btn);
 
-    // this.sound_btn = new SpriteActor('volume_on', this.app, 'common', 'volume_on.png');
-    // this.sound_btn.setAnchor(0.5, 0.5);
-    // this.sound_btn.setPosition(this.app.getScreenSize().w * 0.25, this.app.getScreenSize().h * .875);
-    // this.sound_btn.setScaleUpToScreenPercWidth(.25);
-
-    // this.addChild(this.sound_btn);
-
     // initialize and set leaderboard_btn button
     this.leaderboard_btn = new SpriteActor('leaderboard_btn', this.app, 'common', 'leaderboard_btn.png');
     this.leaderboard_btn.setAnchor(0.5, 0.5);
     this.leaderboard_btn.setPosition(this.sound_btn.getAnimatedSprite().position.x + (this.sound_btn.getAnimatedSprite().width * 1), this.sound_btn.getAnimatedSprite().position.y);
     this.leaderboard_btn.setScaleUpToScreenPercWidth(.25);
     this.leaderboard_btn.getSprite().interactive = true;
+
     this.leaderboard_btn.getSprite().on('pointerup', () => { 
-      console.log('show leaderboard scene');
-      this.app.getSoundPlayer().play('button');
-      // for modal
-      this.lmodal = new LeaderboardModal({app: this.app, var: this.dummy_data});
-      this.container.addChild(this.lmodal);
-      
+      this.showLeaderboard();
     });
+
     this.addChild(this.leaderboard_btn);
 
     // initialize and set mechanic_btn button
@@ -370,6 +174,23 @@ export class SplashScene extends Scene {
     });
   }
 
+  showLeaderboard(){
+
+    if(this.app.getState().isOnline() == true){
+      // with internet connection
+      this.app.getSoundPlayer().play('button');
+      // for modal
+      this.lmodal = new LeaderboardModal({app: this.app, var: ""});
+      this.container.addChild(this.lmodal);
+
+    }else{
+      // show NTO
+      // modal
+      let NTOModal = new NetworkTimeoutModal({app: this.app, var:""});
+      this.container.addChild(NTOModal);
+    }  
+  }
+
   update(_delta: number): void {
 
   }
@@ -385,6 +206,10 @@ export class SplashScene extends Scene {
 
     this.app.getState().timeSpent(timespent);
 
+  }
+
+  networkResume(){
+    this.showLeaderboard();
   }
 
 }

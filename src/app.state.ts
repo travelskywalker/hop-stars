@@ -1,11 +1,13 @@
 import { Subject } from 'rxjs/Subject';
 
 interface JavaScriptInterface { 
+  // events
   gameCancelled(): any; 
   gameStarted(data: any): any;
   gameEnded(data: any): any;
   sendScore(): any;
   eventStarted(data:any): any;
+  // timespent
   timeSpent(data: any): any;
   
 }
@@ -13,7 +15,6 @@ interface JavaScriptInterface {
 declare var Android: JavaScriptInterface;
 
 export class IAppState {
-
   explosionActive: boolean;
   volume: number = 0;
 }
@@ -96,7 +97,7 @@ export class AppState extends Subject<IAppState> {
         break;
     
       default:
-        // this.gameCancelled();
+        this.gameCancelled();
         break;
     }
 
@@ -112,7 +113,7 @@ export class AppState extends Subject<IAppState> {
 
   gameEnded(data: any){
     console.error("Android.gameEnded not properly configured",data);
-    return;
+    // return;
     try {
       Android.gameEnded(data);
     } catch (err) {
