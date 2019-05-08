@@ -5,6 +5,7 @@ import { App } from '@src/app';
 import { SpriteActor } from '@src/core/sprite.actor';
 import { SpriteAnimatedActor } from '@src/core/sprite.animated.actor';
 import { Button } from '@src/scripts/components/button.component';
+import { NetworkTimeoutModal } from '@src/scripts/components/nto.modal';
 
 export class GameScene extends Scene {
 
@@ -116,6 +117,8 @@ export class GameScene extends Scene {
   instructionContainer: Graphics;
   taptostart: Text;
   swipeLeftRight: Text;
+
+  ntoModal: NetworkTimeoutModal;
 
   init(): void {
     
