@@ -36,7 +36,7 @@ export class SplashScene extends Scene {
 
   // dummy score data
   data = {
-    best_score: 0,//this.app.getState().getBestScore(),
+    best_score: this.app.getState().getBestScore(),
     current_score: 0
   };  
 

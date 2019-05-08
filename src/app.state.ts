@@ -1,16 +1,20 @@
 import { Subject } from 'rxjs/Subject';
 
 interface JavaScriptInterface { 
+  getConfig(): any;
+  setConfig(data: any): any;
   // events
   gameCancelled(): any; 
   gameStarted(data: any): any;
   gameEnded(data: any): any;
+  sessionEnded(data: any): any;
   sendScore(): any;
   eventStarted(data:any): any;
   // timespent
-  timeSpent(data: any): any;
-  
+  timeSpent(data: any): any;  
 }
+
+declare global { interface Window { Game: any; } }
 
 declare var Android: JavaScriptInterface;
 
@@ -22,6 +26,37 @@ export class IAppState {
 export class AppState extends Subject<IAppState> {
 
   public state: IAppState = new IAppState();
+
+  constructor(){
+    super();
+
+    // get config
+    try {
+      Android.getConfig();
+    } catch (error) {
+      console.error('Android.getConfig is not defined');
+
+      let gamedata = JSON.parse(localStorage.getItem("hopGameData"));
+
+      if(localStorage.getItem("hopGameData") == null || localStorage.getItem("hopGameData") == undefined){
+        this.saveBestScore(0);
+      }else{
+        this.saveBestScore(gamedata.bestScore);
+      }
+      
+    }
+
+    // expose function for android integration
+    window.Game = {
+      showExitConfirmation: () => {
+        this.gameCancelled();
+      },
+      setConfig: (data: any) => {
+        
+        this.saveBestScore(data.best_score);
+      }
+    }
+  }
 
   public setExplosion(active: boolean): void {
 
@@ -45,11 +80,14 @@ export class AppState extends Subject<IAppState> {
   }
 
   public saveBestScore(score: number){
+    
     let data = {"bestScore": score}
+   
     localStorage.setItem('hopGameData', JSON.stringify(data));
   }
 
   public getBestScore(){
+    
     let gamedata = JSON.parse(localStorage.getItem("hopGameData"));
 
     if(localStorage.getItem("hopGameData") == null || localStorage.getItem("hopGameData") == undefined){
@@ -112,10 +150,8 @@ export class AppState extends Subject<IAppState> {
   }
 
   gameEnded(data: any){
-    console.error("Android.gameEnded not properly configured",data);
-    // return;
     try {
-      Android.gameEnded(data);
+      Android.sessionEnded(data);
     } catch (err) {
       console.error("Android gameEnded is not defined.", data);
     }

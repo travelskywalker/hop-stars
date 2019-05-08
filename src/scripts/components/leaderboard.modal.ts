@@ -6,9 +6,10 @@ export interface leaderboardData {
   var: any;
 }
 
+declare global { interface Window { Game: any; } }
+
 interface JavaScriptInterface { 
   getLeaderboardData(): any;
-  setLeaderboardData(data: any): any;
 }
 
 declare var Android: JavaScriptInterface;
@@ -120,6 +121,14 @@ export class LeaderboardModal extends PIXI.Container {
   constructor(data: leaderboardData) {
 
     super();
+
+    // expose function for android integration
+    window.Game = {
+      setLeaderboardData: (data: any) => {
+        this.setLeaderboardData(data);
+      }
+    }
+
     this.app = data.app;
     this.leaderboardData = this.getLeaderboardData();
 
