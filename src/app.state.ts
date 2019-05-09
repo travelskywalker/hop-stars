@@ -1,8 +1,6 @@
 import { Subject } from 'rxjs/Subject';
 
 interface JavaScriptInterface { 
-  getConfig(): any;
-  setConfig(data: any): any;
   // events
   gameCancelled(): any; 
   gameStarted(data: any): any;
@@ -30,30 +28,10 @@ export class AppState extends Subject<IAppState> {
   constructor(){
     super();
 
-    // get config
-    try {
-      Android.getConfig();
-    } catch (error) {
-      console.error('Android.getConfig is not defined');
-
-      let gamedata = JSON.parse(localStorage.getItem("hopGameData"));
-
-      if(localStorage.getItem("hopGameData") == null || localStorage.getItem("hopGameData") == undefined){
-        this.saveBestScore(0);
-      }else{
-        this.saveBestScore(gamedata.bestScore);
-      }
-      
-    }
-
     // expose function for android integration
     window.Game = {
       showExitConfirmation: () => {
         this.gameCancelled();
-      },
-      setConfig: (data: any) => {
-        
-        this.saveBestScore(data.best_score);
       }
     }
   }
@@ -77,13 +55,14 @@ export class AppState extends Subject<IAppState> {
     if(this.getBestScore() < score){
       this.saveBestScore(score);
     }
-  }
+  } 
 
   public saveBestScore(score: number){
     
-    let data = {"bestScore": score}
+    let data = {"best_score": score}
    
     localStorage.setItem('hopGameData', JSON.stringify(data));
+
   }
 
   public getBestScore(){
@@ -93,7 +72,7 @@ export class AppState extends Subject<IAppState> {
     if(localStorage.getItem("hopGameData") == null || localStorage.getItem("hopGameData") == undefined){
       return 0;
     }else{
-      return gamedata.bestScore;
+      return gamedata.best_score;
     }
   }
 
@@ -124,14 +103,14 @@ export class AppState extends Subject<IAppState> {
 
   // Game Event:
   public eventStarted(data: any) {
-
+    let stringData = JSON.stringify(data);
     switch (data.event) {
       case 'start':
-        this.gameStarted(data);
+        this.gameStarted(stringData);
         break;
       
       case 'end':
-        this.gameEnded(data);
+        this.gameEnded(stringData);
         break;
     
       default:
@@ -158,6 +137,7 @@ export class AppState extends Subject<IAppState> {
   }
 
   public timeSpent(data: any){
+    return;
     try {
       Android.timeSpent(data);
     } catch (err) {

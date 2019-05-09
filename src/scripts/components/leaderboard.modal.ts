@@ -9,7 +9,7 @@ export interface leaderboardData {
 declare global { interface Window { Game: any; } }
 
 interface JavaScriptInterface { 
-  getLeaderboardData(): any;
+  getGameLeaderboardData(): any;
 }
 
 declare var Android: JavaScriptInterface;
@@ -132,7 +132,6 @@ export class LeaderboardModal extends PIXI.Container {
     this.app = data.app;
     this.leaderboardData = this.getLeaderboardData();
 
-    console.log("show leaderboard modal");
   }
 
   private render_leaderboard() {
@@ -351,7 +350,7 @@ export class LeaderboardModal extends PIXI.Container {
   // LEADERBOARD
   public getLeaderboardData(){
     try{
-      Android.getLeaderboardData();
+      Android.getGameLeaderboardData();
     }catch(e){
       this.setLeaderboardData(this.dummy_data);
       console.log("leaderboard data from dummy data")
@@ -359,7 +358,7 @@ export class LeaderboardModal extends PIXI.Container {
   }
 
   public setLeaderboardData(data:any){
-
+    
     this.createLeaderboard();
     this.leaderboardData = data;
     this.render_leaderboard();

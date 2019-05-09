@@ -7,6 +7,13 @@ import { LeaderboardModal } from './../components/leaderboard.modal';
 import { HowtowinModal } from './../components/howtowin.modal';
 import { NetworkTimeoutModal } from '@src/scripts/components/nto.modal';
 
+interface JavaScriptInterface { 
+  getGameConfig(): any;
+}
+declare var Android: JavaScriptInterface;
+
+declare global { interface Window { Game: any; } }
+
 export class SplashScene extends Scene {
 
   state_subscription: Subscription;
@@ -36,7 +43,7 @@ export class SplashScene extends Scene {
 
   // dummy score data
   data = {
-    best_score: this.app.getState().getBestScore(),
+    best_score: 0,
     current_score: 0
   };  
 
@@ -47,14 +54,42 @@ export class SplashScene extends Scene {
   nto: NetworkTimeoutModal;
 
   init(): void {
-    
+    // get config
+    try {
+      Android.getGameConfig();
+    } catch (error) {
+        // mock setConfig 
+        let gamedata = localStorage.getItem("hopGameData");
+        if(localStorage.getItem("hopGameData") == null || localStorage.getItem("hopGameData") == undefined){
+
+          let data = JSON.stringify({"data":{"best_score": 0}});
+          this.setConfig(data);
+        }else{
+          this.setConfig(`{"data":${gamedata} }`);
+        }
+        
+    }
+
+    // expose function for android integration
+    window.Game = {
+      setConfig: (data: string) => {
+        this.setConfig(data);
+      }
+    }
   }
 
-  start(): void {
-    let obj = this.app.getCurrentScene()
+  setConfig(data: string) {
+    // set best score
+    let gameData = JSON.parse(data);
+    this.app.getState().saveBestScore(gameData.data.best_score);
+
+    // load game
+    this.startGame();
+  }
+
+  startGame(): void {
     
     this.timeStart = Date.now();
-
     this.data.best_score = this.app.getState().getBestScore();
     
     // initialize and set bg
