@@ -391,7 +391,10 @@ export class GameScene extends Scene {
       if(this.app.getState().isOnline() == true){
 
         // data requirements
-        this.sessionId = this.app.getState().generateSessionId();
+        if(this.sessionId == null){ 
+          this.sessionId = this.app.getState().generateSessionId();
+        }
+        
         // game started
         if(this.gameStarted == false){
           let event = {
