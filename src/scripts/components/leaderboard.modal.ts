@@ -47,7 +47,7 @@ export class LeaderboardModal extends PIXI.Container {
       {
         name: 'Sander',
         score: '2500',
-        prize: 'P5000',
+        prize: null,
         user_id: 99991,
       },
       {
@@ -212,7 +212,7 @@ export class LeaderboardModal extends PIXI.Container {
       rewards.endFill();
       rewards.position.x = this.profile_container[x].width - rewards.width;
       rewards.position.y = this.profile_container[x].height * 0.5 - rewards.height * 0.5;
-      this.profile_container[x].addChild(rewards);
+      
       // rewards text
       const rewards_text = new PIXI.Text(`${data[x].prize}`, {
         fontFamily: this.fontFamily,
@@ -223,7 +223,12 @@ export class LeaderboardModal extends PIXI.Container {
 
       player_points.position.y = rewards.height * 0.5 - rewards_text.height * 0.5;
       player_points.position.x = rewards.width * 0.5 - rewards_text.width * 0.5;
-      rewards.addChild(player_points);
+
+      // show rewards if prize is not null
+      if(data[x].prize != null){
+        this.profile_container[x].addChild(rewards);
+        rewards.addChild(player_points);
+      }
 
       // line break
       const breakline = new PIXI.Graphics();
