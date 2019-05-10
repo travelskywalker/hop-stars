@@ -51,7 +51,7 @@ export class LeaderboardModal extends PIXI.Container {
     {all_time_rankings: [
       {
         name: 'Sander',
-        avatar: 'url.jpg',
+        avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXhnN-so2rLeUJJ2J4H4LXkR01oxLRA7wwEKWZrE2ycY6woW50',
         self: true,
         rank: 1,
         score: '2500',
@@ -59,92 +59,35 @@ export class LeaderboardModal extends PIXI.Container {
       },
       {
         name: 'Alben',
-        avatar: 'https://yt3.ggpht.com/a/AGF-l78z8Mk9JuY-XjkHVJ_NgGItyTlFUXi1LANy=s288-mo-c-c0xffffffff-rj-k-no',
         score: '250',
+        avatar: 'https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTE1ODA0OTcxOTEwODU4MjUz/bruno-mars-17162400-1-402.jpg',
         self: false,
         rank: 2,
         prize: 'P3000',
       },
       {
         name: 'Lei',
-        avatar: 'https://yt3.ggpht.com/a/AGF-l7_mGsQjw1lWyx_1keNShTNnP6kWkPerGrThEg=s288-mo-c-c0xffffffff-rj-k-no',
         score: '250',
+        avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkN5P3Y2RqmdgWDRLtrzQUcps7ZkHU4W63pW0kHjVs4vejeLH4',
         self: false,
         rank: 3,
         prize: 'P1000',
       },
       {
         name: 'Edric',
-        avatar: 'https://yt3.ggpht.com/a/AGF-l7-o7kerdDSATMKwSTOyOznS6OM5-2JCcvDt1g=s288-mo-c-c0xffffffff-rj-k-no',
         score: '250',
+        avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNYjE7i_iyymMlwf3WRYU7WNKpe1pBbdlnr9G_CzylNL6yw7tP',
         self: false,
         rank: 4,
         prize: 'P100',
       },
       {
         name: 'Ben',
-        avatar: 'https://yt3.ggpht.com/a/AGF-l782W8NNpf4t5UZ86bh0fUy0rIyg72bTD1GBLg=s288-mo-c-c0xffffffff-rj-k-no',
         score: '25',
+        avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR34_pSmGMTSgK5khg_iQkvMpuoV-3QSG8gHmeovHGOMuvh81Jd',
         self: false,
         rank: 5,
         prize: 'P100',
-      },
-      {
-        name: 'Sander',
-        avatar: 'https://yt3.ggpht.com/a/AGF-l7_mGsQjw1lWyx_1keNShTNnP6kWkPerGrThEg=s288-mo-c-c0xffffffff-rj-k-no',
-        score: '25',
-        self: false,
-        rank: 6,
-        prize: 'P100',
-      },
-      {
-        name: 'Sander',
-        avatar: './../../assets/sample.jpg',
-        score: '25',
-        self: false,
-        rank: null,
-        prize: 'P100',
-        
-      },
-      {
-        name: 'Sander',
-        avatar: './../../assets/sample.jpg',
-        score: '25',
-        self: false,
-        rank: null,
-        prize: 'P100',
-      },
-      {
-        name: 'Sander',
-        avatar: './../../assets/sample.jpg',
-        score: '25',
-        self: false,
-        rank: null,
-        prize: 'P50',
-      },
-      {
-        name: 'Sander',
-        avatar: './../../assets/sample.jpg',
-        score: '25',
-        self: false,
-        rank: null,
-        prize: 'P50',
-      },
-      {
-        name: 'Sander',
-        avatar: './../../assets/sample.jpg',
-        score: '25',
-        self: false,
-        rank: null,
-        prize: 'P50',
-      },
-      {
-        name: 'Sander',
-        avatar: './../../assets/sample.jpg',
-        score: '25',
-        self: false,
-        rank: null,
-        prize: 'P50',
       }
     ]}
   };
@@ -158,9 +101,9 @@ export class LeaderboardModal extends PIXI.Container {
 
   }
 
-  private render_leaderboard() {
+  private render_leaderboard(data: any) {
     
-    let data = this.leaderboardData.data.all_time_rankings;
+    // let data = this.leaderboardData.data.all_time_rankings;
     
     for (let x = 0; x < data.length; x++) {
 
@@ -399,8 +342,20 @@ export class LeaderboardModal extends PIXI.Container {
   public setLeaderboardData(data:any){
     
     this.createLeaderboard();
-    this.leaderboardData = data;
-    this.render_leaderboard();
+
+    // preload images
+    var loader = new PIXI.loaders.Loader();
+    let users = data.data.all_time_rankings;
+    
+    users.forEach((profile:any, index:any) => {
+        // addimages to loader
+        loader.add(`user_${index}`, profile.avatar);
+    });
+
+    loader.load((loader: any, resources: any) => {
+      // render leaderboard when all avatar has been loaded
+      this.render_leaderboard(data.data.all_time_rankings);
+    })
   }
 
   private setScaleSpriteItem(parentContainer:any, sprite:any, perc: number): void {
