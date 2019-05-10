@@ -43,91 +43,111 @@ export class LeaderboardModal extends PIXI.Container {
   is_weekly_active:boolean = true;
 
   // Dummy data for testing
-  dummy_data:object =  [
+  dummy_data:object =  {data:
+    {all_time_rankings: [
       {
         name: 'Sander',
+        avatar: 'url.jpg',
+        self: true,
+        rank: 1,
         score: '2500',
         prize: null,
-        user_id: 99991,
       },
       {
         name: 'Alben',
         score: '250',
+        avatar: 'url.jpg',
+        self: false,
+        rank: 2,
         prize: 'P3000',
-        user_id: 99992,
       },
       {
         name: 'Lei',
         score: '250',
+        avatar: 'url.jpg',
+        self: false,
+        rank: 3,
         prize: 'P1000',
-        user_id: 99991,
       },
       {
         name: 'Edric',
         score: '250',
+        avatar: 'url.jpg',
+        self: false,
+        rank: 4,
         prize: 'P100',
-        user_id: 99992,
       },
       {
         name: 'Ben',
         score: '25',
+        avatar: 'url.jpg',
+        self: false,
+        rank: 5,
         prize: 'P100',
-        user_id: 99991,
       },
       {
         name: 'Sander',
         score: '25',
+        avatar: 'url.jpg',
+        self: false,
+        rank: 6,
         prize: 'P100',
-        user_id: 99992,
       },
       {
         name: 'Sander',
         score: '25',
+        avatar: 'url.jpg',
+        self: false,
+        rank: null,
         prize: 'P100',
-        user_id: 99991,
+        
       },
       {
         name: 'Sander',
         score: '25',
+        avatar: 'url.jpg',
+        self: false,
+        rank: null,
         prize: 'P100',
-        user_id: 99992,
       },
       {
         name: 'Sander',
         score: '25',
+        avatar: 'url.jpg',
+        self: false,
+        rank: null,
         prize: 'P50',
-        user_id: 99991,
       },
       {
         name: 'Sander',
         score: '25',
+        avatar: 'url.jpg',
+        self: false,
+        rank: null,
         prize: 'P50',
-        user_id: 99992,
       },
       {
         name: 'Sander',
         score: '25',
+        avatar: 'url.jpg',
+        self: false,
+        rank: null,
         prize: 'P50',
-        user_id: 99991,
       },
       {
         name: 'Sander',
         score: '25',
+        avatar: 'url.jpg',
+        self: false,
+        rank: null,
         prize: 'P50',
-        user_id: 99992,
       }
-    ];
+    ]}
+  };
 
   constructor(data: leaderboardData) {
 
     super();
-
-    // expose function for android integration
-    window.Game = {
-      setLeaderboardData: (data: any) => {
-        this.setLeaderboardData(data);
-      }
-    }
 
     this.app = data.app;
     this.leaderboardData = this.getLeaderboardData();
@@ -135,8 +155,9 @@ export class LeaderboardModal extends PIXI.Container {
   }
 
   private render_leaderboard() {
-
-    let data = this.leaderboardData;
+    
+    let data = this.leaderboardData.data.all_time_rankings;
+    
     for (let x = 0; x < data.length; x++) {
 
       // initialize and set bg color via drawing shapes
@@ -154,7 +175,7 @@ export class LeaderboardModal extends PIXI.Container {
       this.leaderboard_bg.addChild(this.profile_container[x]);
 
       // player rank
-      const rank = new PIXI.Text(`${x + 1}`, {
+      const rank = new PIXI.Text(`${(data[x].rank != null) ? data[x].rank: ''}`, {
         fontFamily: this.fontFamily,
         fontSize: `${this.profile_container[x].height * 0.2}px`,
         fill: 0x744395,
