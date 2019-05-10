@@ -25,17 +25,6 @@ export class AppState extends Subject<IAppState> {
 
   public state: IAppState = new IAppState();
 
-  constructor(){
-    super();
-
-    // expose function for android integration
-    window.Game = {
-      showExitConfirmation: () => {
-        this.gameCancelled();
-      }
-    }
-  }
-
   public setExplosion(active: boolean): void {
 
     this.state.explosionActive = active;

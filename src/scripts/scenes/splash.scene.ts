@@ -53,7 +53,8 @@ export class SplashScene extends Scene {
   // nto
   nto: NetworkTimeoutModal;
 
-  init(): void {
+  start(): void {
+    
     // get config
     try {
       Android.getGameConfig();
@@ -74,8 +75,17 @@ export class SplashScene extends Scene {
     window.Game = {
       setConfig: (data: string) => {
         this.setConfig(data);
+      },
+      showExitConfirmation: () => {
+        this.app.getState().gameCancelled();
+      },
+      setLeaderboardData: (data: any) => {
+        
+        this.lmodal.setLeaderboardData(JSON.parse(data));
       }
     }
+
+    console.log("window.game in splash", window.Game)
   }
 
   setConfig(data: string) {
@@ -86,6 +96,7 @@ export class SplashScene extends Scene {
     // load game
     this.startGame();
   }
+
 
   startGame(): void {
     
