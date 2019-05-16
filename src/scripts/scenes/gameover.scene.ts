@@ -4,9 +4,11 @@ import { SpriteActor } from '@src/core/sprite.actor';
 import { Graphics, Container } from 'pixi.js';
 import { LeaderboardModal } from './../components/leaderboard.modal';
 import { GameScene } from '@src/scripts/scenes/game.scene';
+import { NetworkTimeoutModal } from '@src/scripts/components/nto.modal';
 
+var gameOverLmodal: any;
 export class GameOverScene extends Scene {
-
+  
   lmodal: LeaderboardModal;
   // Dummy data for testing
   dummy_data:object = { 
@@ -390,8 +392,9 @@ OVER`;
     this.leaderboard_btn.getSprite().on('pointerup', () => { 
       
           // for modal
-          this.lmodal = new LeaderboardModal({app: this.app, var: this.dummy_data});
-          this.container.addChild(this.lmodal);
+          // this.lmodal = new LeaderboardModal({app: this.app, var: this.dummy_data});
+          // this.container.addChild(this.lmodal);
+          this.showLeaderboard();
     });
     this.bottomContainer.addChild(this.leaderboard_btn.getSprite());
 
@@ -405,5 +408,20 @@ OVER`;
   remove(): void {
     this.container.removeChildren();
   }
-
+  
+  showLeaderboard(){
+    if(this.app.getState().isOnline() == true){
+      // with internet connection
+      this.app.getSoundPlayer().play('button');
+      // for modal
+      gameOverLmodal = new LeaderboardModal({app: this.app, var: ""});
+      this.container.addChild(gameOverLmodal);
+      console.log('gameover showleader 3');
+    }else{
+      // show NTO
+      // modal
+      let NTOModal = new NetworkTimeoutModal({app: this.app, var:""});
+      this.container.addChild(NTOModal);
+    }  
+  }
 }

@@ -6,6 +6,8 @@ import { SpriteAnimatedActor } from '@src/core/sprite.animated.actor';
 import { LeaderboardModal } from './../components/leaderboard.modal';
 import { HowtowinModal } from './../components/howtowin.modal';
 import { NetworkTimeoutModal } from '@src/scripts/components/nto.modal';
+import { GameOverScene } from '@src/scripts/scenes/gameover.scene';
+import { Application } from 'pixi.js';
 
 interface JavaScriptInterface { 
   getGameConfig(): any;
@@ -13,12 +15,14 @@ interface JavaScriptInterface {
 declare var Android: JavaScriptInterface;
 
 declare global { interface Window { Game: any; } }
+var splashLmodal: any;
+var gameOverLmodal: any;
 
 export class SplashScene extends Scene {
 
   state_subscription: Subscription;
 
-  lmodal: LeaderboardModal;
+  // lmodal: LeaderboardModal;
   howtomodal: HowtowinModal;
   
 
@@ -49,9 +53,10 @@ export class SplashScene extends Scene {
 
   // timespent
   timeStart: any;
-
+  
   // nto
   nto: NetworkTimeoutModal;
+
 
   start(): void {
     
@@ -68,7 +73,6 @@ export class SplashScene extends Scene {
         }else{
           this.setConfig(`{"data":${gamedata} }`);
         }
-        
     }
 
     // expose function for android integration
@@ -80,8 +84,22 @@ export class SplashScene extends Scene {
         this.app.getState().gameCancelled();
       },
       setLeaderboardData: (data: any) => {
-        
-        this.lmodal.setLeaderboardData(JSON.parse(data));
+        console.log("set leaderboard data in splash scene")
+        try {
+          
+          if(this.app.getCurrentScene().constructor.name == "SplashScene"){
+            console.log('splash lmodal');
+            splashLmodal.setLeaderboardData(JSON.parse(data));
+          } else {
+            console.log('gameover lmodal');
+            gameOverLmodal = new LeaderboardModal({app: this.app, var: ""});
+            gameOverLmodal.setLeaderboardData(JSON.parse(data));
+          }
+        } catch (error) {
+          console.log(error);
+          gameOverLmodal = new LeaderboardModal({app: this.app, var: ""});
+          gameOverLmodal.setLeaderboardData(JSON.parse(data));
+        }
       }
     }
 
@@ -221,14 +239,12 @@ export class SplashScene extends Scene {
   }
 
   showLeaderboard(){
-
     if(this.app.getState().isOnline() == true){
       // with internet connection
       this.app.getSoundPlayer().play('button');
       // for modal
-      this.lmodal = new LeaderboardModal({app: this.app, var: ""});
-      this.container.addChild(this.lmodal);
-
+      splashLmodal = new LeaderboardModal({app: this.app, var: ""});
+      this.container.addChild(splashLmodal);
     }else{
       // show NTO
       // modal

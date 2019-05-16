@@ -135,7 +135,7 @@ export class LeaderboardModal extends PIXI.Container {
       rank.position.y = this.profile_container[x].height * 0.5 - rank.height * 0.5;
       rank.visible = true;
       this.profile_container[x].addChild(rank);
-
+      /*
       // set player avatar      
       this.avatar_container[x] = new PIXI.Graphics();
       this.avatar_container[x].beginFill(0xCC0000,0).drawRect(0,0,100,100).endFill();
@@ -181,7 +181,37 @@ export class LeaderboardModal extends PIXI.Container {
       player_name.position.y = user_details.height * 0.5 - player_name.height * 0.5;
       player_name.position.x = 0
       user_details.addChild(player_name);
-      
+      */
+
+      // set player avatar
+      const avatar = new SpriteActor('profile_image', this.app, 'leaderboard', 'profile-avatar.png');
+      avatar.setScaleUpToScreenPercHeight(this.profile_container[x].height * 0.0002);
+      avatar.setAnchor(0, 0);
+      avatar.setPosition(
+        this.profile_container[x].width * 0.08,
+        this.profile_container[x].height * 0.5 - avatar.getSprite().height * 0.5);
+      this.profile_container[x].addChild(avatar.getSprite());
+
+      // initialize and set user details container
+      const user_details = new PIXI.Graphics();
+      user_details.beginFill(0X000000, 0);
+      user_details.drawRect(0, 0, this.profile_container[x].width * 0.55, this.profile_container[x].height * 0.5);
+      user_details.position.x = avatar.getSprite().width + avatar.getSprite().position.x + 20;
+      user_details.position.y = this.profile_container[x].height * 0.5 - user_details.height * 0.5;
+      user_details.endFill();
+      this.profile_container[x].addChild(user_details);
+
+      // player name
+      const player_name = new PIXI.Text(`${data[x].name}`, {
+        fontFamily: this.fontFamily,
+        fontSize: `${user_details.height * 0.5}px`,
+        fill: 0x744395,
+        align: 'center',
+      });
+      player_name.anchor.set(0, 0);
+      player_name.position.y = user_details.height * 0.5 - player_name.height * 0.5;
+      player_name.position.x = 0
+      user_details.addChild(player_name);
       // player points
       const player_points = new PIXI.Text(`${data[x].score} pts.`, {
         fontFamily: this.fontFamily,
@@ -336,6 +366,8 @@ export class LeaderboardModal extends PIXI.Container {
     try{
       Android.getGameLeaderboardData();
     }catch(e){
+      // window.Game.setLeaderboardData('any');
+      // return;
       this.setLeaderboardData(this.dummy_data);
       console.log("leaderboard data from dummy data")
     }
@@ -344,7 +376,7 @@ export class LeaderboardModal extends PIXI.Container {
   public setLeaderboardData(data:any){
     
     this.createLeaderboard();
-
+    /*
     // preload images
     this.avatarLoader = new PIXI.loaders.Loader();
     let users = data.data.all_time_rankings;
@@ -358,6 +390,9 @@ export class LeaderboardModal extends PIXI.Container {
       // render leaderboard when all avatar has been loaded
       this.render_leaderboard(data.data.all_time_rankings);
     })
+    */
+   this.leaderboardData = data;
+   this.render_leaderboard(data.data.all_time_rankings);
   }
 
   private setScaleSpriteItem(parentContainer:any, sprite:any, perc: number): void {

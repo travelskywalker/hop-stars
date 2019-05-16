@@ -1,4 +1,5 @@
 import { Subject } from 'rxjs/Subject';
+import { LeaderboardModal } from '@src/scripts/components/leaderboard.modal';
 
 interface JavaScriptInterface { 
   // events
@@ -11,8 +12,6 @@ interface JavaScriptInterface {
   // timespent
   timeSpent(data: any): any;  
 }
-
-declare global { interface Window { Game: any; } }
 
 declare var Android: JavaScriptInterface;
 
