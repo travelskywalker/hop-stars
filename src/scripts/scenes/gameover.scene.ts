@@ -6,7 +6,6 @@ import { LeaderboardModal } from './../components/leaderboard.modal';
 import { GameScene } from '@src/scripts/scenes/game.scene';
 import { NetworkTimeoutModal } from '@src/scripts/components/nto.modal';
 
-var gameOverLmodal: any;
 export class GameOverScene extends Scene {
   
   lmodal: LeaderboardModal;
@@ -414,8 +413,8 @@ OVER`;
       // with internet connection
       this.app.getSoundPlayer().play('button');
       // for modal
-      gameOverLmodal = new LeaderboardModal({app: this.app, var: ""});
-      this.container.addChild(gameOverLmodal);
+      this.lmodal = new LeaderboardModal({app: this.app, var: ""});
+      this.container.addChild(this.lmodal);
       console.log('gameover showleader 3');
     }else{
       // show NTO

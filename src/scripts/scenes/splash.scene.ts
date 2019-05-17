@@ -15,16 +15,13 @@ interface JavaScriptInterface {
 declare var Android: JavaScriptInterface;
 
 declare global { interface Window { Game: any; } }
-var splashLmodal: any;
-var gameOverLmodal: any;
 
 export class SplashScene extends Scene {
 
   state_subscription: Subscription;
 
-  // lmodal: LeaderboardModal;
+  lmodal: LeaderboardModal;
   howtomodal: HowtowinModal;
-  
 
   // bg
   bg: SpriteActor;
@@ -82,24 +79,6 @@ export class SplashScene extends Scene {
       },
       showExitConfirmation: () => {
         this.app.getState().gameCancelled();
-      },
-      setLeaderboardData: (data: any) => {
-        console.log("set leaderboard data in splash scene")
-        try {
-          
-          if(this.app.getCurrentScene().constructor.name == "SplashScene"){
-            console.log('splash lmodal');
-            splashLmodal.setLeaderboardData(JSON.parse(data));
-          } else {
-            console.log('gameover lmodal');
-            gameOverLmodal = new LeaderboardModal({app: this.app, var: ""});
-            gameOverLmodal.setLeaderboardData(JSON.parse(data));
-          }
-        } catch (error) {
-          console.log(error);
-          gameOverLmodal = new LeaderboardModal({app: this.app, var: ""});
-          gameOverLmodal.setLeaderboardData(JSON.parse(data));
-        }
       }
     }
 
@@ -243,8 +222,9 @@ export class SplashScene extends Scene {
       // with internet connection
       this.app.getSoundPlayer().play('button');
       // for modal
-      splashLmodal = new LeaderboardModal({app: this.app, var: ""});
-      this.container.addChild(splashLmodal);
+      this.lmodal = new LeaderboardModal({app: this.app, var: ""});
+      this.container.addChild(this.lmodal);
+      console.log()
     }else{
       // show NTO
       // modal
