@@ -81,8 +81,6 @@ export class SplashScene extends Scene {
         this.app.getState().gameCancelled();
       }
     }
-
-    console.log("window.game in splash", window.Game)
   }
 
   setConfig(data: string) {
@@ -224,7 +222,6 @@ export class SplashScene extends Scene {
       // for modal
       this.lmodal = new LeaderboardModal({app: this.app, var: ""});
       this.container.addChild(this.lmodal);
-      console.log()
     }else{
       // show NTO
       // modal

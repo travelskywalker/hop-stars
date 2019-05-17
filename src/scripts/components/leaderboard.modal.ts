@@ -98,12 +98,14 @@ export class LeaderboardModal extends PIXI.Container {
 
     super();
 
+    window.Game.setLeaderboardData = (data: any) => {
+      this.setLeaderboardData(JSON.parse(data));
+    }
+
     this.app = data.app;
     this.leaderboardData = this.getLeaderboardData();
 
-    window.Game.setLeaderboardData = function(data: any) {
-      this.setLeaderboardData(JSON.parse(data));
-    }
+    
 
   }
 
@@ -367,12 +369,13 @@ export class LeaderboardModal extends PIXI.Container {
 
   // LEADERBOARD
   public getLeaderboardData(){
-    
     try{
+
       Android.getGameLeaderboardData();
     }catch(e){
+      
       this.setLeaderboardData(this.dummy_data);
-      // console.log("leaderboard data from dummy data")
+      console.log("leaderboard data from dummy data")
     }
   }
 
