@@ -54,7 +54,7 @@ export class LeaderboardModal extends PIXI.Container {
       {
         name: 'Sander',
         avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXhnN-so2rLeUJJ2J4H4LXkR01oxLRA7wwEKWZrE2ycY6woW50',
-        self: true,
+        self: false,
         rank: 1,
         score: '2500',
         prize: null,
@@ -90,7 +90,47 @@ export class LeaderboardModal extends PIXI.Container {
         self: false,
         rank: 5,
         prize: 'P100',
-      }
+      },
+      {
+        name: 'Mac',
+        avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXhnN-so2rLeUJJ2J4H4LXkR01oxLRA7wwEKWZrE2ycY6woW50',
+        self: false,
+        rank: 6,
+        score: '25',
+        prize: null,
+      },
+      {
+        name: 'Book',
+        score: '24',
+        avatar: 'https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTE1ODA0OTcxOTEwODU4MjUz/bruno-mars-17162400-1-402.jpg',
+        self: true,
+        rank: 7,
+        prize: 'P100',
+      },
+      {
+        name: 'Pro',
+        score: '23',
+        avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkN5P3Y2RqmdgWDRLtrzQUcps7ZkHU4W63pW0kHjVs4vejeLH4',
+        self: false,
+        rank: 8,
+        prize: 'P100',
+      },
+      {
+        name: 'Micro',
+        score: '2',
+        avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNYjE7i_iyymMlwf3WRYU7WNKpe1pBbdlnr9G_CzylNL6yw7tP',
+        self: false,
+        rank: 9,
+        prize: 'P100',
+      },
+      {
+        name: 'Soft',
+        score: '1',
+        avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR34_pSmGMTSgK5khg_iQkvMpuoV-3QSG8gHmeovHGOMuvh81Jd',
+        self: false,
+        rank: 10,
+        prize: 'P100',
+      }      
     ]}
   };
 
@@ -114,11 +154,19 @@ export class LeaderboardModal extends PIXI.Container {
     // let data = this.leaderboardData.data.all_time_rankings;
     
     for (let x = 0; x < data.length; x++) {
-
+      
       // initialize and set bg color via drawing shapes
       this.profile_container[x] = new PIXI.Graphics();
-      this.profile_container[x].beginFill(0X2E2D4B, 0);
-      this.profile_container[x].drawRect(0, 0, this.app.getScreenSize().w * 0.9, this.app.getScreenSize().h * 0.12);
+      if(data[x].self == true) {
+        this.profile_container[x].beginFill(0Xc2d378, 1);
+      }
+      else {
+        this.profile_container[x].beginFill(0X2E2D4B, 0);
+      }
+      
+
+      // this.profile_container[x].drawRect(0, 0, this.app.getScreenSize().w * 0.9, this.app.getScreenSize().h * 0.12);
+      this.profile_container[x].drawRect(0, 0, this.app.getScreenSize().w, this.app.getScreenSize().h * 0.12);
       this.profile_container[x].endFill();
       this.profile_container[x].position.x = this.app.getScreenSize().w * 0.5 - this.profile_container[x].width * 0.5;
       if (x !== 0) {
@@ -134,9 +182,9 @@ export class LeaderboardModal extends PIXI.Container {
         fontFamily: this.fontFamily,
         fontSize: `${this.profile_container[x].height * 0.2}px`,
         fill: 0x744395,
-        align: 'center',
+        align: 'left',
       });
-      rank.anchor.set(0, 0);
+      rank.anchor.set(-1, 0);
       rank.name = 'rank';
       rank.position.y = this.profile_container[x].height * 0.5 - rank.height * 0.5;
       rank.visible = true;
@@ -221,7 +269,7 @@ export class LeaderboardModal extends PIXI.Container {
       // player points
       const player_points = new PIXI.Text(`${data[x].score} pts.`, {
         fontFamily: this.fontFamily,
-        fontSize: `${user_details.height * 0.4}px`,
+        fontSize: `${user_details.height * 0.5}px`,
         fill: 0XFFFFFF,
         align: 'left',
       });
@@ -231,7 +279,8 @@ export class LeaderboardModal extends PIXI.Container {
       rewards.beginFill(0xbe388e, 0);
       rewards.drawRoundedRect(0, 0, this.profile_container[x].width * 0.2, this.profile_container[x].height * 0.45, 40);
       rewards.endFill();
-      rewards.position.x = this.profile_container[x].width - rewards.width;
+      // rewards.position.x = this.profile_container[x].width - rewards.width;
+      rewards.position.x = this.profile_container[x].width - (rewards.width + rewards.width * .16);
       rewards.position.y = this.profile_container[x].height * 0.5 - rewards.height * 0.5;
       this.profile_container[x].addChild(rewards);
       // rewards text
@@ -239,10 +288,9 @@ export class LeaderboardModal extends PIXI.Container {
         fontFamily: this.fontFamily,
         fontSize: `${user_details.height * 0.4}px`,
         fill: 0XFFFFFF,
-        align: 'center',
+        align: 'right',
         padding: 0
       });
-      
       player_points.position.y = rewards.height * 0.5 - rewards_text.height * 0.5;
       // player_points.position.x = rewards.width * 0.5 - rewards_text.width * 0.5;
       player_points.position.x = 0;
@@ -310,7 +358,6 @@ export class LeaderboardModal extends PIXI.Container {
     this.tab_nav_container.position.y = Title.position.y + Title.height;
     this.tab_nav_container.visible = false; // show or hide nav bar
    
-    
     // weekly
     this.weekly = new PIXI.Text(`WEEKLY`, {
       fontFamily: this.fontFamily,
