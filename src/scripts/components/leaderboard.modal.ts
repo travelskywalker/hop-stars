@@ -158,11 +158,13 @@ export class LeaderboardModal extends PIXI.Container {
   private render_leaderboard(data: any) {
     // get userData
     let userData = data.find((user: any) => user.self == true);
-    // check if user outside to top 10
-    let isUserNotInTop = (userData.rank > data.length - 1) ? true : false;
-    
-    if(isUserNotInTop){
-      this.createFloatingUser(userData);
+    // console.log(userData);
+    if(userData !== undefined) {
+      // check if user outside to top 10
+      let isUserNotInTop = (userData.rank > data.length - 1) ? true : false;   
+      if(isUserNotInTop){
+        this.createFloatingUser(userData);
+      }
     }
 
     for (let x = 0; x < data.length; x++) {

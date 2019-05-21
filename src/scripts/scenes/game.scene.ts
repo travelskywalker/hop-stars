@@ -332,8 +332,7 @@ export class GameScene extends Scene {
   this.scoreText = new Text(
     `${this.score}`,
     {
-      fontFamily : 'Arial',
-      fontWeight: 'Bold',
+      fontFamily : 'Chennai-Bold',
       fontSize: this.app.getScreenSize().w * 0.1, 
       fill : 0Xffffff, 
       align : 'right',
@@ -346,7 +345,7 @@ export class GameScene extends Scene {
     });
   this.scoreText.anchor.set(1 , 0);
   this.scoreText.position.x = this.score_coin.getSprite().position.x - 20;
-  this.scoreText.position.y = this.app.getScreenSize().h * 0.02;
+  this.scoreText.position.y = this.app.getScreenSize().h * 0.015;
   this.container.addChild(this.scoreText);
 
   //////////////////////////////
