@@ -134,10 +134,10 @@ export class LeaderboardModal extends PIXI.Container {
       },
       {
         name: 'YOU',
-        score: '1',
+        score: '0',
         avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR34_pSmGMTSgK5khg_iQkvMpuoV-3QSG8gHmeovHGOMuvh81Jd',
         self: true,
-        rank: 22,
+        rank: 2292,
         prize: '0',
       }       
     ]}
@@ -159,7 +159,7 @@ export class LeaderboardModal extends PIXI.Container {
     // get userData
     let userData = data.find((user: any) => user.self == true);
     // check if user outside to top 10
-    let isUserNotInTop = (userData.rank > 10) ? true : false;
+    let isUserNotInTop = (userData.rank > data.length - 1) ? true : false;
     
     if(isUserNotInTop){
       this.createFloatingUser(userData);
