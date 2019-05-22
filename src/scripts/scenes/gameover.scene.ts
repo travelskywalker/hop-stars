@@ -7,7 +7,7 @@ import { GameScene } from '@src/scripts/scenes/game.scene';
 import { NetworkTimeoutModal } from '@src/scripts/components/nto.modal';
 
 export class GameOverScene extends Scene {
-  
+  isProcessing = false;
   lmodal: LeaderboardModal;
   // Dummy data for testing
   dummy_data:object = { 
@@ -377,8 +377,18 @@ OVER`;
      this.play_again_btn.setScaleUpToScreenPercWidth(.275);
      setTimeout( () => this.play_again_btn.getSprite().interactive = true, 500);
      this.play_again_btn.getSprite().on('pointerup', () => { 
+       // is processing
+  		if(this.isProcessing === true) {
+  			return;
+  		}
+      this.isProcessing = true;
        console.log('go to instruction screen scene ');
-       setTimeout(() => { this.app.goToScene(2); }, 200);
+       setTimeout(() => { 
+         this.app.goToScene(2); 
+         setTimeout(() => {
+          this.isProcessing = false;
+        },500);
+        }, 200);
      });
     this.bottomContainer.addChild(this.play_again_btn.getSprite());
 

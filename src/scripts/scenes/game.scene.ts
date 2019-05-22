@@ -8,7 +8,7 @@ import { Button } from '@src/scripts/components/button.component';
 import { NetworkTimeoutModal } from '@src/scripts/components/nto.modal';
 
 export class GameScene extends Scene {
-
+  isProcessing = false;
   // objects
   bg: Graphics;
   bg_initial_x: number;
@@ -377,7 +377,12 @@ export class GameScene extends Scene {
 
   //// TOUCH START
     this.circle_bg.on('touchstart', (interactionData: PIXI.interaction.InteractionEvent) => {  
-        
+  		// is processing
+  		if(this.isProcessing === true) {
+  			return;
+  		}
+      this.isProcessing = true;
+
       if(interactionData.data.identifier > 0) return;
 
       this.container.removeChild(this.instructionContainer);
@@ -409,10 +414,15 @@ export class GameScene extends Scene {
         // get initial tapped postion
         const point = interactionData.data.getLocalPosition(this.circle);
         this.initialPoint = point;
+
+        
       }else{
         this.showNTOModal();
       }
-
+      setTimeout(() => {
+        this.isProcessing = false;
+      },500);
+      
   });
 
    //// TOUCH MOVE

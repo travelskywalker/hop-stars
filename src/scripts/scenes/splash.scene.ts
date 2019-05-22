@@ -17,7 +17,7 @@ declare var Android: JavaScriptInterface;
 declare global { interface Window { Game: any; } }
 
 export class SplashScene extends Scene {
-
+  isProcessing = false;
   state_subscription: Subscription;
 
   lmodal: LeaderboardModal;
@@ -156,9 +156,19 @@ export class SplashScene extends Scene {
     this.play_btn.setScaleUpToScreenPercWidth(.315);
     this.play_btn.getSprite().interactive = true;
     this.play_btn.getSprite().on('pointerup', () => { 
+  		// is processing
+  		if(this.isProcessing === true) {
+  			return;
+  		}
+      this.isProcessing = true;
       console.log('go to instruction screen scene ');
       this.app.getSoundPlayer().play('button');
-      setTimeout(() => { this.app.goToScene(2); }, 200);
+      setTimeout(() => { 
+        this.app.goToScene(2); 
+        setTimeout(() => {
+          this.isProcessing = false;
+        },500);
+      }, 200);
     });
     this.addChild(this.play_btn);
 
