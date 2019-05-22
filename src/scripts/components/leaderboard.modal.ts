@@ -60,84 +60,84 @@ export class LeaderboardModal extends PIXI.Container {
         score: '2500',
         prize: null,
       },
-      {
-        name: 'Alben',
-        score: '250',
-        avatar: 'https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTE1ODA0OTcxOTEwODU4MjUz/bruno-mars-17162400-1-402.jpg',
-        self: false,
-        rank: 2,
-        prize: 'P3000',
-      },
-      {
-        name: 'Lei',
-        score: '250',
-        avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkN5P3Y2RqmdgWDRLtrzQUcps7ZkHU4W63pW0kHjVs4vejeLH4',
-        self: false,
-        rank: 3,
-        prize: 'P1000',
-      },
-      {
-        name: 'Edric',
-        score: '250',
-        avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNYjE7i_iyymMlwf3WRYU7WNKpe1pBbdlnr9G_CzylNL6yw7tP',
-        self: false,
-        rank: 4,
-        prize: 'P100',
-      },
-      {
-        name: 'Ben',
-        score: '25',
-        avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR34_pSmGMTSgK5khg_iQkvMpuoV-3QSG8gHmeovHGOMuvh81Jd',
-        self: false,
-        rank: 5,
-        prize: 'P100',
-      },
-      {
-        name: 'Mac',
-        avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXhnN-so2rLeUJJ2J4H4LXkR01oxLRA7wwEKWZrE2ycY6woW50',
-        self: false,
-        rank: 6,
-        score: '25',
-        prize: null,
-      },
-      {
-        name: 'Book',
-        score: '24',
-        avatar: 'https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTE1ODA0OTcxOTEwODU4MjUz/bruno-mars-17162400-1-402.jpg',
-        self: false,
-        rank: 7,
-        prize: 'P100',
-      },
-      {
-        name: 'Pro',
-        score: '23',
-        avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkN5P3Y2RqmdgWDRLtrzQUcps7ZkHU4W63pW0kHjVs4vejeLH4',
-        self: false,
-        rank: 8,
-        prize: 'P100',
-      },
-      {
-        name: 'Micro',
-        score: '2',
-        avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNYjE7i_iyymMlwf3WRYU7WNKpe1pBbdlnr9G_CzylNL6yw7tP',
-        self: false,
-        rank: 9,
-        prize: 'P100',
-      },
-      {
-        name: 'Soft',
-        score: '1',
-        avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR34_pSmGMTSgK5khg_iQkvMpuoV-3QSG8gHmeovHGOMuvh81Jd',
-        self: false,
-        rank: 10,
-        prize: 'P100',
-      },
+      // {
+      //   name: 'Alben',
+      //   score: '250',
+      //   avatar: 'https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTE1ODA0OTcxOTEwODU4MjUz/bruno-mars-17162400-1-402.jpg',
+      //   self: false,
+      //   rank: 2,
+      //   prize: 'P3000',
+      // },
+      // {
+      //   name: 'Lei',
+      //   score: '250',
+      //   avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkN5P3Y2RqmdgWDRLtrzQUcps7ZkHU4W63pW0kHjVs4vejeLH4',
+      //   self: false,
+      //   rank: 3,
+      //   prize: 'P1000',
+      // },
+      // {
+      //   name: 'Edric',
+      //   score: '250',
+      //   avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNYjE7i_iyymMlwf3WRYU7WNKpe1pBbdlnr9G_CzylNL6yw7tP',
+      //   self: false,
+      //   rank: 4,
+      //   prize: 'P100',
+      // },
+      // {
+      //   name: 'Ben',
+      //   score: '25',
+      //   avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR34_pSmGMTSgK5khg_iQkvMpuoV-3QSG8gHmeovHGOMuvh81Jd',
+      //   self: false,
+      //   rank: 5,
+      //   prize: 'P100',
+      // },
+      // {
+      //   name: 'Mac',
+      //   avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXhnN-so2rLeUJJ2J4H4LXkR01oxLRA7wwEKWZrE2ycY6woW50',
+      //   self: false,
+      //   rank: 6,
+      //   score: '25',
+      //   prize: null,
+      // },
+      // {
+      //   name: 'Book',
+      //   score: '24',
+      //   avatar: 'https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTE1ODA0OTcxOTEwODU4MjUz/bruno-mars-17162400-1-402.jpg',
+      //   self: false,
+      //   rank: 7,
+      //   prize: 'P100',
+      // },
+      // {
+      //   name: 'Pro',
+      //   score: '23',
+      //   avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkN5P3Y2RqmdgWDRLtrzQUcps7ZkHU4W63pW0kHjVs4vejeLH4',
+      //   self: false,
+      //   rank: 8,
+      //   prize: 'P100',
+      // },
+      // {
+      //   name: 'Micro',
+      //   score: '2',
+      //   avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNYjE7i_iyymMlwf3WRYU7WNKpe1pBbdlnr9G_CzylNL6yw7tP',
+      //   self: false,
+      //   rank: 9,
+      //   prize: 'P100',
+      // },
+      // {
+      //   name: 'Soft',
+      //   score: '1',
+      //   avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR34_pSmGMTSgK5khg_iQkvMpuoV-3QSG8gHmeovHGOMuvh81Jd',
+      //   self: false,
+      //   rank: 10,
+      //   prize: 'P100',
+      // },
       {
         name: 'YOU',
         score: '0',
         avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR34_pSmGMTSgK5khg_iQkvMpuoV-3QSG8gHmeovHGOMuvh81Jd',
         self: true,
-        rank: 2292,
+        rank: 2,
         prize: '0',
       }       
     ]}
@@ -160,8 +160,10 @@ export class LeaderboardModal extends PIXI.Container {
     let userData = data.find((user: any) => user.self == true);
     // console.log(userData);
     if(userData !== undefined) {
-      // check if user outside to top 10
-      let isUserNotInTop = (userData.rank > data.length - 1) ? true : false;   
+      // check if data user are less than 10 or more
+      let dataLength = (userData.rank == data.length) ? data.length : data.length - 1;
+      // check if user outside to top 10 or more
+      let isUserNotInTop = (userData.rank > dataLength) ? true : false;   
       if(isUserNotInTop){
         this.createFloatingUser(userData);
       }
