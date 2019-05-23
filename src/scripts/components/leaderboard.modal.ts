@@ -152,7 +152,7 @@ export class LeaderboardModal extends PIXI.Container {
     }
 
     this.app = data.app;
-    this.leaderboardData = this.getLeaderboardData();
+    this.getLeaderboardData();
   }
 
   private render_leaderboard(data: any) {
@@ -511,7 +511,7 @@ export class LeaderboardModal extends PIXI.Container {
     this.closeBtn.setScaleUpToScreenPercWidth(.0625);
     this.closeBtn.getSprite().interactive = true;
     this.closeBtn.getSprite().on('pointerup', () => { 
-     
+      this.destroyTexture(this.leaderboardData.data.all_time_rankings);
       this.removeChild(this.leaderboard_bg);
       this.removeChild(this.bg_image.getSprite());
       this.removeChildren();
@@ -520,6 +520,11 @@ export class LeaderboardModal extends PIXI.Container {
     this.addChild(this.leaderboard_bg);
   }
 
+  destroyTexture(data:any){
+    for (let x = 0; x < data.length; x++) {
+      PIXI.Texture.from(`${data[x].avatar}`).destroy(true)
+    }
+  }
   // LEADERBOARD
   public getLeaderboardData(){
     try{
@@ -533,24 +538,24 @@ export class LeaderboardModal extends PIXI.Container {
   }
 
   public setLeaderboardData(data:any){
-    
+    this.leaderboardData = data;
     this.createLeaderboard();
-    /*
-    // preload images
-    this.avatarLoader = new PIXI.loaders.Loader();
-    let users = data.data.all_time_rankings;
     
-    users.forEach((profile:any, index:any) => {
-        // addimages to loader
-        this.avatarLoader.add(`user_${index}`, profile.avatar);
-    });
+    // preload images
+    // this.avatarLoader = new PIXI.loaders.Loader();
+    // let users = data.data.all_time_rankings;
+    
+    // users.forEach((profile:any, index:any) => {
+    //     // addimages to loader
+    //     this.avatarLoader.add(`user_${index}`, profile.avatar);
+    // });
 
-    this.avatarLoader.load((loader: any, resources: any) => {
-      // render leaderboard when all avatar has been loaded
-      this.render_leaderboard(data.data.all_time_rankings);
-    })
-    */
-   this.leaderboardData = data;
+    // this.avatarLoader.load((loader: any, resources: any) => {
+    //   // render leaderboard when all avatar has been loaded
+    //   this.render_leaderboard(data.data.all_time_rankings);
+    // })
+    
+   
    this.render_leaderboard(data.data.all_time_rankings);
   }
 
