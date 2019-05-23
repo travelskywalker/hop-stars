@@ -538,11 +538,8 @@ export class GameScene extends Scene {
       this.container.removeChild(this.taptostart);
       this.container.removeChild(this.swipeLeftRight);
 
-      // game started
-      // this.app.getState().eventStarted(); //send payload
       this.ball_click(); 
     })
-    // END OF INSTRUCTION
   }
 
   randomPosition(){
@@ -554,6 +551,7 @@ export class GameScene extends Scene {
     const leftMost = -(this.app.getScreenSize().w * 0.5);
 
     let n = Math.floor(Math.random() * 5 +1);
+
     switch (n) {
       case 1:
         return leftMost;
@@ -613,7 +611,6 @@ export class GameScene extends Scene {
     
     // do not animate if animation is turned off
     if(this.squareAnimate == false) return false;
-    console.log("animate squares");
 
     let squares = this.animatedSquares;
 
@@ -822,13 +819,7 @@ export class GameScene extends Scene {
                       square.removeChildAt(1);
                     }catch(e){
 
-                    }
-                    // this.animateCoin(this.squareFar[this.bounce_count]);
-
-                    // animate square on points threshold
-                    // if(this.score >= this.squareAnimateThreshold){
-                    //   this.squareAnimate = true;
-                    // }
+                    };
                     
                   }
 
@@ -1152,6 +1143,8 @@ export class GameScene extends Scene {
       // reload instruction screen
       this.showInstructionScreen();
     }
+    // reset game
+    this.reset_game();
   }
 
 }
