@@ -137,7 +137,7 @@ export class LeaderboardModal extends PIXI.Container {
       {
         name: 'YOU',
         score: '0',
-        avatar: './assets/binay.jpg',
+        avatar: null,
         self: true,
         rank: 2000,
         prize: '0',
@@ -211,15 +211,7 @@ export class LeaderboardModal extends PIXI.Container {
       this.rank.visible = true;
       this.profile_container[x].addChild(this.rank);
 
-      //check if avatar !null
-      if( data[x].avatar !== null) {
-        this.renderProfileAvatar(data, x);
-      }
-      else {
-        this.renderDefaultProfile(data, x);
-      }
-
-      // data[x].avatar = (data[x].avatar == null) ? './assets/binay.jpg' : data[x].avatar;
+      data[x].avatar = (data[x].avatar == null) ? './assets/profile-avatar.png' : data[x].avatar;
 
       this.renderProfileAvatar(data, x);
 
@@ -228,7 +220,7 @@ export class LeaderboardModal extends PIXI.Container {
       user_details.beginFill(0X000000, 0);
       user_details.drawRect(0, 0, this.profile_container[x].width * 0.55, this.profile_container[x].height * 0.5);
       
-      user_details.position.x = this.userDetailsPosition(data[x].avatar, x);
+      user_details.position.x = this.avatar[x].width + this.avatar[x].position.x + 50;
       user_details.position.y = this.profile_container[x].height * 0.5 - user_details.height * 0.5;
       user_details.endFill();
       this.profile_container[x].addChild(user_details);
@@ -242,7 +234,7 @@ export class LeaderboardModal extends PIXI.Container {
       });
       // player_name.anchor.set(0, 0);
       player_name.position.y = this.profile_container[x].height * 0.5 - player_name.height * 0.5;
-      player_name.position.x = this.playerNamePosition(data[x].avatar, x);//this.avatar_container[x].position.x + this.avatar_container[x].width;
+      player_name.position.x = this.avatar_container[x].position.x + this.avatar_container[x].width;
       this.profile_container[x].addChild(player_name);
       // player points
       const player_points = new PIXI.Text(`${data[x].score} pts.`, {
@@ -284,25 +276,6 @@ export class LeaderboardModal extends PIXI.Container {
       this.profile_container[x].addChild(breakline);
       
     }
-  }
-
-  userDetailsPosition(picture: any, x: number){
-    return (picture != null) ? this.avatar[x].width + this.avatar[x].position.x + 50 : this.spriteAvatar.getSprite().width + this.spriteAvatar.getSprite().position.x + 20;
-  }
-
-  playerNamePosition(picture: any, x: number){
-    return (picture != null) ? this.avatar_container[x].position.x + this.avatar_container[x].width : this.spriteAvatar.getSprite().position.x + this.spriteAvatar.getSprite().width + 20;
-  }
-
-  renderDefaultProfile(data:any, x:number){
-    // set player avatar
-    this.spriteAvatar = new SpriteActor('profile_image', this.app, 'leaderboard', 'profile-avatar.png');
-    this.spriteAvatar.setScaleUpToScreenPercHeight(this.profile_container[x].height * 0.0002);
-    this.spriteAvatar.setAnchor(0, 0);
-    this.spriteAvatar.setPosition(
-      (this.profile_container[x].width * 0.1 + this.rank.width),
-      this.profile_container[x].height * 0.5 - this.spriteAvatar.getSprite().height * 0.5);
-    this.profile_container[x].addChild(this.spriteAvatar.getSprite());
   }
 
   renderProfileAvatar(data:any, index:number){  
@@ -361,51 +334,41 @@ export class LeaderboardModal extends PIXI.Container {
     rank.visible = true;
     this.profile_float_container.addChild(rank);
     
-    if(data.avatar !== null) {
-      // set player avatar 
-      var avatar_container = new PIXI.Graphics();
-      avatar_container.beginFill(0xCC0000,0).drawRect(0,0,100,100).endFill();
-      avatar_container.width = this.profile_float_container.width * .19;
-      avatar_container.height = avatar_container.width;
-      avatar_container.position.x = this.profile_float_container.width * 0.1 + (rank.width * .7);
-      avatar_container.position.y = this.profile_float_container.height * 0.5 - avatar_container.height * 0.5;
-      
-      // masking
-      var maskC = new PIXI.Graphics();
-      maskC.beginFill(0xffffff, 1).drawCircle(0, 0, 50).endFill();
-      maskC.width = 75;
-      maskC.height = 75;
-      maskC.position.x = 50;
-      maskC.position.y = 50;
-      maskC.renderable = true;
-      
-      var texture = PIXI.Texture.from(`${data.avatar}`);
-      var avatarPic = new PIXI.Sprite(texture);
-      avatarPic.mask = maskC;
-      // avatar.anchor.set(0,0);
-      avatarPic.position.x = 12.5;
-      avatarPic.position.y = 12.5;
-      this.setScaleSpriteItem(avatar_container, avatarPic, 1);
-      avatar_container.addChild(maskC);
-      avatar_container.addChild(avatarPic);
-      this.profile_float_container.addChild(avatar_container);
-    }
-    else {
-      // set player avatar
-      var avatar = new SpriteActor('profile_image', this.app, 'leaderboard', 'profile-avatar.png');
-      avatar.setScaleUpToScreenPercHeight(this.profile_float_container.height * 0.0002);
-      avatar.setAnchor(0, 0);
-      avatar.setPosition(
-        (this.profile_float_container.width * 0.1 + rank.width),
-        this.profile_float_container.height * 0.5 - avatar.getSprite().height * 0.5);
-      this.profile_float_container.addChild(avatar.getSprite());
-    }
+    data.avatar = (data.avatar == null) ? './assets/profile-avatar.png' : data.avatar;
 
+    // set player avatar 
+    var avatar_container = new PIXI.Graphics();
+    avatar_container.beginFill(0xCC0000,0).drawRect(0,0,100,100).endFill();
+    avatar_container.width = this.profile_float_container.width * .19;
+    avatar_container.height = avatar_container.width;
+    avatar_container.position.x = this.profile_float_container.width * 0.1 + (rank.width * .7);
+    avatar_container.position.y = this.profile_float_container.height * 0.5 - avatar_container.height * 0.5;
+    
+    // masking
+    var maskC = new PIXI.Graphics();
+    maskC.beginFill(0xffffff, 1).drawCircle(0, 0, 50).endFill();
+    maskC.width = 75;
+    maskC.height = 75;
+    maskC.position.x = 50;
+    maskC.position.y = 50;
+    maskC.renderable = true;
+    
+    var texture = PIXI.Texture.from(`${data.avatar}`);
+    var avatarPic = new PIXI.Sprite(texture);
+    avatarPic.mask = maskC;
+    // avatar.anchor.set(0,0);
+    avatarPic.position.x = 12.5;
+    avatarPic.position.y = 12.5;
+    this.setScaleSpriteItem(avatar_container, avatarPic, 1);
+    avatar_container.addChild(maskC);
+    avatar_container.addChild(avatarPic);
+    this.profile_float_container.addChild(avatar_container);
+  
     // initialize and set user details container
     const user_details = new PIXI.Graphics();
     user_details.beginFill(0X000000, 0);
     user_details.drawRect(0, 0, this.profile_float_container.width * 0.55, this.profile_float_container.height * 0.5);
-    user_details.position.x = (data.avatar !== null) ? avatar_container.width + avatar_container.position.x : avatar.getSprite().width + avatar.getSprite().position.x + 20;
+    user_details.position.x = avatar_container.width + avatar_container.position.x;
     user_details.position.y = this.profile_float_container.height * 0.5 - user_details.height * 0.5;
     user_details.endFill();
     this.profile_float_container.addChild(user_details);
@@ -419,7 +382,7 @@ export class LeaderboardModal extends PIXI.Container {
     });
     player_name.anchor.set(0, 0);
     player_name.position.y = user_details.height * 0.5 - player_name.height * 0.5;
-    player_name.position.x = (data.avatar !== null) ? avatar_container.width * .001 : avatar.getSprite().width * .3;
+    player_name.position.x = avatar_container.width * .001;
     user_details.addChild(player_name);
     // player points
     const player_points = new PIXI.Text(`${data.score} pts.`, {
@@ -575,25 +538,11 @@ export class LeaderboardModal extends PIXI.Container {
   }
 
   public setLeaderboardData(data:any){
-    console.log(window.devicePixelRatio, window);
+    
     this.leaderboardData = data;
+    
     this.createLeaderboard();
-    
-    // preload images
-    // this.avatarLoader = new PIXI.loaders.Loader();
-    // let users = data.data.all_time_rankings;
-    
-    // users.forEach((profile:any, index:any) => {
-    //     // addimages to loader
-    //     this.avatarLoader.add(`user_${index}`, profile.avatar);
-    // });
-
-    // this.avatarLoader.load((loader: any, resources: any) => {
-    //   // render leaderboard when all avatar has been loaded
-    //   this.render_leaderboard(data.data.all_time_rankings);
-    // })
-   
-   this.render_leaderboard(data.data.all_time_rankings);
+    this.render_leaderboard(data.data.all_time_rankings);
   }
 
   private setScaleSpriteItem(parentContainer:any, sprite:any, perc: number): void {

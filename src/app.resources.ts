@@ -21,6 +21,8 @@ export function resourcesProvider(_app: App, loaded: (resources: any) => void, p
   loader.add('gameover', `./assets/gameover-sprites.json`);
   loader.add('platform', `./assets/platform.png`);
   loader.add('coin1', `./assets/coin.png`);
+  loader.add('default_profile', `./assets/profile-avatar.png`);
+  
   // sounds
   loader.add('ball_bounce', './assets/ball_bounce.{ogg,mp3}');
   loader.add('BGM_default', './assets/BGM_default.{ogg,mp3}');
