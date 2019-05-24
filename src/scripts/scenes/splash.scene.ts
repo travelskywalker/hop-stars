@@ -209,13 +209,16 @@ export class SplashScene extends Scene {
     this.howtowin_btn.setScaleUpToScreenPercWidth(.25);
     this.howtowin_btn.getSprite().interactive = true;
     this.howtowin_btn.getSprite().on('pointerup', () => { 
+      // this.closeBtn.getSprite().interactive = false;
+      // this.play_btn.getSprite().interactive = false;
+      // this.sound_btn.getAnimatedSprite().interactive = false;
+      // this.leaderboard_btn.getSprite().interactive = false;
       console.log('show howtowin modal');
       this.app.getSoundPlayer().play('button');
       // this.app.goToScene(3);
       // modal
       this.howtomodal = new HowtowinModal({app: this.app});
       this.container.addChild(this.howtomodal);
-      
     });
     this.addChild(this.howtowin_btn);
 
