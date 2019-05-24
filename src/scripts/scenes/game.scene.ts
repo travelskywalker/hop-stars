@@ -121,7 +121,7 @@ export class GameScene extends Scene {
   ntoModal: NetworkTimeoutModal;
 
   init(): void {
-    
+    console.log('game init()');
     this.bigWhiteTexture = new PIXI.Texture(PIXI.Texture.EMPTY.baseTexture);
     this.bigWhiteTexture.orig.width = this.CIRCLEWIDTH * 6;
     this.bigWhiteTexture.orig.height = this.CIRCLEWIDTH * 4;
@@ -135,7 +135,7 @@ export class GameScene extends Scene {
   }
 
   start(): void {
-
+    console.log('game start()');
   // set session id to null
   this.sessionId = null;
 
@@ -377,23 +377,20 @@ export class GameScene extends Scene {
 
   //// TOUCH START
     this.circle_bg.on('touchstart', (interactionData: PIXI.interaction.InteractionEvent) => {  
+      console.log('game circle_bg click', this.isProcessing, interactionData.data.identifier);
   		// is processing
-  		if(this.isProcessing === true) {
+  		if(interactionData.data.identifier > 0 || this.isProcessing === true ) {
   			return;
   		}
       this.isProcessing = true;
 
-      if(interactionData.data.identifier > 0) return;
-
       this.container.removeChild(this.instructionContainer);
       this.container.removeChild(this.swipe.getSprite());
       this.container.removeChild(this.swipe_hand.getSprite());
-
       this.container.removeChild(this.taptostart);
       this.container.removeChild(this.swipeLeftRight);
 
       if(this.app.getState().isOnline() == true){
-
         // data requirements
         if(this.sessionId == null){ 
           this.sessionId = this.app.getState().generateSessionId();
@@ -408,20 +405,18 @@ export class GameScene extends Scene {
           this.app.getState().eventStarted(event); //send payload
           this.gameStarted = true;
         }
-        
+        // console.log('is online');
         this.ball_click();
 
         // get initial tapped postion
         const point = interactionData.data.getLocalPosition(this.circle);
-        this.initialPoint = point;
-
-        
+        this.initialPoint = point;      
       }else{
         this.showNTOModal();
       }
       setTimeout(() => {
         this.isProcessing = false;
-      },500);
+      },200);
       
   });
 
@@ -537,7 +532,7 @@ export class GameScene extends Scene {
       this.container.removeChild(this.swipe_hand.getSprite());
       this.container.removeChild(this.taptostart);
       this.container.removeChild(this.swipeLeftRight);
-
+      
       this.ball_click(); 
     })
   }
@@ -973,14 +968,17 @@ export class GameScene extends Scene {
   }
 
   ball_click(): void {
+    console.log('ball_click');
     // bounce ball when tapped
     if(this.GAME_RESET == false) {
      this.TOUCHEND = false;
+     console.log('ball_click - if');
      
     } else {
       // adjust animation rate from 0.9 to 5 || optimization
       this.circle1.switchAnimation('ball',0.95, true);
       this.GAME_RESET = false;
+      console.log('ball_click - else');
     }
   }
   // SOUND ------------------------------------------------------------------

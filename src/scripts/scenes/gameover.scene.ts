@@ -385,9 +385,9 @@ OVER`;
        console.log('go to instruction screen scene ');
        setTimeout(() => { 
          this.app.goToScene(2); 
-         setTimeout(() => {
+        //  setTimeout(() => {
           this.isProcessing = false;
-        },500);
+        // },100);
         }, 200);
      });
     this.bottomContainer.addChild(this.play_again_btn.getSprite());
