@@ -377,7 +377,7 @@ export class GameScene extends Scene {
 
   //// TOUCH START
     this.circle_bg.on('touchstart', (interactionData: PIXI.interaction.InteractionEvent) => {  
-      console.log('game circle_bg click', this.isProcessing, interactionData.data.identifier);
+      
   		// is processing
   		if(interactionData.data.identifier > 0 || this.isProcessing === true ) {
   			return;
@@ -414,10 +414,6 @@ export class GameScene extends Scene {
       }else{
         this.showNTOModal();
       }
-      setTimeout(() => {
-        this.isProcessing = false;
-      },200);
-      
   });
 
    //// TOUCH MOVE
@@ -831,7 +827,7 @@ export class GameScene extends Scene {
             }
             
             if(this.TOUCHEND == true) {
-              // console.log('falling');
+              console.log('falling');
               if(this.fall_position < this.circle.position.y) {
                 // if ball out of screen
                 this.reset_game();
@@ -908,6 +904,7 @@ export class GameScene extends Scene {
   reset_game() {
 
     if(this.app.getState().isOnline() == true){
+      this.isProcessing = false;
       // goto gameover scene
       this.app.goToScene(4, {score: this.score, session_id: this.sessionId, timeStart: this.timeStart});
 
@@ -972,13 +969,10 @@ export class GameScene extends Scene {
     // bounce ball when tapped
     if(this.GAME_RESET == false) {
      this.TOUCHEND = false;
-     console.log('ball_click - if');
-     
     } else {
       // adjust animation rate from 0.9 to 5 || optimization
       this.circle1.switchAnimation('ball',0.95, true);
       this.GAME_RESET = false;
-      console.log('ball_click - else');
     }
   }
   // SOUND ------------------------------------------------------------------
