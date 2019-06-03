@@ -434,9 +434,12 @@ export class GameScene extends Scene {
       const point = interactionData.data.getLocalPosition(this.circle);
 
       if(this.GAME_RESET !== true) {
+
+        // ball width
+        let ball_width = this.circle.width/2;
         // circle move -----
-        this.circle.position.x = Math.min(this.app.getScreenSize().w * 0.5 , this.circle.position.x + (point.x - this.initialPoint.x));
-        this.circle.position.x = Math.max(this.circle.position.x , -(this.deviceScreenSize));
+        this.circle.position.x = Math.min((this.app.getScreenSize().w * 0.5)- ball_width, this.circle.position.x + (point.x - this.initialPoint.x));
+        this.circle.position.x = Math.max(this.circle.position.x , -(this.deviceScreenSize - ball_width));
         // box container -----
         this.container2d.position.x = -((this.circle.position.x + (point.x - this.initialPoint.x)) - this.deviceScreenSize);
         const bg_img_x = this.bg_img.getSprite().position.x + (point.x - this.initialPoint.x) / 8;
