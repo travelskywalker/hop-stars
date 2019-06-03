@@ -112,6 +112,8 @@ Beat the highest score`;
     this.closeBtn.getSprite().on('pointerup', () => { 
     //   console.log('back howtowin scene');
     //   setTimeout(() => { dataApp.app.goToScene(0); }, 200);
+    
+    
     console.log('close modal');
       this.removeChild(this.bg.getSprite());
       this.removeChild(modal);
@@ -119,6 +121,8 @@ Beat the highest score`;
 
     });
     modal.addChild(this.closeBtn.getSprite());
+    // fix for buttons clickable behind the modal
+    modal.interactive = true;
   }
 
 }

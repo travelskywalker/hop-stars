@@ -121,7 +121,7 @@ export class GameScene extends Scene {
   ntoModal: NetworkTimeoutModal;
 
   init(): void {
-    
+    console.log('game init()');
     this.bigWhiteTexture = new PIXI.Texture(PIXI.Texture.EMPTY.baseTexture);
     this.bigWhiteTexture.orig.width = this.CIRCLEWIDTH * 6;
     this.bigWhiteTexture.orig.height = this.CIRCLEWIDTH * 4;
@@ -135,7 +135,7 @@ export class GameScene extends Scene {
   }
 
   start(): void {
-
+    console.log('game start()');
   // set session id to null
   this.sessionId = null;
 
@@ -377,23 +377,20 @@ export class GameScene extends Scene {
 
   //// TOUCH START
     this.circle_bg.on('touchstart', (interactionData: PIXI.interaction.InteractionEvent) => {  
+      
   		// is processing
-  		if(this.isProcessing === true) {
+  		if(interactionData.data.identifier > 0 || this.isProcessing === true ) {
   			return;
   		}
       this.isProcessing = true;
 
-      if(interactionData.data.identifier > 0) return;
-
       this.container.removeChild(this.instructionContainer);
       this.container.removeChild(this.swipe.getSprite());
       this.container.removeChild(this.swipe_hand.getSprite());
-
       this.container.removeChild(this.taptostart);
       this.container.removeChild(this.swipeLeftRight);
 
       if(this.app.getState().isOnline() == true){
-
         // data requirements
         if(this.sessionId == null){ 
           this.sessionId = this.app.getState().generateSessionId();
@@ -408,21 +405,15 @@ export class GameScene extends Scene {
           this.app.getState().eventStarted(event); //send payload
           this.gameStarted = true;
         }
-        
+        // console.log('is online');
         this.ball_click();
 
         // get initial tapped postion
         const point = interactionData.data.getLocalPosition(this.circle);
-        this.initialPoint = point;
-
-        
+        this.initialPoint = point;      
       }else{
         this.showNTOModal();
       }
-      setTimeout(() => {
-        this.isProcessing = false;
-      },500);
-      
   });
 
    //// TOUCH MOVE
@@ -540,12 +531,9 @@ export class GameScene extends Scene {
       this.container.removeChild(this.swipe_hand.getSprite());
       this.container.removeChild(this.taptostart);
       this.container.removeChild(this.swipeLeftRight);
-
-      // game started
-      // this.app.getState().eventStarted(); //send payload
+      
       this.ball_click(); 
     })
-    // END OF INSTRUCTION
   }
 
   randomPosition(){
@@ -557,6 +545,7 @@ export class GameScene extends Scene {
     const leftMost = -(this.app.getScreenSize().w * 0.5);
 
     let n = Math.floor(Math.random() * 5 +1);
+
     switch (n) {
       case 1:
         return leftMost;
@@ -616,7 +605,6 @@ export class GameScene extends Scene {
     
     // do not animate if animation is turned off
     if(this.squareAnimate == false) return false;
-    console.log("animate squares");
 
     let squares = this.animatedSquares;
 
@@ -825,13 +813,7 @@ export class GameScene extends Scene {
                       square.removeChildAt(1);
                     }catch(e){
 
-                    }
-                    // this.animateCoin(this.squareFar[this.bounce_count]);
-
-                    // animate square on points threshold
-                    // if(this.score >= this.squareAnimateThreshold){
-                    //   this.squareAnimate = true;
-                    // }
+                    };
                     
                   }
 
@@ -848,7 +830,7 @@ export class GameScene extends Scene {
             }
             
             if(this.TOUCHEND == true) {
-              // console.log('falling');
+              console.log('falling');
               if(this.fall_position < this.circle.position.y) {
                 // if ball out of screen
                 this.reset_game();
@@ -925,6 +907,7 @@ export class GameScene extends Scene {
   reset_game() {
 
     if(this.app.getState().isOnline() == true){
+      this.isProcessing = false;
       // goto gameover scene
       this.app.goToScene(4, {score: this.score, session_id: this.sessionId, timeStart: this.timeStart});
 
@@ -985,10 +968,10 @@ export class GameScene extends Scene {
   }
 
   ball_click(): void {
+    console.log('ball_click');
     // bounce ball when tapped
     if(this.GAME_RESET == false) {
      this.TOUCHEND = false;
-     
     } else {
       // adjust animation rate from 0.9 to 5 || optimization
       this.circle1.switchAnimation('ball',0.95, true);
@@ -1155,6 +1138,8 @@ export class GameScene extends Scene {
       // reload instruction screen
       this.showInstructionScreen();
     }
+    // reset game
+    this.reset_game();
   }
 
 }
