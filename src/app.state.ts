@@ -57,7 +57,7 @@ export class AppState extends Subject<IAppState> {
     
     let gamedata = JSON.parse(localStorage.getItem("hopGameData"));
 
-    if(localStorage.getItem("hopGameData") == null || localStorage.getItem("hopGameData") == undefined){
+    if(localStorage.getItem("hopGameData") == null || localStorage.getItem("hopGameData") == undefined || gamedata.best_score == undefined){
       return 0;
     }else{
       return gamedata.best_score;
