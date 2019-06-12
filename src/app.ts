@@ -10,6 +10,15 @@ import { scenesProvider } from '@src/app.scenes';
 import { resourcesProvider } from '@src/app.resources';
 import { AppSound } from './app.sound';
 
+declare global { interface Window { Game: any; } }
+
+// android
+interface JavaScriptInterface { 
+  gameStarted(data: any): any;
+}
+
+declare var Android: JavaScriptInterface;
+
 export class App {
   // data requirements
   public currentScore: number = 0;
@@ -46,6 +55,7 @@ export class App {
     // setup game framework
     this.setup();
 
+    // dismiss static loader
     this.dismissStaticLoader();
 
     // loader image
@@ -121,7 +131,24 @@ export class App {
       // alert(`Sorry, your device is not supported.`);
       // create not available page
       setTimeout(() => {
+
+        // dismiss static loader
+        this.dismissStaticLoader();
+
         document.getElementById('not-supported').classList.add('active');
+
+        // send not supported event
+        const data = {
+          event: "not-supported",
+          }
+
+          try {
+            Android.gameStarted(JSON.stringify(data));
+          } catch (error) {
+            alert(error)
+          }
+        
+
       }, 50);
     }
 
