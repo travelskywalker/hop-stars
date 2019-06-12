@@ -378,10 +378,14 @@ export class GameScene extends Scene {
   //// TOUCH START
     this.circle_bg.on('touchstart', (interactionData: PIXI.interaction.InteractionEvent) => {  
       
+      if(interactionData.data.identifier > 0) return;
+      
+      const point = interactionData.data.getLocalPosition(this.circle);
+      this.initialPoint = point;
+
   		// is processing
-  		if(interactionData.data.identifier > 0 || this.isProcessing === true ) {
-  			return;
-  		}
+  		if(this.isProcessing === true) return;
+      
       this.isProcessing = true;
 
       this.container.removeChild(this.instructionContainer);
@@ -409,8 +413,8 @@ export class GameScene extends Scene {
         this.ball_click();
 
         // get initial tapped postion
-        const point = interactionData.data.getLocalPosition(this.circle);
-        this.initialPoint = point;      
+        // const point = interactionData.data.getLocalPosition(this.circle);
+        // this.initialPoint = point;      
       }else{
         this.showNTOModal();
       }
