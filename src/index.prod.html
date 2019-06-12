@@ -81,15 +81,91 @@
                 color: #1b1e21;
                 background-color: #d6d8d9;
                 border-color: #c6c8ca;
-            }           
+            }
+            .loading {
+                position: absolute;
+                z-index: 9999;
+                top: 0; left: 0; bottom: 0; right: 0;
+                background-color: #FFF;
+                display: none;
+            }
+            .loading.active {
+                display: block;
+            }
+            .loading .loader {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                -webkit-transform: translate(-50%, -70%);
+                transform: translate(-50%, -70%);
+            }
+
+            @keyframes lds-rolling {
+                0% {
+                -webkit-transform: translate(-50%, -50%) rotate(0deg);
+                transform: translate(-50%, -50%) rotate(0deg);
+                }
+                100% {
+                -webkit-transform: translate(-50%, -50%) rotate(360deg);
+                transform: translate(-50%, -50%) rotate(360deg);
+                }
+            }
+
+            @-webkit-keyframes lds-rolling {
+                0% {
+                -webkit-transform: translate(-50%, -50%) rotate(0deg);
+                transform: translate(-50%, -50%) rotate(0deg);
+                }
+                100% {
+                -webkit-transform: translate(-50%, -50%) rotate(360deg);
+                transform: translate(-50%, -50%) rotate(360deg);
+                }
+            }
+
+            .lds-rolling div {
+                top: 50%;
+                left: 50%;
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                border-radius: 50%;
+            }
+            .lds-rolling div.gray {
+                -webkit-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+                border: 4px solid #e3e4e5;
+            }
+            .lds-rolling div.overlay {
+                border: 4px solid #9d1f62;
+                border-top-color: transparent;
+                -webkit-animation: lds-rolling 1s linear infinite;
+                animation: lds-rolling 1s linear infinite;
+            }
+            .lds-rolling {
+                width: 50px;
+                height: 50px;
+                -webkit-transform: translate(-50%, -50%) scale(1) translate(50%, 50%);
+                transform: translate(-50%, -50%) scale(1) translate(50%, 50%);
+                position: relative;
+            }            
         </style>   
     </head>
     <body>
-        <div id="not-supported" class="card " style="width: 18rem;">
-            <div class="card-body alert-danger">
-                <p class="card-text alert-danger">Sorry, your device is not supported</p>
-                <button class="btn btn-primary" onclick="try{Android.gameCancelled()}catch(e){console.error('Android.gameCancelled is not defined')}">Ok</button>
+        <div id="loading" class="loading active">
+            <div class="loader">
+              <div class="lds-css">
+                <div class="lds-rolling">
+                  <div class="gray"></div>
+                  <div class="overlay"></div>
+                </div>
+              </div>
             </div>
         </div>
+        <div id="not-supported" class="card " style="width: 18rem;">
+            <div class="card-body alert-danger">
+              <p class="card-text alert-danger">Sorry, your device is not supported</p>
+              <button class="btn btn-primary" onclick="try{Android.gameCancelled()}catch(e){console.error('Android.gameCancelled is not defined')}">Ok</button>
+            </div>
+          </div>
     </body>
 </html>

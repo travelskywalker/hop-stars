@@ -46,6 +46,8 @@ export class App {
     // setup game framework
     this.setup();
 
+    this.dismissStaticLoader();
+
     // loader image
     const loader_img = new Image();
     loader_img.src = b64_loader;
@@ -113,6 +115,7 @@ export class App {
       PIXI.settings.TARGET_FPMS = 1.5;
 
       this._app = new PIXI.Application(w * window.devicePixelRatio, h * window.devicePixelRatio, { resolution: window.devicePixelRatio, antialias: true });
+
     } catch (error) {
 
       // alert(`Sorry, your device is not supported.`);
@@ -265,6 +268,11 @@ export class App {
   public getState(): AppState {
 
     return this._state;
+  }
+
+  private dismissStaticLoader(): void{
+    // remove loader
+    document.getElementById('loading').classList.remove('active');
   }
 
 }
