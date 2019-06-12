@@ -97,6 +97,10 @@ export class SplashScene extends Scene {
     
     this.timeStart = Date.now();
     this.data.best_score = this.app.getState().getBestScore();
+
+    // play default bgm
+    PIXI.sound.stopAll();
+    PIXI.sound.play("BGM_default", { loop: true });
     
     // initialize and set bg
     this.bg = new SpriteActor('splash-bg', this.app, 'common', 'startscreen_bg.jpg');

@@ -97,7 +97,7 @@ export class GameScene extends Scene {
   stageLimit: number = 50; //config
 
   // sounds
-  randomTileSound: boolean = true; //config
+  randomTileSound: boolean = false; //config
   tileSound: boolean = true; //config
   tileVolume: any = 1; //config
 
@@ -987,7 +987,7 @@ export class GameScene extends Scene {
       this.app.getSoundPlayer().play('tile_'+n);
     }else{
       // play default tile sound
-      this.app.getSoundPlayer().play('tile_1',this.tileVolume);
+      this.app.getSoundPlayer().play('tile_5',this.tileVolume);
     }
   }
   playBGMSound(name:string) {
@@ -1047,8 +1047,8 @@ export class GameScene extends Scene {
     this.container.setChildIndex(this.gradient_bg.getSprite(),2)
     this.container.setChildIndex(this.scoreText,3)
 
-    this.stopBGMSound();
-    this.playBGMSound('BGM_S3');
+    // this.stopBGMSound();
+    // this.playBGMSound('BGM_S3');
 
   }
 
@@ -1084,8 +1084,8 @@ export class GameScene extends Scene {
     this.container.setChildIndex(this.gradient_bg.getSprite(),2)
     this.container.setChildIndex(this.scoreText,3)
 
-    this.stopBGMSound();
-    this.playBGMSound('BGM_S2');
+    // this.stopBGMSound();
+    // this.playBGMSound('BGM_S2');
   }
 
   stage1(){
@@ -1118,7 +1118,9 @@ export class GameScene extends Scene {
     this.container.addChild(this.gradient_bg.getSprite());
     this.container.setChildIndex(this.gradient_bg.getSprite(),2)
 
-    this.resetBGMSound();
+    // this.resetBGMSound();
+    this.stopBGMSound();
+    this.playBGMSound('BGM_S1');
 
   }
 

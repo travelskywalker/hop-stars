@@ -251,6 +251,9 @@ export class GameOverScene extends Scene {
   }
 
   start(): void {
+    // play default bgm
+    PIXI.sound.stopAll();
+    PIXI.sound.play("BGM_default", { loop: true });
     // send data 
     this.app.getState().submitScore(this.app.currentScore);
     this.animatingTop = false;

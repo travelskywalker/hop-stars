@@ -11,7 +11,6 @@ export function resourcesProvider(_app: App, loaded: (resources: any) => void, p
   loader.concurrency = 1;
 
   // add assets
-  // loader.add('barmaid', `./assets/barmaid${loader_resolution}.json`);
   loader.add('common', `./assets/spritesheet-common.json`);
   loader.add('lvl1', `./assets/hop-game-level-1.json`);
   loader.add('lvl2', `./assets/hop-game-level-2.json`);
@@ -29,16 +28,7 @@ export function resourcesProvider(_app: App, loaded: (resources: any) => void, p
   loader.add('button', './assets/button.{ogg,mp3}');
   loader.add('coin', './assets/coin.{ogg,mp3}');
   loader.add('BGM_S1', './assets/BGM_S1.{ogg,mp3}');
-  loader.add('BGM_S2', './assets/BGM_S2.{ogg,mp3}');
-  loader.add('BGM_S3', './assets/BGM_S3.{ogg,mp3}');
-  loader.add('tile_1', './assets/tile_1.{ogg,mp3}');
-  loader.add('tile_2', './assets/tile_2.{ogg,mp3}');
-  loader.add('tile_3', './assets/tile_3.{ogg,mp3}');
-  loader.add('tile_4', './assets/tile_4.{ogg,mp3}');
   loader.add('tile_5', './assets/tile_5.{ogg,mp3}');
-  loader.add('tile_6', './assets/tile_6.{ogg,mp3}');
-  loader.add('tile_7', './assets/tile_7.{ogg,mp3}');
-  loader.add('tile_8', './assets/tile_8.{ogg,mp3}');
   
   // start loading resources
   loader.load((_loader: any, resources: any) => {

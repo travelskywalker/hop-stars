@@ -25,13 +25,3 @@ export class AppSound {
     PIXI.sound.stop(name);
   }
 }
-
-// export type SoundName =
-//     'ball_bounce'
-//   | 'BGM'
-//   | 'button'
-//   | 'coin'
-//   | 'tile_1'
-//   | 'tile_2'
-//   | 'tile_3'
-//   | 'tile_4'
