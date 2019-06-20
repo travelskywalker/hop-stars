@@ -15,6 +15,7 @@ declare global { interface Window { Game: any; } }
 // android
 interface JavaScriptInterface { 
   gameStarted(data: any): any;
+  dismissInappLoader(): any;
 }
 
 declare var Android: JavaScriptInterface;
@@ -56,7 +57,8 @@ export class App {
     this.setup();
 
     // dismiss static loader
-    this.dismissStaticLoader();
+    // this.dismissStaticLoader();
+    this.dismissAndroidLoader();
 
     // loader image
     const loader_img = new Image();
@@ -133,7 +135,8 @@ export class App {
       setTimeout(() => {
 
         // dismiss static loader
-        this.dismissStaticLoader();
+        // this.dismissStaticLoader();
+        this.dismissAndroidLoader();
 
         document.getElementById('not-supported').classList.add('active');
 
@@ -300,6 +303,14 @@ export class App {
   private dismissStaticLoader(): void{
     // remove loader
     document.getElementById('loading').classList.remove('active');
+  }
+
+  private dismissAndroidLoader(): void{
+    try {
+      Android.dismissInappLoader();
+    } catch (err) {
+      console.log(err, 'Android.dismissInappLoader triggered!');
+    }
   }
 
 }
